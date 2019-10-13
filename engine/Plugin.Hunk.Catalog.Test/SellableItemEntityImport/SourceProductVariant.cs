@@ -1,7 +1,7 @@
 ﻿using Plugin.Hunk.Catalog.Abstractions;
 using Plugin.Hunk.Catalog.Metadata;
 
-namespace Plugin.Hunk.Catalog.Test.Entity
+namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 {
     public class SourceProductVariant : IEntity
     {

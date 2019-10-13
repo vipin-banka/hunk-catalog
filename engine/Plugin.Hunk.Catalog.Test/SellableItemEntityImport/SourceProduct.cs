@@ -3,7 +3,7 @@ using Plugin.Hunk.Catalog.Abstractions;
 using Plugin.Hunk.Catalog.Entity;
 using Plugin.Hunk.Catalog.Metadata;
 
-namespace Plugin.Hunk.Catalog.Test.Entity
+namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 {
     public class SourceProduct : IEntity
     {
@@ -35,14 +35,14 @@ namespace Plugin.Hunk.Catalog.Test.Entity
         [Parents()]
         public IList<string> Parents { get; set; }
 
-        public string Accessories { get; set; }
-
-        public string Dimensions { get; set; }
-
         [Languages()]
         public IList<LanguageEntity<SourceProduct>> Languages { get; set; }
 
         [Variants()]
         public IList<SourceProductVariant> Variants { get; set; }
+
+        public string Accessories { get; set; }
+
+        public string Dimensions { get; set; }
     }
 }

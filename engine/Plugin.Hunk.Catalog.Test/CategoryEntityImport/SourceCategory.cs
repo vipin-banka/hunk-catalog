@@ -3,7 +3,7 @@ using Plugin.Hunk.Catalog.Abstractions;
 using Plugin.Hunk.Catalog.Entity;
 using Plugin.Hunk.Catalog.Metadata;
 
-namespace Plugin.Hunk.Catalog.Test.Entity
+namespace Plugin.Hunk.Catalog.Test.CategoryEntityImport
 {
     public class SourceCategory : IEntity
     {

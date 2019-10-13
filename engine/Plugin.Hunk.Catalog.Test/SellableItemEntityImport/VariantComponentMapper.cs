@@ -1,9 +1,8 @@
 ﻿using Plugin.Hunk.Catalog.Mappers;
 using Plugin.Hunk.Catalog.Test.Components;
-using Plugin.Hunk.Catalog.Test.Entity;
 using Sitecore.Commerce.Core;
 
-namespace Plugin.Hunk.Catalog.Test.Mappers.VariantComponentMappers
+namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 {
     public class VariantComponentMapper : BaseVariantComponentMapper<SourceProduct, SourceProductVariant, CommerceEntity, VariantComponent>
     {

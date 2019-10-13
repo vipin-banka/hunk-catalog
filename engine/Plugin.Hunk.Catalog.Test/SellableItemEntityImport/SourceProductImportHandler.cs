@@ -1,9 +1,8 @@
 ﻿using Plugin.Hunk.Catalog.ImportHandlers;
-using Plugin.Hunk.Catalog.Test.Entity;
 using Sitecore.Commerce.Core;
 using Sitecore.Commerce.Plugin.Catalog;
 
-namespace Plugin.Hunk.Catalog.Test.EntityImportHandlers
+namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 {
     public class SourceProductImportHandler : SellableItemImportHandler<SourceProduct>
     {

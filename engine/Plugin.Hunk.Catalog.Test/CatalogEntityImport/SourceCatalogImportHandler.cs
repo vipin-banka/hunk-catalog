@@ -1,8 +1,7 @@
 ﻿using Plugin.Hunk.Catalog.ImportHandlers;
-using Plugin.Hunk.Catalog.Test.Entity;
 using Sitecore.Commerce.Core;
 
-namespace Plugin.Hunk.Catalog.Test.EntityImportHandlers
+namespace Plugin.Hunk.Catalog.Test.CatalogEntityImport
 {
     public class SourceCatalogImportHandler : CatalogImportHandler<SourceCatalog>
     {
