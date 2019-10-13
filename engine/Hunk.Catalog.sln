@@ -1,0 +1,79 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2002
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{389FC06B-F543-41B8-9874-726DA9878DDC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3A330984-9652-4DA1-99D3-B55E6DEAC6AA}"
+	ProjectSection(SolutionItems) = preProject
+		..\nuget.config = ..\nuget.config
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sitecore.Commerce.Engine", "Sitecore.Commerce.Engine\Sitecore.Commerce.Engine.csproj", "{4EFE5D1B-EB52-424C-93AA-7E27045515A6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.Sample.Payments.Braintree", "Plugin.Sample.Payments.Braintree\Plugin.Sample.Payments.Braintree.csproj", "{937B4F2D-D6A9-411C-BE16-A002A012044B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.Sample.Habitat", "Plugin.Sample.Habitat\Plugin.Sample.Habitat.csproj", "{D765D77C-AA1C-4C10-B7DD-DBAA369629C1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.Sample.AdventureWorks", "Plugin.Sample.AdventureWorks\Plugin.Sample.AdventureWorks.csproj", "{AF0D2913-FF19-47B9-9BCD-95CB68E3C297}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.Hunk.Catalog.Test", "Plugin.Hunk.Catalog.Test\Plugin.Hunk.Catalog.Test.csproj", "{2A13F7C1-BFDC-4CB0-B098-478EC688A47B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.Hunk.Catalog", "Plugin.Hunk.Catalog\Plugin.Hunk.Catalog.csproj", "{CA6AE1E9-FCAD-4D83-A264-8A753EDFCADF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "postman", "postman", "{5BF78EF9-ECBA-4F75-AE4D-5ACFF0D5E1F2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "import", "import", "{9461B718-BE12-4B90-BF4E-22023B59A95C}"
+	ProjectSection(SolutionItems) = preProject
+		..\postman\import\Catalog Import.postman_collection.json = ..\postman\import\Catalog Import.postman_collection.json
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4EFE5D1B-EB52-424C-93AA-7E27045515A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EFE5D1B-EB52-424C-93AA-7E27045515A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EFE5D1B-EB52-424C-93AA-7E27045515A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EFE5D1B-EB52-424C-93AA-7E27045515A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{937B4F2D-D6A9-411C-BE16-A002A012044B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{937B4F2D-D6A9-411C-BE16-A002A012044B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{937B4F2D-D6A9-411C-BE16-A002A012044B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{937B4F2D-D6A9-411C-BE16-A002A012044B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D765D77C-AA1C-4C10-B7DD-DBAA369629C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D765D77C-AA1C-4C10-B7DD-DBAA369629C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D765D77C-AA1C-4C10-B7DD-DBAA369629C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D765D77C-AA1C-4C10-B7DD-DBAA369629C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF0D2913-FF19-47B9-9BCD-95CB68E3C297}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF0D2913-FF19-47B9-9BCD-95CB68E3C297}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF0D2913-FF19-47B9-9BCD-95CB68E3C297}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF0D2913-FF19-47B9-9BCD-95CB68E3C297}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A13F7C1-BFDC-4CB0-B098-478EC688A47B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A13F7C1-BFDC-4CB0-B098-478EC688A47B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A13F7C1-BFDC-4CB0-B098-478EC688A47B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A13F7C1-BFDC-4CB0-B098-478EC688A47B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA6AE1E9-FCAD-4D83-A264-8A753EDFCADF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA6AE1E9-FCAD-4D83-A264-8A753EDFCADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA6AE1E9-FCAD-4D83-A264-8A753EDFCADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA6AE1E9-FCAD-4D83-A264-8A753EDFCADF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4EFE5D1B-EB52-424C-93AA-7E27045515A6} = {389FC06B-F543-41B8-9874-726DA9878DDC}
+		{937B4F2D-D6A9-411C-BE16-A002A012044B} = {389FC06B-F543-41B8-9874-726DA9878DDC}
+		{D765D77C-AA1C-4C10-B7DD-DBAA369629C1} = {389FC06B-F543-41B8-9874-726DA9878DDC}
+		{AF0D2913-FF19-47B9-9BCD-95CB68E3C297} = {389FC06B-F543-41B8-9874-726DA9878DDC}
+		{2A13F7C1-BFDC-4CB0-B098-478EC688A47B} = {389FC06B-F543-41B8-9874-726DA9878DDC}
+		{CA6AE1E9-FCAD-4D83-A264-8A753EDFCADF} = {389FC06B-F543-41B8-9874-726DA9878DDC}
+		{5BF78EF9-ECBA-4F75-AE4D-5ACFF0D5E1F2} = {3A330984-9652-4DA1-99D3-B55E6DEAC6AA}
+		{9461B718-BE12-4B90-BF4E-22023B59A95C} = {5BF78EF9-ECBA-4F75-AE4D-5ACFF0D5E1F2}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {32813392-1C11-4D75-BF11-1ECBEF674669}
+	EndGlobalSection
+EndGlobal

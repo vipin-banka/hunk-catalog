@@ -1,0 +1,220 @@
+{
+	"info": {
+		"_postman_id": "0a84967b-960a-48d6-b781-585d97284de4",
+		"name": "Catalog Import",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API",
+			"item": [
+				{
+					"name": "Import Catalog",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "ShopName",
+								"value": "{{ShopName}}",
+								"type": "text"
+							},
+							{
+								"key": "ShopperId",
+								"value": "{{ShopperId}}",
+								"type": "text"
+							},
+							{
+								"key": "Language",
+								"value": "{{Language}}",
+								"type": "text"
+							},
+							{
+								"key": "Currency",
+								"value": "{{Currency}}",
+								"type": "text"
+							},
+							{
+								"key": "Environment",
+								"value": "{{Environment}}",
+								"type": "text"
+							},
+							{
+								"key": "GeoLocation",
+								"value": "{{GeoLocation}}",
+								"type": "text"
+							},
+							{
+								"key": "CustomerId",
+								"value": "{{CustomerId}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{SitecoreIdToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"metadata\":{\n\t\t\"Components\":[],\n\t\t\"VariantComponents\":[],\n\t\t\"EntityType\":\"Catalog\"\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Test2_Catalog\",\n\t\t\"Name\": \"Test2_Catalog\",\n\t\t\"DisplayName\": \"Test2 Catalog Display Name\",\n\t\t\"Languages\":[\n\t\t\t{\n\t\t\t\t\"Language\":\"fr-FR\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"fr-FR Test2 Catalog Display Name\",\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Language\":\"de-DE\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"de-DE Test2 Catalog Display Name\",\n\t\t\t\t}\n\t\t\t}\n\t\t]\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
+							"host": [
+								"{{ServiceHost}}"
+							],
+							"path": [
+								"{{ShopsApi}}",
+								"ImportEntity()"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Category",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "ShopName",
+								"value": "{{ShopName}}",
+								"type": "text"
+							},
+							{
+								"key": "ShopperId",
+								"value": "{{ShopperId}}",
+								"type": "text"
+							},
+							{
+								"key": "Language",
+								"value": "{{Language}}",
+								"type": "text"
+							},
+							{
+								"key": "Currency",
+								"value": "{{Currency}}",
+								"type": "text"
+							},
+							{
+								"key": "Environment",
+								"value": "{{Environment}}",
+								"type": "text"
+							},
+							{
+								"key": "GeoLocation",
+								"value": "{{GeoLocation}}",
+								"type": "text"
+							},
+							{
+								"key": "CustomerId",
+								"value": "{{CustomerId}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{SitecoreIdToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"metadata\":{\n\t\t\"Components\":[],\n\t\t\"VariantComponents\":[],\n\t\t\"EntityType\":\"Category\"\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Test1_Category Name\",\n\t\t\"Name\": \"Test1_Category Name\",\n\t\t\"DisplayName\": \"Test1 Category Display Name\",\n\t\t\"Description\": \"Test1 Category Description\",\n\t\t\"Parents\": [\"Test2_Catalog\"],\n\t\t\"Languages\":[\n\t\t\t{\n\t\t\t\t\"Language\":\"fr-FR\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"fr-FR Test2 Category Display Name\",\n\t\t\t\t\t\"Description\": \"fr-FR Test1 Category Description\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Language\":\"de-DE\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"de-DE Test2 Category Display Name\",\n\t\t\t\t\t\"Description\": \"de-DE Test1 Category Description\"\n\t\t\t\t}\n\t\t\t}\n\t\t]\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
+							"host": [
+								"{{ServiceHost}}"
+							],
+							"path": [
+								"{{ShopsApi}}",
+								"ImportEntity()"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Sellable Item",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "ShopName",
+								"value": "{{ShopName}}",
+								"type": "text"
+							},
+							{
+								"key": "ShopperId",
+								"value": "{{ShopperId}}",
+								"type": "text"
+							},
+							{
+								"key": "Language",
+								"value": "{{Language}}",
+								"type": "text"
+							},
+							{
+								"key": "Currency",
+								"value": "{{Currency}}",
+								"type": "text"
+							},
+							{
+								"key": "Environment",
+								"value": "{{Environment}}",
+								"type": "text"
+							},
+							{
+								"key": "GeoLocation",
+								"value": "{{GeoLocation}}",
+								"type": "text"
+							},
+							{
+								"key": "CustomerId",
+								"value": "{{CustomerId}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{SitecoreIdToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"metadata\":{\n\t\t\"Components\":[\"ProductHierarchyRoot\",\"Hardware\"],\n\t\t\"VariantComponents\":[\"Variant\"],\n\t\t\"EntityType\":\"SellableItem\"\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Test1_Sellable Item\",\n\t\t\"Name\": \"Test1_Sellable Item\",\n\t\t\"DisplayName\": \"Test1 Sellable Item Display Name\",\n\t\t\"Description\": \"Test1 Sellable Item Description\",\n\t\t\"Parents\": [\"Test2_Catalog\"],\n\t\t\"PartNumber\": \"Part number value\",\n\t\t\"Weight\": \"Weight value\",\n\t\t\"Accessories\": \"Accessories value\",\n\t\t\"Dimensions\": \"Dimensions value\",\n\t\t\"Variants\": [\n\t\t\t{\n\t\t\t\t\"Id\": \"Test1 Variant1\",\n\t\t\t\t\"DisplayName\": \"Test1 Variant1 Display Name\",\n\t\t\t\t\"Description\": \"Test1 Variant1 Description\",\n\t\t\t\t\"Color\": \"Red\",\n\t\t\t\t\"Length\": \"100m\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Id\": \"Test1 Variant2\",\n\t\t\t\t\"DisplayName\": \"Test1 Variant2 Display Name\",\n\t\t\t\t\"Description\": \"Test1 Variant2 Description\",\n\t\t\t\t\"Color\": \"Green\",\n\t\t\t\t\"Length\": \"200m\"\n\t\t\t}\n\t\t],\n\t\t\"Languages\":[\n\t\t\t{\n\t\t\t\t\"Language\":\"fr-FR\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"fr-FR Test2 Sellable Item Display Name\",\n\t\t\t\t\t\"Description\": \"fr-FR Test1 Sellable Item Description\",\n\t\t\t\t\t\"Accessories\": \"fr-FR Accessories value\",\n\t\t\t\t\t\"Dimensions\": \"fr-FR Dimensions value\",\n\t\t\t\t\t\"Variants\": [\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"Id\": \"Test1 Variant1\",\n\t\t\t\t\t\t\t\"DisplayName\": \"fr-FR Test1 Variant1 Display Name\",\n\t\t\t\t\t\t\t\"Description\": \"fr-FR Test1 Variant1 Description\",\n\t\t\t\t\t\t\t\"Color\": \"fr-FR Red\",\n\t\t\t\t\t\t\t\"Length\": \"fr-FR 100m\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"Id\": \"Test1 Variant2\",\n\t\t\t\t\t\t\t\"DisplayName\": \"fr-FR Test1 Variant2 Display Name\",\n\t\t\t\t\t\t\t\"Description\": \"fr-FR Test1 Variant2 Description\",\n\t\t\t\t\t\t\t\"Color\": \"fr-FR Green\",\n\t\t\t\t\t\t\t\"Length\": \"fr-FR 200m\"\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Language\":\"de-DE\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"de-DE Test2 Sellable Item Display Name\",\n\t\t\t\t\t\"Description\": \"de-DE Test1 Sellable Item Description\",\n\t\t\t\t\t\"Accessories\": \"de-DE Accessories value\",\n\t\t\t\t\t\"Dimensions\": \"de-DE Dimensions value\",\n\t\t\t\t\t\"Variants\": [\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"Id\": \"Test1 Variant1\",\n\t\t\t\t\t\t\t\"DisplayName\": \"de-DE Test1 Variant1 Display Name\",\n\t\t\t\t\t\t\t\"Description\": \"de-DE Test1 Variant1 Description\",\n\t\t\t\t\t\t\t\"Color\": \"de-DE Red\",\n\t\t\t\t\t\t\t\"Length\": \"de-DE 100m\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"Id\": \"Test1 Variant2\",\n\t\t\t\t\t\t\t\"DisplayName\": \"de-DE Test1 Variant2 Display Name\",\n\t\t\t\t\t\t\t\"Description\": \"de-DE Test1 Variant2 Description\",\n\t\t\t\t\t\t\t\"Color\": \"de-DE Green\",\n\t\t\t\t\t\t\t\"Length\": \"de-DE 200m\"\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t}\n\t\t]\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
+							"host": [
+								"{{ServiceHost}}"
+							],
+							"path": [
+								"{{ShopsApi}}",
+								"ImportEntity()"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,0 +1,63 @@
+{
+  "$type": "Sitecore.Commerce.Core.PolicySet, Sitecore.Commerce.Core",
+  "Id": "Entity-PolicySet-CatalogImportPolicySet",
+  "Version": 1,
+  "IsPersisted": false,
+  "Name": "CatalogImportPolicySet",
+  "Policies": {
+    "$type": "System.Collections.Generic.List`1[[Sitecore.Commerce.Core.Policy, Sitecore.Commerce.Core]], mscorlib",
+    "$values": [
+      {
+        "$type": "Sitecore.Commerce.Core.AutoApprovePolicy, Sitecore.Commerce.Core"
+      },
+      {
+        "$type": "Plugin.Accelerator.CatalogImport.Framework.Policy.CatalogImportPolicy, Plugin.Accelerator.CatalogImport.Framework",
+        "DeleteOrphanVariant": true,
+        "Mappings": {
+          "EntityMappings": [
+            {
+              "$type": "Plugin.Accelerator.CatalogImport.Framework.Policy.EntityMapperType, Plugin.Accelerator.CatalogImport.Framework",
+              "Key": "Catalog",
+              "ImportHandlerTypeName": "Plugin.Accelerator.CatalogImport.Sample.EntityImportHandlers.SourceCatalogImportHandler, Plugin.Accelerator.CatalogImport.Sample"
+            },
+            {
+              "$type": "Plugin.Accelerator.CatalogImport.Framework.Policy.EntityMapperType, Plugin.Accelerator.CatalogImport.Framework",
+              "Key": "Category",
+              "ImportHandlerTypeName": "Plugin.Accelerator.CatalogImport.Sample.EntityImportHandlers.SourceCategoryImportHandler, Plugin.Accelerator.CatalogImport.Sample"
+            },
+            {
+              "$type": "Plugin.Accelerator.CatalogImport.Framework.Policy.EntityMapperType, Plugin.Accelerator.CatalogImport.Framework",
+              "Key": "SellableItem",
+              "ImportHandlerTypeName": "Plugin.Accelerator.CatalogImport.Sample.EntityImportHandlers.SourceProductImportHandler, Plugin.Accelerator.CatalogImport.Sample"
+            }
+          ],
+          "EntityComponentMappings": [
+            {
+              "$type": "Plugin.Accelerator.CatalogImport.Framework.Policy.MapperType, Plugin.Accelerator.CatalogImport.Framework",
+              "Key": "ProductHierarchyRoot",
+              "FullTypeName": "Plugin.Accelerator.CatalogImport.Sample.Mappers.EntityComponentMappers.ProductHierarchyRootComponentMapper, Plugin.Accelerator.CatalogImport.Sample"
+            },
+            {
+              "$type": "Plugin.Accelerator.CatalogImport.Framework.Policy.MapperType, Plugin.Accelerator.CatalogImport.Framework",
+              "Key": "Hardware",
+              "FullTypeName": "Plugin.Accelerator.CatalogImport.Sample.Mappers.EntityComponentMappers.HardwareComponentMapper, Plugin.Accelerator.CatalogImport.Sample"
+            }
+          ],
+          "ItemVariantionMappings": [
+            {
+              "$type": "Plugin.Accelerator.CatalogImport.Framework.Policy.MapperType, Plugin.Accelerator.CatalogImport.Framework",
+              "FullTypeName": "Plugin.Accelerator.CatalogImport.Sample.Mappers.ItemVariantComponentMappers.ItemVariationComponentMapper, Plugin.Accelerator.CatalogImport.Sample"
+            }
+          ],
+          "ItemVariantionComponentMappings": [
+            {
+              "$type": "Plugin.Accelerator.CatalogImport.Framework.Policy.MapperType, Plugin.Accelerator.CatalogImport.Framework",
+              "Key": "Variant",
+              "FullTypeName": "Plugin.Accelerator.CatalogImport.Sample.Mappers.VariantComponentMappers.VariantComponentMapper, Plugin.Accelerator.CatalogImport.Sample"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
