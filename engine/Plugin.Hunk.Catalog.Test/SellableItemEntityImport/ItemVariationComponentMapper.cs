@@ -17,6 +17,8 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
             component.Id = SourceVariant.Id;
             component.DisplayName = SourceVariant.DisplayName;
             component.Description = SourceVariant.Description;
+            component.Disabled = SourceVariant.Disabled;
+            component.Tags = SourceVariant.Tags;
         }
 
         protected override void MapLocalizeValues(ItemVariationComponent component)
