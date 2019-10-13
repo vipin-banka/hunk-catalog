@@ -20,7 +20,7 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
             if (arg.CommerceEntity != null 
                 && arg.HasLocalizationContent)
             {
-                var localizationEntityId = arg.CommerceEntity.Id.ToLocalizationEntityId();
+                var localizationEntityId = LocalizationEntity.GetIdBasedOnEntityId(arg.CommerceEntity.Id);
                 var localizationEntity = await _findEntityPipeline.Run(new FindEntityArgument(typeof(LocalizationEntity), localizationEntityId, arg.CommerceEntity.EntityVersion), context).ConfigureAwait(false);
 
                 arg.LocalizationEntity = localizationEntity as LocalizationEntity;

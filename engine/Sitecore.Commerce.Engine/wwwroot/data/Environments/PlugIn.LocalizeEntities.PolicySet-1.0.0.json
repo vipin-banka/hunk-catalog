@@ -79,19 +79,19 @@
           },
           {
             "$type": "Sitecore.Commerce.Core.LocalizeEntityComponentPolicy, Sitecore.Commerce.Core",
-            "Path": "HardwareComponent",
+            "Path": "SellableItemComponent",
             "Properties": [
               "Accessories",
               "Dimensions"
             ],
-            "ActionView": "HardwareComponentDetails",
+            "ActionView": "SellableItemComponentDetails",
             "IsItemComponent": true
           },
           {
             "$type": "Sitecore.Commerce.Core.LocalizeEntityComponentPolicy, Sitecore.Commerce.Core",
             "Path": "ItemVariationsComponent.ItemVariationComponent.VariantComponent",
             "Properties": [
-              "Color",
+              "Breadth",
               "Length"
             ],
             "ActionView": "VariantComponentDetails",
@@ -102,6 +102,15 @@
       {
         "$type": "Sitecore.Commerce.Core.LocalizeEntityPolicy, Sitecore.Commerce.Core",
         "Type": "Sitecore.Commerce.Plugin.Inventory.InventorySet",
+        "Properties": [
+          "DisplayName",
+          "Description"
+        ],
+        "ActionView": "Details"
+      },
+      {
+        "$type": "Sitecore.Commerce.Core.LocalizeEntityPolicy, Sitecore.Commerce.Core",
+        "Type": "Plugin.Hunk.Catalog.Test.CustomEntityImport.CustomCommerceItem",
         "Properties": [
           "DisplayName",
           "Description"

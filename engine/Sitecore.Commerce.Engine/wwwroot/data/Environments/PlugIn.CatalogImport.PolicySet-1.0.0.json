@@ -29,6 +29,11 @@
               "$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
               "Key": "SellableItem",
               "ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.SourceProductImportHandler, Plugin.Hunk.Catalog.Test"
+            },
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+              "Key": "SourceCustomEntity",
+              "ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.CustomEntityImport.SourceCustomEntityImportHandler, Plugin.Hunk.Catalog.Test"
             }
           ],
           "EntityComponentMappings": [
