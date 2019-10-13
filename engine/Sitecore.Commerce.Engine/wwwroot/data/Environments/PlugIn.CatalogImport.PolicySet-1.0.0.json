@@ -11,49 +11,44 @@
         "$type": "Sitecore.Commerce.Core.AutoApprovePolicy, Sitecore.Commerce.Core"
       },
       {
-        "$type": "Plugin.Accelerator.CatalogImport.Framework.Policy.CatalogImportPolicy, Plugin.Accelerator.CatalogImport.Framework",
+        "$type": "Plugin.Hunk.Catalog.Policy.CatalogImportPolicy, Plugin.Hunk.Catalog",
         "DeleteOrphanVariant": true,
         "Mappings": {
           "EntityMappings": [
             {
-              "$type": "Plugin.Accelerator.CatalogImport.Framework.Policy.EntityMapperType, Plugin.Accelerator.CatalogImport.Framework",
+              "$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
               "Key": "Catalog",
-              "ImportHandlerTypeName": "Plugin.Accelerator.CatalogImport.Sample.EntityImportHandlers.SourceCatalogImportHandler, Plugin.Accelerator.CatalogImport.Sample"
+              "ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.CatalogEntityImport.SourceCatalogImportHandler, Plugin.Hunk.Catalog.Test"
             },
             {
-              "$type": "Plugin.Accelerator.CatalogImport.Framework.Policy.EntityMapperType, Plugin.Accelerator.CatalogImport.Framework",
+              "$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
               "Key": "Category",
-              "ImportHandlerTypeName": "Plugin.Accelerator.CatalogImport.Sample.EntityImportHandlers.SourceCategoryImportHandler, Plugin.Accelerator.CatalogImport.Sample"
+              "ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.CategoryEntityImport.SourceCategoryImportHandler, Plugin.Hunk.Catalog.Test"
             },
             {
-              "$type": "Plugin.Accelerator.CatalogImport.Framework.Policy.EntityMapperType, Plugin.Accelerator.CatalogImport.Framework",
+              "$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
               "Key": "SellableItem",
-              "ImportHandlerTypeName": "Plugin.Accelerator.CatalogImport.Sample.EntityImportHandlers.SourceProductImportHandler, Plugin.Accelerator.CatalogImport.Sample"
+              "ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.SourceProductImportHandler, Plugin.Hunk.Catalog.Test"
             }
           ],
           "EntityComponentMappings": [
             {
-              "$type": "Plugin.Accelerator.CatalogImport.Framework.Policy.MapperType, Plugin.Accelerator.CatalogImport.Framework",
-              "Key": "ProductHierarchyRoot",
-              "FullTypeName": "Plugin.Accelerator.CatalogImport.Sample.Mappers.EntityComponentMappers.ProductHierarchyRootComponentMapper, Plugin.Accelerator.CatalogImport.Sample"
-            },
-            {
-              "$type": "Plugin.Accelerator.CatalogImport.Framework.Policy.MapperType, Plugin.Accelerator.CatalogImport.Framework",
-              "Key": "Hardware",
-              "FullTypeName": "Plugin.Accelerator.CatalogImport.Sample.Mappers.EntityComponentMappers.HardwareComponentMapper, Plugin.Accelerator.CatalogImport.Sample"
+              "$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+              "Key": "SellableItemComponent",
+              "FullTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.SellableItemComponentMapper, Plugin.Hunk.Catalog.Test"
             }
           ],
-          "ItemVariantionMappings": [
+          "ItemVariationMappings": [
             {
-              "$type": "Plugin.Accelerator.CatalogImport.Framework.Policy.MapperType, Plugin.Accelerator.CatalogImport.Framework",
-              "FullTypeName": "Plugin.Accelerator.CatalogImport.Sample.Mappers.ItemVariantComponentMappers.ItemVariationComponentMapper, Plugin.Accelerator.CatalogImport.Sample"
+              "$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+              "FullTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.ItemVariationComponentMapper, Plugin.Hunk.Catalog.Test"
             }
           ],
-          "ItemVariantionComponentMappings": [
+          "ItemVariationComponentMappings": [
             {
-              "$type": "Plugin.Accelerator.CatalogImport.Framework.Policy.MapperType, Plugin.Accelerator.CatalogImport.Framework",
-              "Key": "Variant",
-              "FullTypeName": "Plugin.Accelerator.CatalogImport.Sample.Mappers.VariantComponentMappers.VariantComponentMapper, Plugin.Accelerator.CatalogImport.Sample"
+              "$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+              "Key": "VariantComponent",
+              "FullTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.VariantComponentMapper, Plugin.Hunk.Catalog.Test"
             }
           ]
         }
