@@ -30,12 +30,8 @@ namespace Plugin.Hunk.Catalog.Commands
 
                 if (result != null)
                 {
-                    if (importEntityArgument.ImportHandler.ParentEntityIds != null 
-                        && importEntityArgument.ImportHandler.ParentEntityIds.Any())
-                    {
-                        // Manage association of sellable item with catalog and categories.
-                        await PerformTransaction(commerceContext, async () => await Pipeline<IAssociateParentsPipeline>().Run(importEntityArgument, commerceContext.PipelineContextOptions));
-                    }
+                    // Manage association of sellable item with catalog and categories.
+                    await PerformTransaction(commerceContext, async () => await Pipeline<IAssociateParentsPipeline>().Run(importEntityArgument, commerceContext.PipelineContextOptions));
 
                     // Manage localization values for sellable item
                     var importLocalizeContentArgument =
