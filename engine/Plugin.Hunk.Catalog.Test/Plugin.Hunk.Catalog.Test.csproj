@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>The Belden Catalog Import Plugin.</Description>
+    <TargetFramework>net471</TargetFramework>
+    <PackageTags>$(PackageTags);Commerce;Plugin;Catalog Import</PackageTags>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Sitecore.Commerce.Core" Version="4.0.72" />
+    <PackageReference Include="Sitecore.Commerce.Plugin.Catalog" Version="4.0.61" />
+    <PackageReference Include="Sitecore.Framework.Pipelines.Common" Version="4.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Plugin.Hunk.Catalog\Plugin.Hunk.Catalog.csproj" />
+  </ItemGroup>
+
+</Project>
