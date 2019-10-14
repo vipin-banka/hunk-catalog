@@ -314,3 +314,65 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 * Specify your custom variant item class as second type argument.
 * Specify your Sitecore Commerce Component class (that will store additional variant data) as third type argument.
 * Override *Map* method and write mapping code.
+
+### Configure mapper classes.
+
+**Create a Policy Set file and add "CatalogImportPolicy" in it.**, see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Sitecore.Commerce.Engine/wwwroot/data/Environments/PlugIn.CatalogImport.PolicySet-1.0.0.json) for reference.
+```json
+{
+  "$type": "Sitecore.Commerce.Core.PolicySet, Sitecore.Commerce.Core",
+  "Id": "Entity-PolicySet-CatalogImportPolicySet",
+  "Version": 1,
+  "IsPersisted": false,
+  "Name": "CatalogImportPolicySet",
+  "Policies": {
+    "$type": "System.Collections.Generic.List`1[[Sitecore.Commerce.Core.Policy, Sitecore.Commerce.Core]], mscorlib",
+    "$values": [
+      {
+        "$type": "Plugin.Hunk.Catalog.Policy.CatalogImportPolicy, Plugin.Hunk.Catalog",
+        "DeleteOrphanVariant": true,
+        "EntityVersioningScheme": "UpdateLatest",
+        "Mappings": {
+          "EntityMappings": [
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+              "Key": "SellableItem",
+              "ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.SourceProductImportHandler, Plugin.Hunk.Catalog.Test"
+            }
+          ],
+          "EntityComponentMappings": [
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+              "Key": "SellableItemComponent",
+              "FullTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.SellableItemComponentMapper, Plugin.Hunk.Catalog.Test"
+            }
+          ],
+          "ItemVariationMappings": [
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+              "FullTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.ItemVariationComponentMapper, Plugin.Hunk.Catalog.Test"
+            }
+          ],
+          "ItemVariationComponentMappings": [
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+              "Key": "VariantComponent",
+              "FullTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.VariantComponentMapper, Plugin.Hunk.Catalog.Test"
+            }
+          ],
+          "RelationshipMappings": [] 
+        }
+      }
+    ]
+  }
+}
+```
+
+* Attach this policy set with commerce environment.
+
+### How to test?
+* Build and deploy commerce solution.
+* Bootstrap commerce using postman.
+* Import [Sample Postman Collection](https://github.com/vipin-banka/hunk-catalog/blob/master/postman/import/Catalog%20Import.postman_collection.json) in postman.
+* Open **Import Sellable Item** request.
+* Execute the request.
