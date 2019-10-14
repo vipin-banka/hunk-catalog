@@ -55,7 +55,7 @@ namespace Plugin.Hunk.Catalog.ImportHandlers
             CommerceEntity = commerceEntity as TCommerceEntity;
         }
 
-        protected virtual string Id => typeof(TSourceEntity).GetPropertyValueWithAttribute<EntityIdAttribute, string>(SourceEntity);
+        protected virtual string Id => SourceEntity.Id;
 
         protected string IdWithPrefix()
         {
