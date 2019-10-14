@@ -24,3 +24,14 @@ It supports following:
 * Easily customizabe using Policies or custom pipeline blocks.
 
 Note: For localization and versioning make sure to set proper policies in the respective policy set file(s). Refer PlugIn.LocalizeEntities.PolicySet-1.0.0.json file for localization and PlugIn.Versioning.PolicySet-1.0.0.json file for versioning.
+
+## Flow Chart
+![alt text](https://github.com/vipin-banka/hunk-catalog/blob/feature/initial-branch/docs/flow-chart.png)
+
+## What is involved in writing import code?
+Overall it involves following:
+1. Create your custom POCO classes representing your source entities.
+2. Create custom Mapper classes by inheriting from standard implementation comes with plugin.
+3. All abstract mapper classes comes with plugin have basic implementation for most of the methods, you just need to override methods that suits your requirements. Basically you need to write simple map code that will read values from source entities and write in commerce entities, components and policies.
+4. Configure your mapper class in the policies or resolve using custom pipeline blocks.
+5. That’s it. Once your commerce solution is deployed and bootstraped you can try the import operation using Postman calls or you can trigger it from your other custom plugins.
