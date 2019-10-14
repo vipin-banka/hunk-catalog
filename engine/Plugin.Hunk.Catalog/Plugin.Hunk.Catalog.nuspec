@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Plugin.Hunk.Catalog</id>
+	<title>Plugin.Hunk.Catalog</title>
+    <version>1.0.0</version>
+    <authors>Vipin Banka</authors>
+    <owners>Vipin Banka</owners>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+	<license type="file">license\LICENSE.md</license>
+	<icon>images\hunk.png</icon>
+    <projectUrl>https://github.com/vipin-banka/hunk-catalog</projectUrl>
+	<iconUrl>https://github.com/vipin-banka/hunk-catalog/blob/master/docs/hunk.ico</iconUrl>
+    <description>Sitecore Commerce Catalog Import Plugin that makes writing custom catalog import implementation very simple, mantainable and saves time.</description>
+    <tags>Sitecore-Commerce Catalog-Import Hunk-Catalog Hunk</tags>
+    <repository type="Git" url="https://github.com/vipin-banka/hunk-catalog" />
+	<summary>Sitecore Commerce Catalog Import Plugin that makes writing custom catalog import implementation very simple, mantainable and saves time.</summary>
+	<language>English</language>
+    <dependencies>
+      <group targetFramework=".NETFramework4.7.1">
+        <dependency id="Sitecore.Commerce.Core" version="4.0.72" exclude="Build,Analyzers" />
+        <dependency id="Sitecore.Commerce.Plugin.Catalog" version="4.0.61" exclude="Build,Analyzers" />
+        <dependency id="Sitecore.Framework.Pipelines.Common" version="4.1.1" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="Microsoft.Win32.Primitives" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.AppContext" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.Console" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.Globalization.Calendars" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.IO.Compression.ZipFile" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.IO" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.IO.FileSystem" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.IO.FileSystem.Primitives" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.Linq" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.Linq.Expressions" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.Reflection" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.Runtime" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.Runtime.Extensions" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.Runtime.InteropServices" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.Runtime.InteropServices.RuntimeInformation" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.Security.Cryptography.Encoding" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.Security.Cryptography.Primitives" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.Security.Cryptography.X509Certificates" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.Text.RegularExpressions" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.ValueTuple" targetFramework=".NETFramework4.7.1" />
+      <frameworkAssembly assemblyName="System.Xml.ReaderWriter" targetFramework=".NETFramework4.7.1" />
+    </frameworkAssemblies>
+  </metadata>
+  	<files>
+      <file src="license\LICENSE.md" target="license\" />
+	  <file src="images\hunk.png" target="images\" />
+	</files>
+</package>
