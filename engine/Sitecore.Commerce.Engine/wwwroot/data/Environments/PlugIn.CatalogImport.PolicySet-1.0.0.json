@@ -56,7 +56,29 @@
               "Key": "VariantComponent",
               "FullTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.VariantComponentMapper, Plugin.Hunk.Catalog.Test"
             }
-          ]
+          ],
+          "RelationshipMappings": [
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+              "Key": "TrainingProducts",
+              "FullTypeName": "Plugin.Hunk.Catalog.RelationshipMappers.TrainingSellableItemToSellableItemRelationshipMapper, Plugin.Hunk.Catalog"
+            },
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+              "Key": "InstallationProducts",
+              "FullTypeName": "Plugin.Hunk.Catalog.RelationshipMappers.InstallationSellableItemToSellableItemRelationshipMapper, Plugin.Hunk.Catalog"
+            },
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+              "Key": "RelatedProducts",
+              "FullTypeName": "Plugin.Hunk.Catalog.RelationshipMappers.RelatedSellableItemToSellableItemRelationshipMapper, Plugin.Hunk.Catalog"
+            },
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+              "Key": "WarrantyProducts",
+              "FullTypeName": "Plugin.Hunk.Catalog.RelationshipMappers.WarrantySellableItemToSellableItemRelationshipMapper, Plugin.Hunk.Catalog"
+            }
+          ] 
         }
       }
     ]

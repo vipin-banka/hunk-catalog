@@ -129,6 +129,23 @@ namespace Plugin.Hunk.Catalog.ImportHandlers
             return new List<IEntity>();
         }
 
+        public virtual bool HasRelationships()
+        {
+            var relationships = typeof(TSourceEntity).GetPropertyValueWithAttribute<RelationshipsAttribute, IEnumerable>(SourceEntity);
+            return relationships != null && relationships.GetEnumerator().MoveNext();
+        }
+
+        public virtual IList<RelationshipDetail> GetRelationships()
+        {
+            var relationships = typeof(TSourceEntity).GetPropertyValueWithAttribute<RelationshipsAttribute, IEnumerable>(SourceEntity);
+            if (relationships != null)
+            {
+                return relationships.Cast<RelationshipDetail>().ToList();
+            }
+
+            return new List<RelationshipDetail>();
+        }
+
         public virtual void Map()
         {
         }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Plugin.Hunk.Catalog.Model;
 using Sitecore.Commerce.Core;
 
 namespace Plugin.Hunk.Catalog.Abstractions
@@ -33,6 +34,10 @@ namespace Plugin.Hunk.Catalog.Abstractions
         bool HasVariants(ILanguageEntity languageEntity);
 
         IList<IEntity> GetVariants(ILanguageEntity languageEntity);
+
+        bool HasRelationships();
+
+        IList<RelationshipDetail> GetRelationships();
     }
 
     public interface IEntityImportHandler<TCommerceEntity>

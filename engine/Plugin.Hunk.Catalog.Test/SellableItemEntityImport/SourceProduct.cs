@@ -2,6 +2,7 @@
 using Plugin.Hunk.Catalog.Abstractions;
 using Plugin.Hunk.Catalog.Entity;
 using Plugin.Hunk.Catalog.Metadata;
+using Plugin.Hunk.Catalog.Model;
 using Sitecore.Commerce.Core;
 
 namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
@@ -34,6 +35,9 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 
         [Parents()]
         public IList<string> Parents { get; set; }
+
+        [Relationships()]
+        public IList<RelationshipDetail> RelationshipDetails { get; set; }
 
         [Languages()]
         public IList<LanguageEntity<SourceProduct>> Languages { get; set; }

@@ -221,5 +221,28 @@ namespace Plugin.Hunk.Catalog.Extensions
 
             return null;
         }
+
+        public static IRelationshipMapper GetRelationshipMapper(this Mappings mappings, ImportEntityArgument importEntityArgument, string relationshipName, CommerceCommander commerceCommander, CommercePipelineExecutionContext context)
+        {
+            var mapperType = mappings
+                .RelationshipMappings
+                .FirstOrDefault(x => x.Key.Equals(relationshipName, StringComparison.OrdinalIgnoreCase));
+
+            if (mapperType != null)
+            {
+                var t = Type.GetType(mapperType.FullTypeName);
+
+                if (t != null)
+                {
+                    if (Activator.CreateInstance(t, commerceCommander,
+                        context) is IRelationshipMapper mapper)
+                    {
+                        return mapper;
+                    }
+                }
+            }
+
+            return null;
+        }
     }
 }

@@ -58,6 +58,11 @@ namespace Plugin.Hunk.Catalog
                     configure
                         .Add<ResolveComponentMapperBlock>();
                 })
+                .AddPipeline<IResolveRelationshipMapperPipeline, ResolveRelationshipMapperPipeline>(configure =>
+                {
+                    configure
+                        .Add<ResolveRelationshipMapperBlock>();
+                })
                 .AddPipeline<IResolveEntityLocalizationMapperPipeline, ResolveEntityLocalizationMapperPipeline>(configure =>
                 {
                     configure
@@ -90,7 +95,8 @@ namespace Plugin.Hunk.Catalog
                 {
                     configure
                         .Add<Pipelines.Blocks.AssociateCategoryToParentBlock>()
-                        .Add<AssociateSellableItemToParentBlock>();
+                        .Add<AssociateSellableItemToParentBlock>()
+                        .Add<Pipelines.Blocks.CreateRelationshipBlock>();
                 })
                 .AddPipeline<IImportLocalizeContentPipeline, ImportLocalizeContentPipeline>(configure =>
                 {

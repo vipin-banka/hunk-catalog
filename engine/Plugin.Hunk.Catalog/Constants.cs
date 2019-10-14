@@ -14,6 +14,8 @@
 
         public const string ResolveComponentMapperPipeline = "CatalogImport.Framework.pipeline.ResolveComponentMapper";
 
+        public const string ResolveRelationshipMapperPipeline = "CatalogImport.Framework.pipeline.ResolveRelationshipMapper";
+
         public const string AssociateParentsPipeline = "CatalogImport.Framework.pipeline.AssociateParents";
 
         public const string ImportLocalizeContentPipeline = "CatalogImport.Framework.pipeline.ImportLocalizeContent";
@@ -36,6 +38,8 @@
 
         public const string ResolveComponentLocalizationMapperBlock = "CatalogImport.Framework.block.ResolveComponentLocalizationMapper";
 
+        public const string ResolveRelationshipMapperBlock = "CatalogImport.Framework.block.ResolveRelationshipMapper";
+
         public const string GetSourceEntityBlock = "CatalogImport.Framework.block.GetSourceEntity";
 
         public const string ValidateSourceEntityBlock = "CatalogImport.Framework.block.ValidateSourceEntity";
@@ -57,6 +61,8 @@
         public const string AssociateCategoryToParentBlock = "CatalogImport.Framework.block.AssociateCategoryToParent";
 
         public const string AssociateSellableItemToParentBlock = "CatalogImport.Framework.block.AssociateSellableItemToParent";
+
+        public const string CreateRelationshipBlock = "CatalogImport.Framework.block.CreateRelationship";
 
         public const string GetLocalizePropertiesBlock = "CatalogImport.Framework.block.GetLocalizeProperties";
 
