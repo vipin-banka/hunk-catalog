@@ -13,7 +13,6 @@ namespace Plugin.Hunk.Catalog.Test.CategoryEntityImport
             Languages = new List<LanguageEntity<SourceCategory>>();
         }
 
-        [EntityId()]
         public string Id { get; set; }
 
         public string Name { get; set; }

@@ -12,7 +12,6 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
             Tags = new List<Tag>();
         }
 
-        [EntityId()]
         public string Id { get; set; }
 
         public string DisplayName { get; set; }
