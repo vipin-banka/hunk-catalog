@@ -1,10 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>The Belden Catalog Import Framework Plugin.</Description>
+    <Description>Sitecore Commerce Catalog Import Plugin that make writing custom import implementation very simple and mantainable.</Description>
     <TargetFramework>net471</TargetFramework>
-    <PackageTags>$(PackageTags);Commerce;Plugin;Catalog Import Framework</PackageTags>
+    <PackageTags>;Sitecore-Commerce;Catalog-Import;Hunk-Catalog;Hunk</PackageTags>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Authors>Vipin Banka</Authors>
+    <Company />
+    <PackageLicenseUrl>https://github.com/vipin-banka/hunk-catalog/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/vipin-banka/hunk-catalog</PackageProjectUrl>
+    <PackageIconUrl>https://github.com/vipin-banka/hunk-catalog/blob/master/docs/hunk.png</PackageIconUrl>
+    <RepositoryUrl>https://github.com/vipin-banka/hunk-catalog</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
