@@ -17,7 +17,9 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
 
             if (catalogImportPolicy == null)
             {
-                context.Abort(await context.CommerceContext.AddMessage(context.GetPolicy<KnownResultCodes>().Error, "CatalogImportPolicyMissing", null, "Catalog import policy missing."), context);
+                catalogImportPolicy = new CatalogImportPolicy();
+                await context.CommerceContext.AddMessage(context.GetPolicy<KnownResultCodes>().Error, "CatalogImportPolicyMissing", null, "Catalog import policy not found in the environment, created a default catalog import policy.")
+                    .ConfigureAwait(false);
             }
 
             arg.CatalogImportPolicy = catalogImportPolicy;

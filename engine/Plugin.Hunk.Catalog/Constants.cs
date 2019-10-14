@@ -42,6 +42,8 @@
 
         public const string ImportEntityBlock = "CatalogImport.Framework.block.ImportEntity";
 
+        public const string ResolveVersionedEntityBlock = "CatalogImport.Framework.block.ResolveVersionedEntity";
+
         public const string UpdateEntityBlock = "CatalogImport.Framework.block.UpdateEntity";
 
         public const string SetEntityComponentsBlock = "CatalogImport.Framework.block.SetEntityComponents";

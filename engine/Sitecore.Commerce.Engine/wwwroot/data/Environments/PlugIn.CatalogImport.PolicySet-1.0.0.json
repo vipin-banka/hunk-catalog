@@ -13,6 +13,7 @@
       {
         "$type": "Plugin.Hunk.Catalog.Policy.CatalogImportPolicy, Plugin.Hunk.Catalog",
         "DeleteOrphanVariant": true,
+        "EntityVersioningScheme": "UpdateLatest",
         "Mappings": {
           "EntityMappings": [
             {

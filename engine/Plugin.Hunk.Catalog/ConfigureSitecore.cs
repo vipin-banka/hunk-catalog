@@ -33,6 +33,7 @@ namespace Plugin.Hunk.Catalog
                         .Add<ResolveImportHandlerInstanceBlock>()
                         .Add<GetSourceEntityBlock>()
                         .Add<ValidateSourceEntityBlock>()
+                        .Add<ResolveVersionedEntityBlock>()
                         .Add<ImportEntityBlock>();
                 })
                 .AddPipeline<IResolveEntityImportHandlerPipeline, ResolveEntityImportHandlerPipeline>(configure =>
