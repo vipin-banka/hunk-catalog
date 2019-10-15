@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>The Belden Catalog Import Plugin.</Description>
+    <Description>The Hunk Catalog Test Plugin.</Description>
     <TargetFramework>net471</TargetFramework>
     <PackageTags>$(PackageTags);Commerce;Plugin;Catalog Import</PackageTags>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>

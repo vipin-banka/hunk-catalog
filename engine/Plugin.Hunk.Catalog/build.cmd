@@ -1,0 +1,1 @@
+"..\..\nuget.exe" pack Plugin.Hunk.Catalog.csproj -Prop Configuration=Release

@@ -2,20 +2,20 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>Plugin.Hunk.Catalog</id>
-	<title>Plugin.Hunk.Catalog</title>
-    <version>1.0.0</version>
+    <title>Plugin.Hunk.Catalog</title>
+    <version>1.0.1</version>
     <authors>Vipin Banka</authors>
     <owners>Vipin Banka</owners>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-	<license type="file">license\LICENSE.md</license>
-	<icon>images\hunk.png</icon>
+    <license type="file">license\LICENSE.</license>
+    <icon>images\hunk.png</icon>
     <projectUrl>https://github.com/vipin-banka/hunk-catalog</projectUrl>
-	<iconUrl>https://github.com/vipin-banka/hunk-catalog/blob/master/docs/hunk.ico</iconUrl>
+    <iconUrl>https://github.com/vipin-banka/hunk-catalog/blob/master/docs/hunk.ico</iconUrl>
     <description>Sitecore Commerce Catalog Import Plugin that makes writing custom catalog import implementation very simple, mantainable and saves time.</description>
     <tags>Sitecore-Commerce Catalog-Import Hunk-Catalog Hunk</tags>
     <repository type="Git" url="https://github.com/vipin-banka/hunk-catalog" />
-	<summary>Sitecore Commerce Catalog Import Plugin that makes writing custom catalog import implementation very simple, mantainable and saves time.</summary>
-	<language>English</language>
+    <summary>Sitecore Commerce Catalog Import Plugin that makes writing custom catalog import implementation very simple, mantainable and saves time.</summary>
+    <language>English</language>
     <dependencies>
       <group targetFramework=".NETFramework4.7.1">
         <dependency id="Sitecore.Commerce.Core" version="4.0.72" exclude="Build,Analyzers" />
@@ -47,8 +47,8 @@
       <frameworkAssembly assemblyName="System.Xml.ReaderWriter" targetFramework=".NETFramework4.7.1" />
     </frameworkAssemblies>
   </metadata>
-  	<files>
-      <file src="license\LICENSE.md" target="license\" />
-	  <file src="images\hunk.png" target="images\" />
-	</files>
+  <files>
+    <file src="..\..\LICENSE" target="license\LICENSE." />
+    <file src="..\..\images\hunk.png" target="images\" />
+  </files>
 </package>
