@@ -1,4 +1,4 @@
-![alt text](https://github.com/vipin-banka/hunk-catalog/blob/feature/initial-branch/docs/hunk.png)
+![hunk-catalog](https://github.com/vipin-banka/hunk-catalog/blob/images/hunk.png)
 
 # hunk-catalog for Sitecore Commerce (for XC 9.2)
 Plugin for Sitecore Commerce that does the heavy lifting of importing an entity in Sitecore Commerce and allows you to write simple and maintainable custom import implementations.
@@ -28,19 +28,30 @@ Note: For localization and versioning make sure to set proper policies in the re
 ## Flow Chart
 ![alt text](https://github.com/vipin-banka/hunk-catalog/blob/feature/initial-branch/docs/flow-chart.png)
 
-## What is your responsility in custom import?
+## What is your responsility?
 You need do following:
-1. Create your custom POCO classes representing your source entities.
-2. Create custom Mapper classes by inheriting from standard implementation comes with this plugin.
-3. All abstract mapper classes comes with this plugin have basic implementation for most of the methods, you just need to override methods that suits your requirements. Basically you need to write simple map code that will read values from source entity and write in commerce entity, component or policy.
-4. Configure your mapper class in the policies or resolve using custom pipeline blocks.
-5. That’s it. Once your commerce solution is deployed and bootstraped you can try the import operation using Postman calls or you can trigger it from your other custom plugins.
+* **Model source entities**
+  - Create c# classes representing your source entities.
+  - These will be simple POCO classes representing source information.
+* **Model Commerce Entities and Components**
+  - Create custom Sitecore commerce entity classes (optional, for a catalog import not neccessary)
+  - Create custom Sitecore commerce component classes, these will be simple POCO classes representing information that will be stored in commerce engine.
+* **Write Mappers**
+  - Create c# classes and write simple mapping code.
+  - Write code to read inforamtion from source and write in target.
+* **Configure Commerce Engine**
+  - This step involves configuration of mappers into your commerce engine environment files.
+  - Import process will trigger your custom mappers.
+
+That’s it. 
+Once your commerce engine solution is deployed and bootstraped you can use the import operation.
+See sample Postman API calls and sample test console application for usage.
 
 ## How to use it?
-* Create a new plugin in your commerce solution. see [Plugin.Hunk.Catalog.Test](https://github.com/vipin-banka/hunk-catalog/tree/master/engine/Plugin.Hunk.Catalog.Test) for reference.
+* Create a new plugin in your commerce solution.
 * Add a dependency on Hunk.Catalog to the new plugin.
-  - From the package manager console: Install-Package Plugin.Hunk.Catalog
-  - Using the Nuget package manager add a dependency on Plugin.Hunk.Catalog.
+  - From the package manager console: *Install-Package Plugin.Hunk.Catalog*
+  - Using the Nuget package manager add a dependency on *Plugin.Hunk.Catalog*.
 
 ## Getting started
 Let's say you want to import a sellable item. Your sellable item support all OOTB fields for Sitecore Commerce sellable item and in addition your sellable item also has two more fields for "Accessories" and "Dimensions".
