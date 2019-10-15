@@ -6,10 +6,9 @@ using Sitecore.Commerce.Plugin.Catalog;
 
 namespace Plugin.Hunk.Catalog.Mappers
 {
-    public abstract class BaseVariantComponentMapper<TSourceEntity, TSourceVariant, TCommerceEntity, TComponent> : BaseEntityComponentMapper<TSourceEntity, TCommerceEntity, TComponent>
+    public abstract class BaseVariantComponentMapper<TSourceEntity, TSourceVariant, TComponent> : BaseCommerceEntityComponentMapper<TSourceEntity, TComponent>
         where TSourceEntity : IEntity
         where TSourceVariant : IEntity
-        where TCommerceEntity : CommerceEntity
         where TComponent : Component, new()
     {
         protected TSourceVariant SourceVariant { get; }
