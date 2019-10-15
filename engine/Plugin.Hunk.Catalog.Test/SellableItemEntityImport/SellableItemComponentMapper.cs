@@ -1,12 +1,16 @@
 ﻿using Plugin.Hunk.Catalog.Mappers;
 using Plugin.Hunk.Catalog.Test.Components;
 using Sitecore.Commerce.Core;
+using Sitecore.Commerce.Plugin.Catalog;
 
 namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 {
-    public class SellableItemComponentMapper : BaseEntityComponentMapper<SourceProduct, CommerceEntity, SellableItemComponent>
+    public class SellableItemComponentMapper : BaseCommerceEntityComponentMapper<SourceProduct, SellableItemComponent>
     {
-        public SellableItemComponentMapper(SourceProduct product, CommerceEntity commerceEntity, CommerceCommander commerceCommander, CommercePipelineExecutionContext context)
+        public SellableItemComponentMapper(SourceProduct product, 
+            SellableItem commerceEntity, 
+            CommerceCommander commerceCommander, 
+            CommercePipelineExecutionContext context)
             : base(product, commerceEntity, commerceCommander, context)
         { }
 

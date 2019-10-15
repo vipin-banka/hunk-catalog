@@ -5,10 +5,9 @@ using Sitecore.Commerce.Plugin.Catalog;
 
 namespace Plugin.Hunk.Catalog.Mappers
 {
-    public class BaseItemVariationComponentMapper<TSourceEntity, TSourceVariant, TCommerceEntity> : BaseVariantComponentMapper<TSourceEntity, TSourceVariant, TCommerceEntity, ItemVariationComponent>
+    public class BaseItemVariationComponentMapper<TSourceEntity, TSourceVariant> : BaseVariantComponentMapper<TSourceEntity, TSourceVariant, ItemVariationComponent>
         where TSourceEntity : IEntity
         where TSourceVariant : IEntity
-        where TCommerceEntity : CommerceEntity
     {
         public BaseItemVariationComponentMapper(TSourceEntity sourceEntity, TSourceVariant sourceVariant, CommerceEntity commerceEntity, Component parentComponent, CommerceCommander commerceCommander, CommercePipelineExecutionContext context)
             :base(sourceEntity, sourceVariant, commerceEntity, parentComponent, commerceCommander, context)

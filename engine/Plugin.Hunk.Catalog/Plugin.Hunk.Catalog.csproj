@@ -5,8 +5,8 @@
     <TargetFramework>net471</TargetFramework>
     <PackageTags>;Sitecore-Commerce;Catalog-Import;Hunk-Catalog;Hunk</PackageTags>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Authors>Vipin Banka</Authors>
     <Company />
     <PackageLicenseUrl>https://github.com/vipin-banka/hunk-catalog/blob/master/LICENSE</PackageLicenseUrl>
@@ -14,6 +14,7 @@
     <PackageIconUrl>https://github.com/vipin-banka/hunk-catalog/blob/master/docs/hunk.png</PackageIconUrl>
     <RepositoryUrl>https://github.com/vipin-banka/hunk-catalog</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -21,7 +22,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

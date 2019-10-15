@@ -15,6 +15,7 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
             Languages = new List<LanguageEntity<SourceProduct>>();
             Variants = new List<SourceProductVariant>();
             Tags = new List<Tag>();
+            RelationshipDetails = new List<RelationshipDetail>();
         }
 
         public string Id { get; set; }

@@ -4,7 +4,7 @@ using Sitecore.Commerce.Core;
 
 namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 {
-    public class VariantComponentMapper : BaseVariantComponentMapper<SourceProduct, SourceProductVariant, CommerceEntity, VariantComponent>
+    public class VariantComponentMapper : BaseVariantComponentMapper<SourceProduct, SourceProductVariant, VariantComponent>
     {
         public VariantComponentMapper(SourceProduct product, SourceProductVariant productVariant, CommerceEntity commerceEntity, Component parentComponent, CommerceCommander commerceCommander, CommercePipelineExecutionContext context)
             :base(product, productVariant, commerceEntity, parentComponent, commerceCommander, context)
