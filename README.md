@@ -1,4 +1,4 @@
-![hunk-catalog](https://github.com/vipin-banka/hunk-catalog/blob/images/hunk.png)
+![hunk-catalog](https://github.com/vipin-banka/hunk-catalog/blob/master/images/hunk.png)
 
 # hunk-catalog for Sitecore Commerce (for XC 9.2)
 Plugin for Sitecore Commerce that does the heavy lifting of importing an entity in Sitecore Commerce and allows you to write simple and maintainable custom import implementations.
@@ -26,7 +26,7 @@ It supports following:
 Note: For localization and versioning make sure to set proper policies in the respective policy set file(s). Refer PlugIn.LocalizeEntities.PolicySet-1.0.0.json file for localization and PlugIn.Versioning.PolicySet-1.0.0.json file for versioning.
 
 ## Flow Chart
-![alt text](https://github.com/vipin-banka/hunk-catalog/blob/feature/initial-branch/docs/flow-chart.png)
+![alt text](https://github.com/vipin-banka/hunk-catalog/blob/master/docs/flow-chart.png)
 
 ## What is your responsility?
 You need do following:
