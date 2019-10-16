@@ -1,35 +1,36 @@
 ![hunk-catalog](https://github.com/vipin-banka/hunk-catalog/blob/master/images/hunk.png)
 
 # hunk-catalog for Sitecore Commerce (for XC 9.2)
-Plugin for Sitecore Commerce that does the heavy lifting of importing an entity in Sitecore Commerce and allows you to write simple and maintainable custom import implementations.
+Plugin for Sitecore Commerce that allows you to write simple and maintainable custom catalog import implementations.
 
 ## What is this?
-In most of Sitecore Commerce projects you need to write custom catalog import code based on your specific requirements and catalog information in your PIM. Without a standard architecture each team does it in different way and it becomes hard to maintain such implementations in a longer time period. The idea with this plugin is to create a standard framework for import processes that can be utilized in any commerce implementation without compromising on flexibility and extensibility of Sitecore commerce architecture and also gives you type safe way to write your own custom implementations.
+In most of Sitecore Commerce projects you need to write custom catalog import code based on your specific requirements and catalog information in your PIM. Without a standard approach each team does it in a different way. The idea with this plugin is to create a standard approach for import processes that can be utilized in any commerce implementation without compromising with flexibility and extensibility of Sitecore commerce architecture and also gives you type safe way to write your own custom implementations.
 
-This plugin will give you ability to focus on your entity designs rather than import implementation. It makes you free from writing lots of boilerplate code for import process.
+**A typical catalog import implementation**
+![A typical catalog import implementation](https://github.com/vipin-banka/hunk-catalog/blob/master/images/a-general-catalog-import-implementation.png)
+In a typical catalog import implementation you create a plugin (at minimum) that reads data from external system, takes care of XC specific things (enities, components, pipelines, commands, versioning, localization etc.) and writes the source content to Sitecore XC entities.
 
-It supports following:
+**Hunk catalog import implementation**
+![hunk-catalog import implementation](https://github.com/vipin-banka/hunk-catalog/blob/master/images/hunk-catalog-import-implementation.png)
+With **hunk-catalog** import implementation you create a plugin that reads data from external system and writes the source content to Sitecore XC entities, **hunk-catalog** will take care of all XC specific things for you. With this implementation you are free from writing lots of boilerplate code for import process.
+
+**This plugin supports following:**
 * Creation and update of Catalog, Category and SellableItem commerce entities.
 * Creation and update of any custom commerce entities.
 * Adding, updating and removing child components on commerce entities.
-* Managing parent child relationships between catalog, category and sellable items.
 * Creation and update of item variants for sellable items.
 * Adding, updating and removing child components on item variants.
-* Managing various relationships e.g. related, cross sell on sellable items.
-* Localized content for commerce entities.
-* Localized content for commerce entities child components.
-* Localized content for item variants.
-* Localized content for item variant child components.
-* Configure entity versioning scheme.
-* Easily customizabe using Policies or custom pipeline blocks.
+* Managing parent child relationships between catalog, category and sellable items.
+* Managing relationships e.g. related, cross sell on sellable items.
+* Store Localized content for commerce entities, components, item variants and item variant child components.
 
-Note: For localization and versioning make sure to set proper policies in the respective policy set file(s). Refer PlugIn.LocalizeEntities.PolicySet-1.0.0.json file for localization and PlugIn.Versioning.PolicySet-1.0.0.json file for versioning.
-
-## Flow Chart
+## Flow Chart - A full flow for single entity import.
 ![alt text](https://github.com/vipin-banka/hunk-catalog/blob/master/docs/flow-chart.png)
 
 ## What is your responsility?
 You need do following:
+* **Create a plugin**
+  - you need to create a XC plugin that will reference **hunk-catalog** plugin.
 * **Model source entities**
   - Create c# classes representing your source entities.
   - These will be simple POCO classes representing source information.
