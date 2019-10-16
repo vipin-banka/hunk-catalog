@@ -59,9 +59,10 @@ Let's say you want to import a sellable item. Your sellable item support all OOT
 
 You also want to import variants for your sellable item and your variants also has two more fields for "Breadth" and "Length".
 
-### Create two c# classes representing your source sellable item and source variant. Your classes will look like below:
+### Create two c# classes representing your source sellable item and source variant.
+Your classes will look like below:
 
-**Class for your source sellable item**, see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProduct.cs) for reference.
+**Source sellable item class**, see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProduct.cs) for reference.
 ```c#
 namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 {    
@@ -118,7 +119,7 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
         public IList<SourceProductVariant> Variants { get; set; }
 ```
 
-**Class for your source varint**, see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProductVariant.cs) for reference.
+**Source variant class**, see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProductVariant.cs) for reference.
 ```c#
 namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 {
@@ -148,9 +149,10 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 **notes**
 * Inherit your class from "IEntity" interface and implement it, this interface only demands for one string property named as Id.
 
-### Create Sitecore Commerce component classes to store custom catalog information with sellable item and item variants.
+### Create Sitecore Commerce component classes
+These will be used to store custom catalog information with sellable item and item variants inside Sitecore XC.
 
-**Component class to store custom data with sellable item**, see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/Components/SellableItemComponent.cs) for reference.
+**Component class**, see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/Components/SellableItemComponent.cs) for reference.
 ```c#
 namespace Plugin.Hunk.Catalog.Test.Components
 {
@@ -163,7 +165,7 @@ namespace Plugin.Hunk.Catalog.Test.Components
 }
 ```
 
-**Component class to store custom data with item variant**, see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/Components/VariantComponent.cs) for reference.
+**Component class**, see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/Components/VariantComponent.cs) for reference.
 ```c#
 namespace Plugin.Hunk.Catalog.Test.Components
 {
@@ -178,7 +180,7 @@ namespace Plugin.Hunk.Catalog.Test.Components
 
 ### Create Sellable Item mapper class
 
-Write code to read field/property values from your custom sellable item and write to Sitecore Commerce Sellable Item commerce entity.
+Write code to read field/property values from source sellable item and write to Sitecore Commerce Sellable Item.
 See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProductImportHandler.cs) for reference.
 
 ```c#
@@ -224,9 +226,9 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 * Override *Initialize* method and write code to read values from your custom sellable item class and assign to class properties
 * Override *Map* method and write code to read values from your custom sellable item class and assign to commerce entitiy properties.
 
-### Create Sellable Item Child Component mapper class
+### Create Sellable Item Component mapper class
 
-Write code to read field/property values from your custom sellable item and write to Sitecore Commerce Component.
+Write code to read field/property values from source sellable item and write to Sitecore Commerce Component.
 See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SellableItemComponentMapper.cs) for reference.
 
 ```c#
@@ -257,7 +259,7 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 
 ### Create Item Variant mapper class
 
-Write code to read field/property values from your custom variant and write to Sitecore Commerce Item Variant component.
+Write code to read field/property values from your source variant and write to Sitecore Commerce Item Variant component.
 See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/ItemVariationComponentMapper.cs) for reference.
 
 ```c#
@@ -295,7 +297,7 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 
 ### Create Item Variant's Child Component mapper class
 
-Write code to read field/property values from your custom variant write to Sitecore Commerce component.
+Write code to read field/property values from custom variant write to Sitecore Commerce component.
 See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/VariantComponentMapper.cs) for reference.
 
 ```c#
