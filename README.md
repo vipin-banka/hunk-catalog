@@ -98,7 +98,7 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 **notes**
 * Inherit your class from "IEntity" interface and implement it, this interface only demands for one string property named as Id.
 * You can design this class as your want.
-* To be able to set relationship with Catalogs and Categories add a property like below and decorate it with Parents attribute. You can name it anything you like. see more info for this [here](#link-to-catalog)
+* To be able to set relationship with Catalogs and Categories add a property like below and decorate it with Parents attribute. You can name it anything you like.
 ```c#
         [Parents()]
         public IList<string> Parents { get; set; }
@@ -276,11 +276,11 @@ see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine
 * notes
   - you need to pass two parameters
    - "metadata": this is to tell import process what to import, it includes following
-     - EntityType: The unique name defined forentity  mapper in the policy, in our case this is SellableItem.
-     - Components: List of comma separated component mapper names defined in the policy, in current case this is SellableItemComponent.
-     - VariantComponents: List of comma separated variant component mapper names defined in the policy, in current case there is none so we can leave it blank.
+     - EntityType: The entity key defined for entity  mapper in the policy, for this sample it is SellableItem.
+     - Components: Comma separated component mapper keys defined in the policy, for this sample it is SellableItemComponent.
+     - VariantComponents: Comma separated variant component mapper keys defined in the policy, for this sample there is none so we can leave it blank.
    - "entity": This is serialzed value for your source entity, this will change based on your source entity.
-* **make sure to give some value in "Parents" property, this can be one or more catalog name or category name".
+* **make sure to give some value in "Parents" property, this can be one or more catalog name or category name".** see [more info](#link-to-catalog)
 * Execute the request.
 * Open Business tools and verify sellable item has been added.
 
@@ -320,6 +320,18 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 * Inherit your class from "IEntity" interface and implement it, this interface only demands for one string property named as Id.
 
 #### 2.2 Add variants to source sellable item class
+add following property in your source sellable item class you have created in sample 1.
+```c#
+public class SourceProduct : IEntity
+{
+	// other properties
+	
+	[Variants()]
+        public IList<SourceProductVariant> Variants { get; set; }
+}
+```
+**notes**
+* this property should be decorated with Variants attribute and the type argument in property should represent your source variant class.
 
 #### 2.3 Create Component class
 
@@ -466,8 +478,8 @@ see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine
 }
 ```
 **notes**
-* In EntityMappings section add all entity mapper types. Each entry must have a unique key.
-* In EntityComponentMappings section add all entity component mapper types. Each entry must have a unique key.
+* In ItemVariationMappings section add item variant mapper types.
+* In ItemVariationComponentMappings section add all item variant component mapper types. Each entry must have a unique key.
 * Attach this policy set with commerce environment.
 
 #### 2.7 How to test?
@@ -475,14 +487,14 @@ see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine
 * Bootstrap commerce engine using postman.
 * Import [Sample Postman Collection](https://github.com/vipin-banka/hunk-catalog/blob/master/postman/import/Catalog%20Import.postman_collection.json) in postman.
 * Execute GetToken API from your commerce Authentication collection.
-* Go to **Catalog Import** collection and open **Import Sellable Item** request.
+* Go to **Catalog Import** collection and open **Import Sellable Item With Variants** request.
 * Provide correct data in the request body.
 ```json
 {
 	"metadata":{
+		"EntityType":"SellableItem",
 		"Components":["SellableItemComponent"],
-		"VariantComponents":["VariantComponent"],
-		"EntityType":"SellableItem"
+		"VariantComponents":["VariantComponent"]
 	},
 	"entity": {
 		"Id": "Sellable Item3",
@@ -519,8 +531,16 @@ see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine
 	}
 }
 ```
+* notes
+  - you need to pass two parameters
+   - "metadata": this is to tell import process what to import, it includes following
+     - EntityType: The unique name defined for entity  mapper in the policy, for this sample it is SellableItem.
+     - Components: Comma separated component mapper keys defined in the policy, for this sample it is SellableItemComponent.
+     - VariantComponents: Comma separated variant component mapper keys defined in the policy, for this sample it is VariantComponent.
+   - "entity": This is serialzed value for your source entity, this will change based on your source entity.
+* **make sure to give some value in "Parents" property, this can be one or more catalog name or category name".** see [more info](#link-to-catalog)
 * Execute the request.
-* Open Business tools and verify sellable item.
+* Open Business tools and verify sellable item has been added.
 
 ### 3. Import sellable item with Languages
 ### 4. Import sellable item with relationships
@@ -543,9 +563,94 @@ Examples:
 ### 9. Catalog Import Policy
 Catalog import policy allows you to set followin values:
 
-1. DeleteOrphanVariant - You can set a boolen value. True will remove any variants those exists in Sitecore Commerce but does not come in external system content. False will keep the variants but will mark them as disabled.
+1. **DeleteOrphanVariant** - You can set a boolen value. True will remove any variants those exists in Sitecore Commerce but does not come in external system content. False will keep the variants but will mark them as disabled.
 
-2. EntityVersioningScheme - This will be used to determine which version of entity should be used to do the updates, this is not applicable if entity does not exists, import process will always create a new entity if that does not exists.
+2. **EntityVersioningScheme** - This will be used to determine which version of entity should be used to do the updates, this is not applicable if entity does not exists, import process will always create a new entity if that does not exists.
    - CreateNewVersion - This option will create a new version everytime for your imported entity.
    - UpdateLatestUnpublished - This option will first look for your latest version and if that version is in unpublished state, it will make updates in that version only but if latest version is already published than it will create a new version.
    - UpdateLatest - This will not create a new version and will always update in the latest version.
+ 
+3. **EntityMappings** - In this section you have to configure all custom entity mappers you have created. Give a unique key to each entry, you need to use these keys as entity name in "EntityType" property for metadata in import api.
+ 
+4. **EntityComponentMappings** - In this section you have to configure all custom component mappers you have created. Give a unique key to each entry, you need to use these keys as component names in "Components" property for metadata in import api.
+ 
+5. **ItemVariationMappings** - In this section you have to configure one item variant mapper.
+ 
+6. **ItemVariationComponentMappings** - In this section you have to configure all custom item variant component mappers you have created. Give a unique key to each entry, you need to use these keys as variant component names in "VariantComponents" property for metadata in import api.
+ 
+7. **RelationshipMappings** - In this section you have to configure all relation ship mappers, OOTB this plugin comes with four which supports relationship of sellable item to sellable item. Give a unique key to each entry, you need to use these keys with your relationship data to pass to import process.
+
+A complete Catalog Import Policy is below:
+```json{
+{
+	"$type": "Plugin.Hunk.Catalog.Policy.CatalogImportPolicy, Plugin.Hunk.Catalog",
+	"DeleteOrphanVariant": true,
+	"EntityVersioningScheme": "UpdateLatest",
+	"Mappings": {
+		"EntityMappings": [
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+				"Key": "Catalog",
+				"ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.CatalogEntityImport.SourceCatalogImportHandler, Plugin.Hunk.Catalog.Test"
+			},
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+				"Key": "Category",
+				"ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.CategoryEntityImport.SourceCategoryImportHandler, Plugin.Hunk.Catalog.Test"
+			},
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+				"Key": "SellableItem",
+				"ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.SourceProductImportHandler, Plugin.Hunk.Catalog.Test"
+			},
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+				"Key": "SourceCustomEntity",
+				"ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.CustomEntityImport.SourceCustomEntityImportHandler, Plugin.Hunk.Catalog.Test"
+			}
+		],
+		"EntityComponentMappings": [
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+				"Key": "SellableItemComponent",
+				"FullTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.SellableItemComponentMapper, Plugin.Hunk.Catalog.Test"
+			}
+		],
+		"ItemVariationMappings": [
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+				"FullTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.ItemVariationComponentMapper, Plugin.Hunk.Catalog.Test"
+			}
+		],
+		"ItemVariationComponentMappings": [
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+				"Key": "VariantComponent",
+				"FullTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.VariantComponentMapper, Plugin.Hunk.Catalog.Test"
+			}
+		],
+		"RelationshipMappings": [
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+				"Key": "TrainingProducts",
+				"FullTypeName": "Plugin.Hunk.Catalog.RelationshipMappers.TrainingSellableItemToSellableItemRelationshipMapper, Plugin.Hunk.Catalog"
+			},
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+				"Key": "InstallationProducts",
+				"FullTypeName": "Plugin.Hunk.Catalog.RelationshipMappers.InstallationSellableItemToSellableItemRelationshipMapper, Plugin.Hunk.Catalog"
+			},
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+				"Key": "RelatedProducts",
+				"FullTypeName": "Plugin.Hunk.Catalog.RelationshipMappers.RelatedSellableItemToSellableItemRelationshipMapper, Plugin.Hunk.Catalog"
+			},
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+				"Key": "WarrantyProducts",
+				"FullTypeName": "Plugin.Hunk.Catalog.RelationshipMappers.WarrantySellableItemToSellableItemRelationshipMapper, Plugin.Hunk.Catalog"
+			}
+		]
+	}
+}
+```
