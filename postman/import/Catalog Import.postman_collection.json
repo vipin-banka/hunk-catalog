@@ -9,7 +9,7 @@
 			"name": "API",
 			"item": [
 				{
-					"name": "Import Catalog",
+					"name": "Import Catalog Item",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -61,7 +61,75 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"metadata\":{\n\t\t\"Components\":[],\n\t\t\"VariantComponents\":[],\n\t\t\"EntityType\":\"Catalog\"\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Hunk1_Catalog\",\n\t\t\"Name\": \"Hunk1_Catalog\",\n\t\t\"DisplayName\": \"Hunk1 Catalog Display Name\",\n\t\t\"Languages\":[\n\t\t\t{\n\t\t\t\t\"Language\":\"fr-FR\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"fr-FR Hunk1 Catalog Display Name\",\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Language\":\"de-DE\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"de-DE Hunk1 Catalog Display Name\",\n\t\t\t\t}\n\t\t\t}\n\t\t]\n\t}\n}"
+							"raw": "{\n\t\"metadata\":{\n\t\t\"EntityType\":\"Catalog\",\n\t\t\"Components\":[],\n\t\t\"VariantComponents\":[]\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Hunk1_Catalog\",\n\t\t\"Name\": \"Hunk1_Catalog\",\n\t\t\"DisplayName\": \"Hunk1 Catalog Display Name\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
+							"host": [
+								"{{ServiceHost}}"
+							],
+							"path": [
+								"{{ShopsApi}}",
+								"ImportEntity()"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Catalog Item With Languages",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "ShopName",
+								"value": "{{ShopName}}",
+								"type": "text"
+							},
+							{
+								"key": "ShopperId",
+								"value": "{{ShopperId}}",
+								"type": "text"
+							},
+							{
+								"key": "Language",
+								"value": "{{Language}}",
+								"type": "text"
+							},
+							{
+								"key": "Currency",
+								"value": "{{Currency}}",
+								"type": "text"
+							},
+							{
+								"key": "Environment",
+								"value": "{{Environment}}",
+								"type": "text"
+							},
+							{
+								"key": "GeoLocation",
+								"value": "{{GeoLocation}}",
+								"type": "text"
+							},
+							{
+								"key": "CustomerId",
+								"value": "{{CustomerId}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{SitecoreIdToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"metadata\":{\n\t\t\"EntityType\":\"Catalog\",\n\t\t\"Components\":[],\n\t\t\"VariantComponents\":[]\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Hunk1_Catalog\",\n\t\t\"Name\": \"Hunk1_Catalog\",\n\t\t\"DisplayName\": \"Hunk1 Catalog Display Name\",\n\t\t\"Languages\":[\n\t\t\t{\n\t\t\t\t\"Language\":\"fr-FR\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"fr-FR Hunk1 Catalog Display Name\",\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Language\":\"de-DE\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"de-DE Hunk1 Catalog Display Name\",\n\t\t\t\t}\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
 						"url": {
 							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
@@ -129,7 +197,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"metadata\":{\n\t\t\"Components\":[],\n\t\t\"VariantComponents\":[],\n\t\t\"EntityType\":\"SourceCustomEntity\"\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Custom Entity1\",\n\t\t\"Name\": \"Custom Entity1 Name\",\n\t\t\"DisplayName\": \"Custom Entity1 Display Name\",\n\t\t\"Description\": \"Custom Entity1 Description\",\n\t\t\"Languages\":[\n\t\t\t{\n\t\t\t\t\"Language\":\"fr-FR\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"fr-FR Custom Entity1 Display Name\",\n\t\t\t\t\t\"Description\": \"fr-FR Custom Entity1 Description\",\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Language\":\"de-DE\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"de-DE Custom Entity1 Display Name\",\n\t\t\t\t\t\"Description\": \"de-DE Custom Entity1 Description\",\n\t\t\t\t}\n\t\t\t}\n\t\t]\n\t}\n}"
+							"raw": "{\n\t\"metadata\":{\n\t\t\"EntityType\":\"SourceCustomEntity\",\n\t\t\"Components\":[],\n\t\t\"VariantComponents\":[]\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Custom Entity1\",\n\t\t\"Name\": \"Custom Entity1 Name\",\n\t\t\"DisplayName\": \"Custom Entity1 Display Name\",\n\t\t\"Description\": \"Custom Entity1 Description\"\n\t}\n}"
 						},
 						"url": {
 							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
@@ -145,7 +213,75 @@
 					"response": []
 				},
 				{
-					"name": "Import Category",
+					"name": "Import Custom Entity With Languages",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "ShopName",
+								"type": "text",
+								"value": "{{ShopName}}"
+							},
+							{
+								"key": "ShopperId",
+								"type": "text",
+								"value": "{{ShopperId}}"
+							},
+							{
+								"key": "Language",
+								"type": "text",
+								"value": "{{Language}}"
+							},
+							{
+								"key": "Currency",
+								"type": "text",
+								"value": "{{Currency}}"
+							},
+							{
+								"key": "Environment",
+								"type": "text",
+								"value": "{{Environment}}"
+							},
+							{
+								"key": "GeoLocation",
+								"type": "text",
+								"value": "{{GeoLocation}}"
+							},
+							{
+								"key": "CustomerId",
+								"type": "text",
+								"value": "{{CustomerId}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{SitecoreIdToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"metadata\":{\n\t\t\"EntityType\":\"SourceCustomEntity\",\n\t\t\"Components\":[],\n\t\t\"VariantComponents\":[]\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Custom Entity1\",\n\t\t\"Name\": \"Custom Entity1 Name\",\n\t\t\"DisplayName\": \"Custom Entity1 Display Name\",\n\t\t\"Description\": \"Custom Entity1 Description\",\n\t\t\"Languages\":[\n\t\t\t{\n\t\t\t\t\"Language\":\"fr-FR\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"fr-FR Custom Entity1 Display Name\",\n\t\t\t\t\t\"Description\": \"fr-FR Custom Entity1 Description\",\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Language\":\"de-DE\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"de-DE Custom Entity1 Display Name\",\n\t\t\t\t\t\"Description\": \"de-DE Custom Entity1 Description\",\n\t\t\t\t}\n\t\t\t}\n\t\t]\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
+							"host": [
+								"{{ServiceHost}}"
+							],
+							"path": [
+								"{{ShopsApi}}",
+								"ImportEntity()"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Category Item",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -197,7 +333,75 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"metadata\":{\n\t\t\"Components\":[],\n\t\t\"VariantComponents\":[],\n\t\t\"EntityType\":\"Category\"\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Hunk1_Category Name\",\n\t\t\"Name\": \"Hunk1_Category Name\",\n\t\t\"DisplayName\": \"Hunk1 Category Display Name\",\n\t\t\"Description\": \"Hunk1 Category Description\",\n\t\t\"Parents\": [\"Hunk1_Catalog\"],\n\t\t\"Languages\":[\n\t\t\t{\n\t\t\t\t\"Language\":\"fr-FR\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"fr-FR Hunk1 Category Display Name\",\n\t\t\t\t\t\"Description\": \"fr-FR Hunk1 Category Description\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Language\":\"de-DE\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"de-DE Hunk1 Category Display Name\",\n\t\t\t\t\t\"Description\": \"de-DE Hunk1 Category Description\"\n\t\t\t\t}\n\t\t\t}\n\t\t]\n\t}\n}"
+							"raw": "{\n\t\"metadata\":{\n\t\t\"EntityType\":\"Category\",\n\t\t\"Components\":[],\n\t\t\"VariantComponents\":[]\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Hunk1_Category Name\",\n\t\t\"Name\": \"Hunk1_Category Name\",\n\t\t\"DisplayName\": \"Hunk1 Category Display Name\",\n\t\t\"Description\": \"Hunk1 Category Description\",\n\t\t\"Parents\": [\"Hunk1_Catalog\"]\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
+							"host": [
+								"{{ServiceHost}}"
+							],
+							"path": [
+								"{{ShopsApi}}",
+								"ImportEntity()"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Category Item With Languages",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "ShopName",
+								"value": "{{ShopName}}",
+								"type": "text"
+							},
+							{
+								"key": "ShopperId",
+								"value": "{{ShopperId}}",
+								"type": "text"
+							},
+							{
+								"key": "Language",
+								"value": "{{Language}}",
+								"type": "text"
+							},
+							{
+								"key": "Currency",
+								"value": "{{Currency}}",
+								"type": "text"
+							},
+							{
+								"key": "Environment",
+								"value": "{{Environment}}",
+								"type": "text"
+							},
+							{
+								"key": "GeoLocation",
+								"value": "{{GeoLocation}}",
+								"type": "text"
+							},
+							{
+								"key": "CustomerId",
+								"value": "{{CustomerId}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{SitecoreIdToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"metadata\":{\n\t\t\"EntityType\":\"Category\",\n\t\t\"Components\":[],\n\t\t\"VariantComponents\":[]\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Hunk1_Category Name\",\n\t\t\"Name\": \"Hunk1_Category Name\",\n\t\t\"DisplayName\": \"Hunk1 Category Display Name\",\n\t\t\"Description\": \"Hunk1 Category Description\",\n\t\t\"Parents\": [\"Hunk1_Catalog\"],\n\t\t\"Languages\":[\n\t\t\t{\n\t\t\t\t\"Language\":\"fr-FR\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"fr-FR Hunk1 Category Display Name\",\n\t\t\t\t\t\"Description\": \"fr-FR Hunk1 Category Description\"\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Language\":\"de-DE\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"de-DE Hunk1 Category Display Name\",\n\t\t\t\t\t\"Description\": \"de-DE Hunk1 Category Description\"\n\t\t\t\t}\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
 						"url": {
 							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
@@ -265,7 +469,211 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"metadata\":{\n\t\t\"Components\":[\"SellableItemComponent\"],\n\t\t\"VariantComponents\":[\"VariantComponent\"],\n\t\t\"EntityType\":\"SellableItem\"\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Sellable Item2\",\n\t\t\"Name\": \"Sellable Item2\",\n\t\t\"DisplayName\": \"Sellable Item2 Display Name\",\n\t\t\"Description\": \"Sellable Item2 Description\",\n\t\t\"Brand\": \"sample brand\",\n\t\t\"Manufacturer\": \"sample manufacturer\",\n\t\t\"TypeOfGood\": \"sample type of good\",\n\t\t\"Tags\":[{\"Name\":\"refrigerator\"}, {\"Name\":\"tag1\", \"Excluded\": true}],\n\t\t\"Parents\": [\"Hunk1_Catalog/Hunk1_Category Name\"],\n\t\t\"Accessories\": \"Accessories value\",\n\t\t\"Dimensions\": \"Dimensions value\",\n\t\t\"Variants\": [\n\t\t\t{\n\t\t\t\t\"Id\": \"Variant1\",\n\t\t\t\t\"DisplayName\": \"Variant1 Display Name\",\n\t\t\t\t\"Description\": \"Variant1 Description\",\n\t\t\t\t\"Disabled\": \"true\",\n\t\t\t\t\"Tags\": [{\"Name\": \"stainless\"}, {\"Name\": \"v1\", \"Excluded\": true}],\n\t\t\t\t\"Breadth\": \"10m\",\n\t\t\t\t\"Length\": \"100m\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Id\": \"Variant2\",\n\t\t\t\t\"DisplayName\": \"Variant2 Display Name\",\n\t\t\t\t\"Description\": \"Variant2 Description\",\n\t\t\t\t\"Disabled\": \"false\",\n\t\t\t\t\"Tags\": [{\"Name\":\"22cuft\"}, {\"Name\":\"v2\", \"Excluded\": true}],\n\t\t\t\t\"Breadth\": \"20m\",\n\t\t\t\t\"Length\": \"200m\"\n\t\t\t}\n\t\t],\n\t\t\"Languages\":[\n\t\t\t{\n\t\t\t\t\"Language\":\"fr-FR\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"fr-FR Sellable Item2 Display Name\",\n\t\t\t\t\t\"Description\": \"fr-FR Sellable Item2 Description\",\n\t\t\t\t\t\"Accessories\": \"fr-FR Accessories value\",\n\t\t\t\t\t\"Dimensions\": \"fr-FR Dimensions value\",\n\t\t\t\t\t\"Variants\": [\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"Id\": \"Variant1\",\n\t\t\t\t\t\t\t\"DisplayName\": \"fr-FR Variant1 Display Name\",\n\t\t\t\t\t\t\t\"Description\": \"fr-FR Variant1 Description\",\n\t\t\t\t\t\t\t\"Breadth\": \"fr-FR 10m\",\n\t\t\t\t\t\t\t\"Length\": \"fr-FR 100m\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"Id\": \"Variant2\",\n\t\t\t\t\t\t\t\"DisplayName\": \"fr-FR Variant2 Display Name\",\n\t\t\t\t\t\t\t\"Description\": \"fr-FR Variant2 Description\",\n\t\t\t\t\t\t\t\"Breadth\": \"fr-FR 20m\",\n\t\t\t\t\t\t\t\"Length\": \"fr-FR 200m\"\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Language\":\"de-DE\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"de-DE Sellable Item2 Display Name\",\n\t\t\t\t\t\"Description\": \"de-DE Sellable Item2 Description\",\n\t\t\t\t\t\"Accessories\": \"de-DE Accessories value\",\n\t\t\t\t\t\"Dimensions\": \"de-DE Dimensions value\",\n\t\t\t\t\t\"Variants\": [\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"Id\": \"Variant1\",\n\t\t\t\t\t\t\t\"DisplayName\": \"de-DE Variant1 Display Name\",\n\t\t\t\t\t\t\t\"Description\": \"de-DE Variant1 Description\",\n\t\t\t\t\t\t\t\"Breadth\": \"de-DE 10m\",\n\t\t\t\t\t\t\t\"Length\": \"de-DE 100m\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"Id\": \"Variant2\",\n\t\t\t\t\t\t\t\"DisplayName\": \"de-DE Variant2 Display Name\",\n\t\t\t\t\t\t\t\"Description\": \"de-DE Variant2 Description\",\n\t\t\t\t\t\t\t\"Breadth\": \"de-DE 20m\",\n\t\t\t\t\t\t\t\"Length\": \"de-DE 200m\"\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t}\n\t\t],\n\t\t\"RelationshipDetails\": [\n\t\t\t{\n\t\t\t\t\"Name\": \"TrainingProducts\",\n\t\t\t\t\"Ids\":[\"6042325\",\"6042283\"]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Name\": \"InstallationProducts\",\n\t\t\t\t\"Ids\":[\"6042878\",\"6042183\"]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Name\": \"RelatedProducts\",\n\t\t\t\t\"Ids\":[\"6042430\",\"6042886\"]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Name\": \"WarrantyProducts\",\n\t\t\t\t\"Ids\":[\"7042257\",\"7042258\"]\n\t\t\t}\n\t\t]\n\t}\n}"
+							"raw": "{\n\t\"metadata\":{\n\t\t\"EntityType\":\"SellableItem\",\n\t\t\"Components\":[\"SellableItemComponent\"],\n\t\t\"VariantComponents\":[\"VariantComponent\"]\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Sellable Item1\",\n\t\t\"Name\": \"Sellable Item1\",\n\t\t\"DisplayName\": \"Sellable Item1 Display Name\",\n\t\t\"Description\": \"Sellable Item1 Description\",\n\t\t\"Brand\": \"sample brand\",\n\t\t\"Manufacturer\": \"sample manufacturer\",\n\t\t\"TypeOfGood\": \"sample type of good\",\n\t\t\"Tags\":[{\"Name\":\"tag\"}],\n\t\t\"Parents\": [\"Hunk1_Catalog/Hunk1_Category Name\"],\n\t\t\"Accessories\": \"Accessories value\",\n\t\t\"Dimensions\": \"Dimensions value\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
+							"host": [
+								"{{ServiceHost}}"
+							],
+							"path": [
+								"{{ShopsApi}}",
+								"ImportEntity()"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Sellable Item With Variants",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "ShopName",
+								"type": "text",
+								"value": "{{ShopName}}"
+							},
+							{
+								"key": "ShopperId",
+								"type": "text",
+								"value": "{{ShopperId}}"
+							},
+							{
+								"key": "Language",
+								"type": "text",
+								"value": "{{Language}}"
+							},
+							{
+								"key": "Currency",
+								"type": "text",
+								"value": "{{Currency}}"
+							},
+							{
+								"key": "Environment",
+								"type": "text",
+								"value": "{{Environment}}"
+							},
+							{
+								"key": "GeoLocation",
+								"type": "text",
+								"value": "{{GeoLocation}}"
+							},
+							{
+								"key": "CustomerId",
+								"type": "text",
+								"value": "{{CustomerId}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{SitecoreIdToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"metadata\":{\n\t\t\"EntityType\":\"SellableItem\",\n\t\t\"Components\":[\"SellableItemComponent\"],\n\t\t\"VariantComponents\":[\"VariantComponent\"]\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Sellable Item\",\n\t\t\"Name\": \"Sellable Item\",\n\t\t\"DisplayName\": \"Sellable Item Display Name\",\n\t\t\"Description\": \"Sellable Item Description\",\n\t\t\"Brand\": \"sample brand\",\n\t\t\"Manufacturer\": \"sample manufacturer\",\n\t\t\"TypeOfGood\": \"sample type of good\",\n\t\t\"Tags\":[{\"Name\":\"tag1\"}],\n\t\t\"Parents\": [\"Hunk1_Catalog/Hunk1_Category Name\"],\n\t\t\"Accessories\": \"Accessories value\",\n\t\t\"Dimensions\": \"Dimensions value\",\n\t\t\"Variants\": [\n\t\t\t{\n\t\t\t\t\"Id\": \"Variant1\",\n\t\t\t\t\"DisplayName\": \"Variant1 Display Name\",\n\t\t\t\t\"Description\": \"Variant1 Description\",\n\t\t\t\t\"Disabled\": \"false\",\n\t\t\t\t\"Tags\": [{\"Name\": \"tag1\"}],\n\t\t\t\t\"Breadth\": \"10m\",\n\t\t\t\t\"Length\": \"100m\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Id\": \"Variant2\",\n\t\t\t\t\"DisplayName\": \"Variant2 Display Name\",\n\t\t\t\t\"Description\": \"Variant2 Description\",\n\t\t\t\t\"Disabled\": \"false\",\n\t\t\t\t\"Tags\": [{\"Name\":\"22cuft\"}, {\"Name\":\"v2\", \"Excluded\": true}],\n\t\t\t\t\"Breadth\": \"20m\",\n\t\t\t\t\"Length\": \"200m\"\n\t\t\t}\n\t\t]\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
+							"host": [
+								"{{ServiceHost}}"
+							],
+							"path": [
+								"{{ShopsApi}}",
+								"ImportEntity()"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Sellable Item With Languages",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "ShopName",
+								"value": "{{ShopName}}",
+								"type": "text"
+							},
+							{
+								"key": "ShopperId",
+								"value": "{{ShopperId}}",
+								"type": "text"
+							},
+							{
+								"key": "Language",
+								"value": "{{Language}}",
+								"type": "text"
+							},
+							{
+								"key": "Currency",
+								"value": "{{Currency}}",
+								"type": "text"
+							},
+							{
+								"key": "Environment",
+								"value": "{{Environment}}",
+								"type": "text"
+							},
+							{
+								"key": "GeoLocation",
+								"value": "{{GeoLocation}}",
+								"type": "text"
+							},
+							{
+								"key": "CustomerId",
+								"value": "{{CustomerId}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{SitecoreIdToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"metadata\":{\n\t\t\"EntityType\":\"SellableItem\",\n\t\t\"Components\":[\"SellableItemComponent\"],\n\t\t\"VariantComponents\":[\"VariantComponent\"]\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Sellable Item\",\n\t\t\"Name\": \"Sellable Item\",\n\t\t\"DisplayName\": \"Sellable Item Display Name\",\n\t\t\"Description\": \"Sellable Item Description\",\n\t\t\"Brand\": \"sample brand\",\n\t\t\"Manufacturer\": \"sample manufacturer\",\n\t\t\"TypeOfGood\": \"sample type of good\",\n\t\t\"Tags\":[{\"Name\":\"tag1\"}],\n\t\t\"Parents\": [\"Hunk1_Catalog/Hunk1_Category Name\"],\n\t\t\"Accessories\": \"Accessories value\",\n\t\t\"Dimensions\": \"Dimensions value\",\n\t\t\"Variants\": [\n\t\t\t{\n\t\t\t\t\"Id\": \"Variant1\",\n\t\t\t\t\"DisplayName\": \"Variant1 Display Name\",\n\t\t\t\t\"Description\": \"Variant1 Description\",\n\t\t\t\t\"Disabled\": \"true\",\n\t\t\t\t\"Tags\": [{\"Name\": \"stainless\"}, {\"Name\": \"v1\", \"Excluded\": true}],\n\t\t\t\t\"Breadth\": \"10m\",\n\t\t\t\t\"Length\": \"100m\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Id\": \"Variant2\",\n\t\t\t\t\"DisplayName\": \"Variant2 Display Name\",\n\t\t\t\t\"Description\": \"Variant2 Description\",\n\t\t\t\t\"Disabled\": \"false\",\n\t\t\t\t\"Tags\": [{\"Name\":\"22cuft\"}, {\"Name\":\"v2\", \"Excluded\": true}],\n\t\t\t\t\"Breadth\": \"20m\",\n\t\t\t\t\"Length\": \"200m\"\n\t\t\t}\n\t\t],\n\t\t\"Languages\":[\n\t\t\t{\n\t\t\t\t\"Language\":\"fr-FR\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"fr-FR Sellable Item1 Display Name\",\n\t\t\t\t\t\"Description\": \"fr-FR Sellable Item1 Description\",\n\t\t\t\t\t\"Accessories\": \"fr-FR Accessories value\",\n\t\t\t\t\t\"Dimensions\": \"fr-FR Dimensions value\",\n\t\t\t\t\t\"Variants\": [\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"Id\": \"Variant1\",\n\t\t\t\t\t\t\t\"DisplayName\": \"fr-FR Variant1 Display Name\",\n\t\t\t\t\t\t\t\"Description\": \"fr-FR Variant1 Description\",\n\t\t\t\t\t\t\t\"Breadth\": \"fr-FR 10m\",\n\t\t\t\t\t\t\t\"Length\": \"fr-FR 100m\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"Id\": \"Variant2\",\n\t\t\t\t\t\t\t\"DisplayName\": \"fr-FR Variant2 Display Name\",\n\t\t\t\t\t\t\t\"Description\": \"fr-FR Variant2 Description\",\n\t\t\t\t\t\t\t\"Breadth\": \"fr-FR 20m\",\n\t\t\t\t\t\t\t\"Length\": \"fr-FR 200m\"\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Language\":\"de-DE\",\n\t\t\t\t\"Entity\":{\n\t\t\t\t\t\"DisplayName\": \"de-DE Sellable Item2 Display Name\",\n\t\t\t\t\t\"Description\": \"de-DE Sellable Item2 Description\",\n\t\t\t\t\t\"Accessories\": \"de-DE Accessories value\",\n\t\t\t\t\t\"Dimensions\": \"de-DE Dimensions value\",\n\t\t\t\t\t\"Variants\": [\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"Id\": \"Variant1\",\n\t\t\t\t\t\t\t\"DisplayName\": \"de-DE Variant1 Display Name\",\n\t\t\t\t\t\t\t\"Description\": \"de-DE Variant1 Description\",\n\t\t\t\t\t\t\t\"Breadth\": \"de-DE 10m\",\n\t\t\t\t\t\t\t\"Length\": \"de-DE 100m\"\n\t\t\t\t\t\t},\n\t\t\t\t\t\t{\n\t\t\t\t\t\t\t\"Id\": \"Variant2\",\n\t\t\t\t\t\t\t\"DisplayName\": \"de-DE Variant2 Display Name\",\n\t\t\t\t\t\t\t\"Description\": \"de-DE Variant2 Description\",\n\t\t\t\t\t\t\t\"Breadth\": \"de-DE 20m\",\n\t\t\t\t\t\t\t\"Length\": \"de-DE 200m\"\n\t\t\t\t\t\t}\n\t\t\t\t\t]\n\t\t\t\t}\n\t\t\t}\n\t\t]\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
+							"host": [
+								"{{ServiceHost}}"
+							],
+							"path": [
+								"{{ShopsApi}}",
+								"ImportEntity()"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Sellable Item With Relationship",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "ShopName",
+								"type": "text",
+								"value": "{{ShopName}}"
+							},
+							{
+								"key": "ShopperId",
+								"type": "text",
+								"value": "{{ShopperId}}"
+							},
+							{
+								"key": "Language",
+								"type": "text",
+								"value": "{{Language}}"
+							},
+							{
+								"key": "Currency",
+								"type": "text",
+								"value": "{{Currency}}"
+							},
+							{
+								"key": "Environment",
+								"type": "text",
+								"value": "{{Environment}}"
+							},
+							{
+								"key": "GeoLocation",
+								"type": "text",
+								"value": "{{GeoLocation}}"
+							},
+							{
+								"key": "CustomerId",
+								"type": "text",
+								"value": "{{CustomerId}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{SitecoreIdToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"metadata\":{\n\t\t\"EntityType\":\"SellableItem\",\n\t\t\"Components\":[\"SellableItemComponent\"],\n\t\t\"VariantComponents\":[\"VariantComponent\"]\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Sellable Item\",\n\t\t\"Name\": \"Sellable Item\",\n\t\t\"DisplayName\": \"Sellable Item Display Name\",\n\t\t\"Description\": \"Sellable Item Description\",\n\t\t\"Brand\": \"sample brand\",\n\t\t\"Manufacturer\": \"sample manufacturer\",\n\t\t\"TypeOfGood\": \"sample type of good\",\n\t\t\"Tags\":[{\"Name\":\"tag1\"}],\n\t\t\"Parents\": [\"Hunk1_Catalog/Hunk1_Category Name\"],\n\t\t\"Accessories\": \"Accessories value\",\n\t\t\"Dimensions\": \"Dimensions value\",\n\t\t\"Variants\": [\n\t\t\t{\n\t\t\t\t\"Id\": \"Variant1\",\n\t\t\t\t\"DisplayName\": \"Variant1 Display Name\",\n\t\t\t\t\"Description\": \"Variant1 Description\",\n\t\t\t\t\"Disabled\": \"true\",\n\t\t\t\t\"Tags\": [{\"Name\": \"stainless\"}, {\"Name\": \"v1\", \"Excluded\": true}],\n\t\t\t\t\"Breadth\": \"10m\",\n\t\t\t\t\"Length\": \"100m\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Id\": \"Variant2\",\n\t\t\t\t\"DisplayName\": \"Variant2 Display Name\",\n\t\t\t\t\"Description\": \"Variant2 Description\",\n\t\t\t\t\"Disabled\": \"false\",\n\t\t\t\t\"Tags\": [{\"Name\":\"22cuft\"}, {\"Name\":\"v2\", \"Excluded\": true}],\n\t\t\t\t\"Breadth\": \"20m\",\n\t\t\t\t\"Length\": \"200m\"\n\t\t\t}\n\t\t],\n\t\t\"RelationshipDetails\": [\n\t\t\t{\n\t\t\t\t\"Name\": \"TrainingProducts\",\n\t\t\t\t\"Ids\":[\"6042325\",\"6042283\"]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Name\": \"InstallationProducts\",\n\t\t\t\t\"Ids\":[\"6042878\",\"6042183\"]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Name\": \"RelatedProducts\",\n\t\t\t\t\"Ids\":[\"6042430\",\"6042886\"]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Name\": \"WarrantyProducts\",\n\t\t\t\t\"Ids\":[\"7042257\",\"7042258\"]\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
 						"url": {
 							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
