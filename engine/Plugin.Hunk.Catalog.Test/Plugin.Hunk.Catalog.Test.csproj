@@ -22,7 +22,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Plugin.Hunk.Catalog" Version="1.0.1" />
+    <PackageReference Include="Plugin.Hunk.Catalog" Version="4.0.0" />
     <PackageReference Include="Sitecore.Commerce.Core" Version="4.0.72" />
     <PackageReference Include="Sitecore.Commerce.Plugin.Catalog" Version="4.0.61" />
     <PackageReference Include="Sitecore.Framework.Pipelines.Common" Version="4.1.1" />

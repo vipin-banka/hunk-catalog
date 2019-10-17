@@ -53,13 +53,20 @@ See sample Postman API calls and sample test console application for usage.
   - Using the Nuget package manager add a dependency on *Plugin.Hunk.Catalog*.
 
 ## Getting started
-Let's say you want to import a sellable item. Your sellable item have few custom fields i.e. "Accessories" and "Dimensions".
-You also want to import variants for your sellable item and your variants also has few custom fields i.e. "Breadth" and "Length".
+This plugin covers lot of things so lets go by samples. 
+There are samples for following:
+1. [Import a Sellable Item](#import-sellable-item)
+2. [Import a Sellable Item With Variants](#import-sellable-item-with-variants)
+3. [Import a Sellable Item With Localized Content](#import-sellable-item-with-localize-content)
+4. [Import a Sellable Item With Relationships](#import-sellable-item-with-relationships)
+5. [Import a Catalog Item](#import-catalog-item)
+6. [Import a Category Item](#import-category-item)
+7. [Import a Custom Entity](#import-custom-entity)
 
-### Create two c# classes for source sellable item and source variant.
+### <a name="import-sellable-item">1. Import a sellable item
+Let's say you want to import a sellable item. Your sellable item have few custom fields i.e. "Accessories" and "Dimensions" and you need to add a custom component for that.
 
-**Source sellable item class**
-
+#### 1.1 Create a c# class for source sellable item.
 see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProduct.cs) for reference.
 ```c#
 namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
@@ -69,8 +76,6 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
         public SourceProduct()
         {
             Parents = new List<string>();
-            Languages = new List<LanguageEntity<SourceProduct>>();
-            Variants = new List<SourceProductVariant>();
             Tags = new List<Tag>();
         }
 
@@ -93,67 +98,23 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
         [Parents()]
         public IList<string> Parents { get; set; }
         
-        [Variants()]
-        public IList<SourceProductVariant> Variants { get; set; }
-
         public string Accessories { get; set; }
 
         public string Dimensions { get; set; }
     }
 }
-
 ```
 **notes**
 * Inherit your class from "IEntity" interface and implement it, this interface only demands for one string property named as Id.
 * You can design this class as your want.
 * To be able to set relationship with Catalogs and Categories add a property like below and decorate it with Parents attribute. You can name it anything you like.
-```
+```c#
         [Parents()]
         public IList<string> Parents { get; set; }
 ```
-* To be able to import variants add a property like below and decorate it with Variants attribute.Use your variant class type as type.
-```
-        [Variants()]
-        public IList<SourceProductVariant> Variants { get; set; }
-```
 
-**Source variant class**
-
-see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProductVariant.cs) for reference.
-```c#
-namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
-{
-    public class SourceProductVariant : IEntity
-    {
-        public SourceProductVariant()
-        {
-            Tags = new List<Tag>();
-        }
-
-        public string Id { get; set; }
-
-        public string DisplayName { get; set; }
-
-        public string Description { get; set; }
-
-        public bool Disabled { get; set; }
-
-        public IList<Tag> Tags { get; set; }
-
-        public string Breadth { get; set; }
-
-        public string Length { get; set; }
-    }
-}
-```
-**notes**
-* Inherit your class from "IEntity" interface and implement it, this interface only demands for one string property named as Id.
-
-### Create Sitecore Commerce component classes
-These will be used to store custom information with sellable item and item variants inside Sitecore XC.
-
-**First Component class**
-
+#### 1.2 Create Commerce component class
+This will be used to store custom information with sellable item in Sitecore XC.
 see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/Components/SellableItemComponent.cs) for reference.
 ```c#
 namespace Plugin.Hunk.Catalog.Test.Components
@@ -167,27 +128,10 @@ namespace Plugin.Hunk.Catalog.Test.Components
 }
 ```
 
-**Second Component class**
-
-see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/Components/VariantComponent.cs) for reference.
-```c#
-namespace Plugin.Hunk.Catalog.Test.Components
-{
-    public class VariantComponent : Sitecore.Commerce.Core.Component
-    {
-        public string Breadth { get; set; }
-
-        public string Length { get; set; }
-    }
-}
-```
-
-### Create Sellable Item mapper class
-
+#### 1.3 Create Sellable Item mapper class
 Write code to read field/property values from source sellable item and write to Sitecore Commerce Sellable Item.
 
 See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProductImportHandler.cs) for reference.
-
 ```c#
 namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 {
@@ -228,11 +172,10 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 **notes**
 * Inherit this class from *SellableItemImportHandler* class.
 * Specify your custom sellable item class as type argument.
-* Override *Initialize* method and write code to read values from your custom sellable item class and assign to class properties
-* Override *Map* method and write code to read values from your custom sellable item class and assign to commerce entitiy properties.
+* Override *Initialize* method and write code to read values from your custom sellable item class and assign to base class properties.
+* Override *Map* method and write code to read values from your custom sellable item and assign to commerce entitiy.
 
-### Create Sellable Item Component mapper class
-
+#### 1.4 Create Sellable Item Component mapper class
 Write code to read field/property values from source sellable item and write to Sitecore Commerce Component.
 
 See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SellableItemComponentMapper.cs) for reference.
@@ -261,9 +204,159 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 * Inherit this class from *BaseEntityComponentMapper* class.
 * Specify your custom sellable item class as first type argument.
 * Specify your Sitecore Commerce Component class (that will store additional sellable item data) as second type argument.
-* Override *Map* method and write mapping code.
+* Override *Map* method and write code to read values from your custom sellable item and assign to commerce component. 
 
-### Create Item Variant mapper class
+#### 1.5 Configure commerce engine
+Create a Policy Set file and add CatalogImportPolicy in it.
+
+see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Sitecore.Commerce.Engine/wwwroot/data/Environments/PlugIn.CatalogImport.PolicySet-1.0.0.json) for reference.
+```json
+{
+  "$type": "Sitecore.Commerce.Core.PolicySet, Sitecore.Commerce.Core",
+  "Id": "Entity-PolicySet-CatalogImportPolicySet",
+  "Version": 1,
+  "IsPersisted": false,
+  "Name": "CatalogImportPolicySet",
+  "Policies": {
+    "$type": "System.Collections.Generic.List`1[[Sitecore.Commerce.Core.Policy, Sitecore.Commerce.Core]], mscorlib",
+    "$values": [
+      {
+        "$type": "Plugin.Hunk.Catalog.Policy.CatalogImportPolicy, Plugin.Hunk.Catalog",
+        "DeleteOrphanVariant": true,
+        "EntityVersioningScheme": "UpdateLatest",
+        "Mappings": {
+          "EntityMappings": [
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+              "Key": "SellableItem",
+              "ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.SourceProductImportHandler, Plugin.Hunk.Catalog.Test"
+            }
+          ],
+          "EntityComponentMappings": [
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+              "Key": "SellableItemComponent",
+              "FullTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.SellableItemComponentMapper, Plugin.Hunk.Catalog.Test"
+            }
+          ],
+          "ItemVariationMappings": [],
+          "ItemVariationComponentMappings": [],
+          "RelationshipMappings": [] 
+        }
+      }
+    ]
+  }
+}
+```
+**notes**
+* In EntityMappings section add all entity mapper types. Each entry must have a unique key.
+* In EntityComponentMappings section add all entity component mapper types. Each entry must have a unique key.
+* Attach this policy set with commerce environment.
+
+#### 1.6 How to test?
+* Build and deploy commerce solution.
+* Bootstrap commerce engine using postman.
+* Import [Sample Postman Collection](https://github.com/vipin-banka/hunk-catalog/blob/master/postman/import/Catalog%20Import.postman_collection.json) in postman.
+* Execute GetToken API from your commerce Authentication collection.
+* Go to **Catalog Import** collection and open **Import Sellable Item** request.
+* Provide correct data in the request body.
+```json
+{
+	"metadata":{	
+		"EntityType":"SellableItem",
+		"Components":["SellableItemComponent"],
+		"VariantComponents":[]
+	},
+	"entity": {
+		"Id": "Sellable Item1",
+		"Name": "Sellable Item1",
+		"DisplayName": "Sellable Item1 Display Name",
+		"Description": "Sellable Item1 Description",
+		"Brand": "sample brand",
+		"Manufacturer": "sample manufacturer",
+		"TypeOfGood": "sample type of good",
+		"Tags":[{"Name":"tag1"}],
+		"Parents": ["Hunk1_Catalog/Hunk1_Category Name"],
+		"Accessories": "Accessories value",
+		"Dimensions": "Dimensions value"
+	}
+}
+```
+* notes
+  - you need to pass two parameters
+   - "metadata": this is to tell import process what to import, it includes following
+     - EntityType: The entity key defined for entity  mapper in the policy, for this sample it is SellableItem.
+     - Components: Comma separated component mapper keys defined in the policy, for this sample it is SellableItemComponent.
+     - VariantComponents: Comma separated variant component mapper keys defined in the policy, for this sample there is none so we can leave it blank.
+   - "entity": This is serialzed value for your source entity, this will change based on your source entity.
+* **make sure to give some value in "Parents" property, this can be one or more catalog name or category name".** see [more info](#link-to-catalog)
+* Execute the request.
+* Open Business tools and verify sellable item has been added.
+
+### 2. <a name="import-sellable-item-with-variants">Import a Sellable Item With Variants
+Let's say you want to import a sellable item with varaints. Your varaint have few custom fields as well.
+Follow all the steps to import a sellable item and also do the following.
+
+#### 2.1 Create your source variant class
+see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProductVariant.cs) for reference.
+```c#
+namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
+{
+    public class SourceProductVariant : IEntity
+    {
+        public SourceProductVariant()
+        {
+            Tags = new List<Tag>();
+        }
+
+        public string Id { get; set; }
+
+        public string DisplayName { get; set; }
+
+        public string Description { get; set; }
+
+        public bool Disabled { get; set; }
+
+        public IList<Tag> Tags { get; set; }
+
+        public string Breadth { get; set; }
+
+        public string Length { get; set; }
+    }
+}
+```
+**notes**
+* Inherit your class from "IEntity" interface and implement it, this interface only demands for one string property named as Id.
+
+#### 2.2 Add variants to source sellable item class
+add following property in your source sellable item class you have created in sample 1.
+```c#
+public class SourceProduct : IEntity
+{
+	// other properties
+	
+	[Variants()]
+        public IList<SourceProductVariant> Variants { get; set; }
+}
+```
+**notes**
+* this property should be decorated with Variants attribute and the type argument in property should represent your source variant class.
+
+#### 2.3 Create Component class
+
+see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/Components/VariantComponent.cs) for reference.
+```c#
+namespace Plugin.Hunk.Catalog.Test.Components
+{
+    public class VariantComponent : Sitecore.Commerce.Core.Component
+    {
+        public string Breadth { get; set; }
+
+        public string Length { get; set; }
+    }
+}
+```
+#### 2.4 Create Item Variant mapper class
 
 Write code to read field/property values from your source variant and write to Sitecore Commerce Item Variant component.
 
@@ -302,7 +395,7 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 * Specify your custom variant item class as second type argument.
 * Override *Map* method and write mapping code.
 
-### Create Item Variant's Child Component mapper class
+#### 2.5 Create Item Variant's Child Component mapper class
 
 Write code to read field/property values from custom variant write to Sitecore Commerce component.
 
@@ -337,9 +430,8 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 * Specify your Sitecore Commerce Component class (that will store additional variant data) as third type argument.
 * Override *Map* method and write mapping code.
 
-### Configure commerce engine
-
-**Create a Policy Set file and add "CatalogImportPolicy" in it.**
+#### 2.6 Configure Commerce Engine
+Create a Policy Set file and add "CatalogImportPolicy" in it.
 
 see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Sitecore.Commerce.Engine/wwwroot/data/Environments/PlugIn.CatalogImport.PolicySet-1.0.0.json) for reference.
 ```json
@@ -352,6 +444,9 @@ see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine
   "Policies": {
     "$type": "System.Collections.Generic.List`1[[Sitecore.Commerce.Core.Policy, Sitecore.Commerce.Core]], mscorlib",
     "$values": [
+      {
+        "$type": "Sitecore.Commerce.Core.AutoApprovePolicy, Sitecore.Commerce.Core"
+      },
       {
         "$type": "Plugin.Hunk.Catalog.Policy.CatalogImportPolicy, Plugin.Hunk.Catalog",
         "DeleteOrphanVariant": true,
@@ -392,21 +487,683 @@ see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine
 }
 ```
 **notes**
-* EntityMappings section will contain all entity mapper types. Each entry must have a unique key.
-* EntityComponentMappings section will contain all entity component mapper types. Each entry must have a unique key.
-* ItemVariationMappings section will contain only one entry and that will be item varaint mapper type.
-* ItemVariationComponentMappings section will contain all item variant component mapper types. Each entry must have a unique key.
+* In ItemVariationMappings section add item variant mapper types.
+* In ItemVariationComponentMappings section add all item variant component mapper types. Each entry must have a unique key.
 * Attach this policy set with commerce environment.
 
-### How to test?
+#### 2.7 How to test?
 * Build and deploy commerce solution.
-* Bootstrap commerce using postman.
+* Bootstrap commerce engine using postman.
 * Import [Sample Postman Collection](https://github.com/vipin-banka/hunk-catalog/blob/master/postman/import/Catalog%20Import.postman_collection.json) in postman.
-* Execute GetToken API.
-* Open **Import Sellable Item With Variants** request.
+* Execute GetToken API from your commerce Authentication collection.
+* Go to **Catalog Import** collection and open **Import Sellable Item With Variants** request.
 * Provide correct data in the request body.
+```json
+{
+	"metadata":{
+		"EntityType":"SellableItem",
+		"Components":["SellableItemComponent"],
+		"VariantComponents":["VariantComponent"]
+	},
+	"entity": {
+		"Id": "Sellable Item3",
+		"Name": "Sellable Item3",
+		"DisplayName": "Sellable Item3 Display Name",
+		"Description": "Sellable Item3 Description",
+		"Brand": "sample brand3",
+		"Manufacturer": "sample manufacturer3",
+		"TypeOfGood": "sample type of good3",
+		"Tags":[{"Name":"tag1"}],
+		"Parents": ["Hunk1_Catalog/Hunk1_Category Name"],
+		"Accessories": "Accessories value3",
+		"Dimensions": "Dimensions value3",
+		"Variants": [
+			{
+				"Id": "Variant1",
+				"DisplayName": "Variant1 Display Name",
+				"Description": "Variant1 Description",
+				"Disabled": "true",
+				"Tags": [{"Name": "stainless"}],
+				"Breadth": "10m",
+				"Length": "100m"
+			},
+			{
+				"Id": "Variant2",
+				"DisplayName": "Variant2 Display Name",
+				"Description": "Variant2 Description",
+				"Disabled": "false",
+				"Tags": [{"Name":"22cuft"}, {"Name":"v2", "Excluded": true}],
+				"Breadth": "20m",
+				"Length": "200m"
+			}
+		]
+	}
+}
+```
+* notes
+  - you need to pass two parameters
+   - "metadata": this is to tell import process what to import, it includes following
+     - EntityType: The unique name defined for entity  mapper in the policy, for this sample it is SellableItem.
+     - Components: Comma separated component mapper keys defined in the policy, for this sample it is SellableItemComponent.
+     - VariantComponents: Comma separated variant component mapper keys defined in the policy, for this sample it is VariantComponent.
+   - "entity": This is serialzed value for your source entity, this will change based on your source entity.
+* **make sure to give some value in "Parents" property, this can be one or more catalog name or category name".** see [more info](#link-to-catalog)
 * Execute the request.
-* Open Business tools and verify sellable item.
+* Open Business tools and verify sellable item and variants has been added.
 
-## Documentation
+### 3. <a name="import-sellable-item-with-localize-content">Import Sellable Item With Localize Content
 
+#### 3.1 Set Localization Policy set
+In "PlugIn.LocalizeEntities.PolicySet-1.0.0.json" file set localization details for your entity.
+
+#### 3.2 Add language property to source sellable item class
+add following property in your source sellable item class.
+```c#
+public class SourceProduct : IEntity
+{
+	// other properties
+	
+	[Languages()]
+        public IList<LanguageEntity<SourceProduct>> Languages { get; set; }
+}
+```
+**notes**
+* this property should be decorated with Languages attribute and the type argument in property should represent your source product class.
+
+#### 3.3 Override method in mapper classes.
+each mapper class supports a method to map localize content, in your mapper class override this method:
+```c#
+protected override void MapLocalizeValues(SourceProduct localizedSourceEntity, SellableItem localizedTargetEntity)
+{
+    localizedTargetEntity.DisplayName = localizedSourceEntity.DisplayName;
+    localizedTargetEntity.Description = localizedSourceEntity.Description;
+}
+```
+
+#### 3.4 How to test?
+* Build and deploy commerce solution.
+* Bootstrap commerce engine using postman.
+* Import [Sample Postman Collection](https://github.com/vipin-banka/hunk-catalog/blob/master/postman/import/Catalog%20Import.postman_collection.json) in postman.
+* Execute GetToken API from your commerce Authentication collection.
+* Go to **Catalog Import** collection and open **Import Sellable Item With Languages** request.
+* Provide correct data in the request body.
+```json
+{
+	"metadata":{
+		"EntityType":"SellableItem",
+		"Components":["SellableItemComponent"],
+		"VariantComponents":["VariantComponent"]
+	},
+	"entity": {
+		"Id": "Sellable Item",
+		"Name": "Sellable Item",
+		"DisplayName": "Sellable Item Display Name",
+		"Description": "Sellable Item Description",
+		"Brand": "sample brand",
+		"Manufacturer": "sample manufacturer",
+		"TypeOfGood": "sample type of good",
+		"Tags":[{"Name":"tag1"},],
+		"Parents": ["Hunk1_Catalog/Hunk1_Category Name"],
+		"Accessories": "Accessories value",
+		"Dimensions": "Dimensions value",
+		"Variants": [
+			{
+				"Id": "Variant1",
+				"DisplayName": "Variant1 Display Name",
+				"Description": "Variant1 Description",
+				"Disabled": "true",
+				"Tags": [{"Name": "tag1"}],
+				"Breadth": "10m",
+				"Length": "100m"
+			}
+		],
+		"Languages":[
+			{
+				"Language":"fr-FR",
+				"Entity":{
+					"DisplayName": "fr-FR Sellable Item1 Display Name",
+					"Description": "fr-FR Sellable Item1 Description",
+					"Accessories": "fr-FR Accessories value",
+					"Dimensions": "fr-FR Dimensions value",
+					"Variants": [
+						{
+							"Id": "Variant1",
+							"DisplayName": "fr-FR Variant1 Display Name",
+							"Description": "fr-FR Variant1 Description",
+							"Breadth": "fr-FR 10m",
+							"Length": "fr-FR 100m"
+						}
+					]
+				}
+			}
+		]
+	}
+}
+```
+* Execute the request.
+* Open Business tools and verify sellable item has been added with localized content.
+
+### 4. Import sellable item with relationships
+
+#### 4.1 Add relationship property to source sellable item class
+add following property in your source sellable item class.
+```c#
+public class SourceProduct : IEntity
+{
+	// other properties
+	
+	[Relationships()]
+        public IList<RelationshipDetail> RelationshipDetails { get; set; }
+}
+```
+**notes**
+* You have to add this property to your sellable item source class as is.
+
+#### 4.2 Verify commerce engine configuration
+see polict details [here](#catalog-import-policy), make sure all your mappers are configured properly.
+
+#### 4.3 How to test?
+* Build and deploy commerce solution.
+* Bootstrap commerce engine using postman.
+* Import [Sample Postman Collection](https://github.com/vipin-banka/hunk-catalog/blob/master/postman/import/Catalog%20Import.postman_collection.json) in postman.
+* Execute GetToken API from your commerce Authentication collection.
+* Go to **Catalog Import** collection and open **Import Sellable Item With Relationship** request.
+* Provide correct data in the request body.
+```json
+{
+	"metadata":{
+		"EntityType":"SellableItem",
+		"Components":["SellableItemComponent"],
+		"VariantComponents":["VariantComponent"]
+	},
+	"entity": {
+		"Id": "Sellable Item",
+		"Name": "Sellable Item",
+		"DisplayName": "Sellable Item Display Name",
+		"Description": "Sellable Item Description",
+		"Brand": "sample brand",
+		"Manufacturer": "sample manufacturer",
+		"TypeOfGood": "sample type of good",
+		"Tags":[{"Name":"tag1"}],
+		"Parents": ["Hunk1_Catalog/Hunk1_Category Name"],
+		"Accessories": "Accessories value",
+		"Dimensions": "Dimensions value",
+		"RelationshipDetails": [
+			{
+				"Name": "TrainingProducts",
+				"Ids":["6042325","6042283"]
+			},
+			{
+				"Name": "InstallationProducts",
+				"Ids":["6042878","6042183"]
+			},
+			{
+				"Name": "RelatedProducts",
+				"Ids":["6042430","6042886"]
+			},
+			{
+				"Name": "WarrantyProducts",
+				"Ids":["7042257","7042258"]
+			}
+		]
+	}
+}
+```
+* Execute the request.
+* Open Business tools and verify sellable item has been added with localized content.
+
+### <a name="import-catalog-item">5. Import Catalog item
+	
+#### 5.1 Create a c# class for source catalog item.
+see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/CatalogEntityImport/SourceCatalog.cs) for reference.
+```c#
+namespace Plugin.Hunk.Catalog.Test.CatalogEntityImport
+{
+    public class SourceCatalog : IEntity
+    {
+        public SourceCatalog()
+        {
+            Languages = new List<LanguageEntity<SourceCatalog>>();
+        }
+
+        public string Id { get; set; }
+
+        public string Name { get; set; }
+
+        public string DisplayName { get; set; }
+
+        [Languages()]
+        public IList<LanguageEntity<SourceCatalog>> Languages { get; set; }
+    }
+}
+```
+**notes**
+* Inherit your class from "IEntity" interface and implement it, this interface only demands for one string property named as Id.
+* You can design this class as your want.
+
+#### 5.2 Create Catalog Item mapper class
+Write code to read field/property values from source catalog item and write to Sitecore Commerce Catalog Item.
+
+See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/CatalogEntityImport/SourceCatalogImportHandler.cs) for reference.
+```c#
+namespace Plugin.Hunk.Catalog.Test.CatalogEntityImport
+{
+    public class SourceCatalogImportHandler : CatalogImportHandler<SourceCatalog>
+    {
+        public SourceCatalogImportHandler(string sourceCatalog, 
+            CommerceCommander commerceCommander, 
+            CommercePipelineExecutionContext context)
+            : base(sourceCatalog, commerceCommander, context)
+        {
+        }
+
+        protected override void Initialize()
+        {
+            Name = SourceEntity.Name;
+            DisplayName = SourceEntity.DisplayName;
+        }
+
+        public override void Map()
+        {
+            CommerceEntity.Name = SourceEntity.Name;
+            CommerceEntity.DisplayName = SourceEntity.DisplayName;
+        }
+
+        protected override void MapLocalizeValues(SourceCatalog localizedSourceEntity, Sitecore.Commerce.Plugin.Catalog.Catalog localizedTargetEntity)
+        {
+            localizedTargetEntity.DisplayName = localizedSourceEntity.DisplayName;
+        }
+    }
+}
+```
+**notes**
+* Inherit this class from *CatalogImportHandler* class.
+* Specify your custom catalog item class as type argument.
+* Override *Initialize*, *Map* and "MapLocalizeValues" methods.
+
+#### 5.3 Configure commerce engine
+configure your mappers in catalog import policy.
+see sample configuration [here](#catalog-import-policy)
+
+
+#### 5.4 How to test?
+* Build and deploy commerce solution.
+* Bootstrap commerce engine using postman.
+* Import [Sample Postman Collection](https://github.com/vipin-banka/hunk-catalog/blob/master/postman/import/Catalog%20Import.postman_collection.json) in postman.
+* Execute GetToken API from your commerce Authentication collection.
+* Go to **Catalog Import** collection and open **Import Catalog Item** request.
+* Provide correct data in the request body.
+```json
+{
+	"metadata":{
+		"EntityType":"Catalog",
+		"Components":[],
+		"VariantComponents":[]
+	},
+	"entity": {
+		"Id": "Hunk1_Catalog",
+		"Name": "Hunk1_Catalog",
+		"DisplayName": "Hunk1 Catalog Display Name",
+		"Languages":[
+			{
+				"Language":"fr-FR",
+				"Entity":{
+					"DisplayName": "fr-FR Hunk1 Catalog Display Name",
+				}
+			},
+			{
+				"Language":"de-DE",
+				"Entity":{
+					"DisplayName": "de-DE Hunk1 Catalog Display Name",
+				}
+			}
+		]
+	}
+}
+```
+* Execute the request.
+* Open Business tools and verify catalog item has been added.
+
+### <a name="import-category-item">6. Import Category item
+	
+#### 6.1 Create a c# class for source category item.
+see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/CategoryEntityImport/SourceCategory.cs) for reference.
+```c#
+namespace Plugin.Hunk.Catalog.Test.CategoryEntityImport
+{
+    public class SourceCategory : IEntity
+    {
+        public SourceCategory()
+        {
+            Parents = new List<string>();
+            Languages = new List<LanguageEntity<SourceCategory>>();
+        }
+
+        public string Id { get; set; }
+
+        public string Name { get; set; }
+
+        public string DisplayName { get; set; }
+
+        public string Description { get; set; }
+
+        [Parents()]
+        public IList<string> Parents { get; set; }
+
+        [Languages()]
+        public IList<LanguageEntity<SourceCategory>> Languages { get; set; }
+    }
+}
+```
+**notes**
+* Inherit your class from "IEntity" interface and implement it, this interface only demands for one string property named as Id.
+* You can design this class as your want.
+* Make sure to add Parents property to link your category with catalog or category.
+
+#### 6.2 Create Category Item mapper class
+Write code to read field/property values from source catalog item and write to Sitecore Commerce Catalog Item.
+
+See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/CatalogEntityImport/SourceCatalogImportHandler.cs) for reference.
+```c#
+namespace Plugin.Hunk.Catalog.Test.CategoryEntityImport
+{
+    public class SourceCategoryImportHandler : CategoryImportHandler<SourceCategory>
+    {
+        public SourceCategoryImportHandler(string sourceCategory, 
+		CommerceCommander commerceCommander, 
+		CommercePipelineExecutionContext context)
+            : base(sourceCategory, commerceCommander, context)
+        {
+        }
+
+        protected override void Initialize()
+        {
+            Name = SourceEntity.Name;
+            DisplayName = SourceEntity.DisplayName;
+            Description = SourceEntity.Description;
+        }
+
+        public override void Map()
+        {
+            CommerceEntity.Name = SourceEntity.Name;
+            CommerceEntity.DisplayName = SourceEntity.DisplayName;
+            CommerceEntity.Description = SourceEntity.Description;
+        }
+
+        protected override void MapLocalizeValues(SourceCategory localizedSourceEntity, Sitecore.Commerce.Plugin.Catalog.Category localizedTargetEntity)
+        {
+            localizedTargetEntity.DisplayName = localizedSourceEntity.DisplayName;
+            localizedTargetEntity.Description = localizedSourceEntity.Description;
+        }
+    }
+}
+```
+**notes**
+* Inherit this class from *CategoryImportHandler* class.
+* Specify your custom category item class as type argument.
+* Override *Initialize*, *Map* and "MapLocalizeValues" methods.
+
+#### 6.3 Configure commerce engine
+configure your mappers in catalog import policy.
+see sample configuration [here](#catalog-import-policy)
+
+
+#### 6.4 How to test?
+* Build and deploy commerce solution.
+* Bootstrap commerce engine using postman.
+* Import [Sample Postman Collection](https://github.com/vipin-banka/hunk-catalog/blob/master/postman/import/Catalog%20Import.postman_collection.json) in postman.
+* Execute GetToken API from your commerce Authentication collection.
+* Go to **Catalog Import** collection and open **Import Category Item** request.
+* Provide correct data in the request body.
+```json
+{
+	"metadata":{
+		"EntityType":"Category",
+		"Components":[],
+		"VariantComponents":[]
+	},
+	"entity": {
+		"Id": "Hunk1_Category Name",
+		"Name": "Hunk1_Category Name",
+		"DisplayName": "Hunk1 Category Display Name",
+		"Description": "Hunk1 Category Description",
+		"Parents": ["Hunk1_Catalog"],
+		"Languages":[
+			{
+				"Language":"fr-FR",
+				"Entity":{
+					"DisplayName": "fr-FR Hunk1 Category Display Name",
+					"Description": "fr-FR Hunk1 Category Description"
+				}
+			},
+			{
+				"Language":"de-DE",
+				"Entity":{
+					"DisplayName": "de-DE Hunk1 Category Display Name",
+					"Description": "de-DE Hunk1 Category Description"
+				}
+			}
+		]
+	}
+}
+```
+* Execute the request.
+* Open Business tools and verify catalog item has been added.
+
+### <a name="import-custom-entity">7. Import Custom Entity
+
+#### 7.1 Create a c# class for source custom item.
+see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/CategoryEntityImport/SourceCategory.cs) for reference.
+```c#
+namespace Plugin.Hunk.Catalog.Test.CustomEntityImport
+{
+    public class SourceCustomEntity : IEntity
+    {
+        public string Id { get; set; }
+
+        public string Name { get; set; }
+
+        public string DisplayName { get; set; }
+
+        public string Description { get; set; }
+    }
+}
+```
+**notes**
+* Inherit your class from "IEntity" interface and implement it, this interface only demands for one string property named as Id.
+* You can design this class as your want.
+
+#### 7.2 Create Custom Commerce Entity class
+
+```
+namespace Plugin.Hunk.Catalog.Test.CustomEntityImport
+{
+    public class CustomCommerceItem : CommerceEntity
+    {
+        public string Description { get; set; }
+    }
+}
+```
+**notes**
+- Inherit from CommerceEntity class from Sitecore.Commerce.Core.
+- Add whatever properties you need, for simplicity i have just added Description.
+
+#### 7.3 Create Custom Item mapper class
+Write code to read field/property values from source catalog item and write to Sitecore Commerce Catalog Item.
+
+See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/CatalogEntityImport/SourceCatalogImportHandler.cs) for reference.
+```c#
+namespace Plugin.Hunk.Catalog.Test.CustomEntityImport
+{
+    public class SourceCustomEntityImportHandler : BaseEntityImportHandler<SourceCustomEntity, CustomCommerceItem>
+    {
+        public SourceCustomEntityImportHandler(string sourceProduct, CommerceCommander commerceCommander, CommercePipelineExecutionContext context)
+            : base(sourceProduct, commerceCommander, context)
+        {
+        }
+
+        public override async Task<CommerceEntity> Create()
+        {
+            var commerceEntity = new CustomCommerceItem();
+            commerceEntity.Id = IdWithPrefix();
+            commerceEntity.Name = SourceEntity.Name;
+            commerceEntity.DisplayName = SourceEntity.DisplayName;
+            commerceEntity.Description = SourceEntity.Description;
+
+            await CommerceCommander.Pipeline<IPersistEntityPipeline>()
+                .Run(new PersistEntityArgument(commerceEntity), Context).ConfigureAwait(false);
+
+            return commerceEntity;
+        }
+
+        public override void Map()
+        {
+            CommerceEntity.Name = SourceEntity.Name;
+            CommerceEntity.DisplayName = SourceEntity.DisplayName;
+            CommerceEntity.Description = SourceEntity.Description;
+        }
+    }
+}
+```
+**notes**
+* Inherit this class from *BaseEntityImportHandler* class.
+* Specify your source entity item class as first type argument.
+* Specify your commerce entity item class as second type argument.
+* Override *Create* and *Map* methods.
+
+#### 7.4 Configure commerce engine
+configure your mappers in catalog import policy.
+see sample configuration [here](#catalog-import-policy)
+
+
+#### 7.5 How to test?
+* Build and deploy commerce solution.
+* Bootstrap commerce engine using postman.
+* Import [Sample Postman Collection](https://github.com/vipin-banka/hunk-catalog/blob/master/postman/import/Catalog%20Import.postman_collection.json) in postman.
+* Execute GetToken API from your commerce Authentication collection.
+* Go to **Catalog Import** collection and open **Import Custom Entity** request.
+* Provide correct data in the request body.
+```json
+{
+	"metadata":{
+		"EntityType":"SourceCustomEntity",
+		"Components":[],
+		"VariantComponents":[]
+	},
+	"entity": {
+		"Id": "Custom Entity1",
+		"Name": "Custom Entity1 Name",
+		"DisplayName": "Custom Entity1 Display Name",
+		"Description": "Custom Entity1 Description"
+	}
+}
+```
+* Execute the request.
+* You can check entity json in database.
+
+### <a name="link-to-catalog">8. Link Sellable Item With Catalog & Category
+To link sellable item with catalog or category or both, in your source sellable item class your should have a property like below
+```c#
+        [Parents()]
+        public IList<string> Parents { get; set; }
+```
+This property should contains name of catalog or category or both. category name must be in format "{catalog-name}/{category-name}".
+Examples:
+- A single value like "Hunk1_Catalog" will associate sellable item with catalog.
+- A single value like "Hunk1_Catalog/Hunk1_Category Name" will associate sellable item with category inside catalog.
+- Mutiple values like "Hunk1_Catalog" and "Hunk1_Catalog/Hunk1_Category Name" will associate sellable item with both catalog and category.
+	
+### <a name="catalog-import-policy">9. Catalog Import Policy
+Catalog import policy allows you to set followin values:
+
+1. **DeleteOrphanVariant** - You can set a boolen value. True will remove any variants those exists in Sitecore Commerce but does not come in external system content. False will keep the variants but will mark them as disabled.
+
+2. **EntityVersioningScheme** - This will be used to determine which version of entity should be used to do the updates, this is not applicable if entity does not exists, import process will always create a new entity if that does not exists.
+   - CreateNewVersion - This option will create a new version everytime for your imported entity.
+   - UpdateLatestUnpublished - This option will first look for your latest version and if that version is in unpublished state, it will make updates in that version only but if latest version is already published than it will create a new version.
+   - UpdateLatest - This will not create a new version and will always update in the latest version.
+ 
+3. **EntityMappings** - In this section you have to configure all custom entity mappers you have created. Give a unique key to each entry, you need to use these keys as entity name in "EntityType" property for metadata in import api.
+ 
+4. **EntityComponentMappings** - In this section you have to configure all custom component mappers you have created. Give a unique key to each entry, you need to use these keys as component names in "Components" property for metadata in import api.
+ 
+5. **ItemVariationMappings** - In this section you have to configure one item variant mapper.
+ 
+6. **ItemVariationComponentMappings** - In this section you have to configure all custom item variant component mappers you have created. Give a unique key to each entry, you need to use these keys as variant component names in "VariantComponents" property for metadata in import api.
+ 
+7. **RelationshipMappings** - In this section you have to configure all relation ship mappers, OOTB this plugin comes with four which supports relationship of sellable item to sellable item. Give a unique key to each entry, you need to use these keys with your relationship data to pass to import process.
+
+A complete Catalog Import Policy is below:
+```json{
+{
+	"$type": "Plugin.Hunk.Catalog.Policy.CatalogImportPolicy, Plugin.Hunk.Catalog",
+	"DeleteOrphanVariant": true,
+	"EntityVersioningScheme": "UpdateLatest",
+	"Mappings": {
+		"EntityMappings": [
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+				"Key": "Catalog",
+				"ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.CatalogEntityImport.SourceCatalogImportHandler, Plugin.Hunk.Catalog.Test"
+			},
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+				"Key": "Category",
+				"ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.CategoryEntityImport.SourceCategoryImportHandler, Plugin.Hunk.Catalog.Test"
+			},
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+				"Key": "SellableItem",
+				"ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.SourceProductImportHandler, Plugin.Hunk.Catalog.Test"
+			},
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+				"Key": "SourceCustomEntity",
+				"ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.CustomEntityImport.SourceCustomEntityImportHandler, Plugin.Hunk.Catalog.Test"
+			}
+		],
+		"EntityComponentMappings": [
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+				"Key": "SellableItemComponent",
+				"FullTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.SellableItemComponentMapper, Plugin.Hunk.Catalog.Test"
+			}
+		],
+		"ItemVariationMappings": [
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+				"FullTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.ItemVariationComponentMapper, Plugin.Hunk.Catalog.Test"
+			}
+		],
+		"ItemVariationComponentMappings": [
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+				"Key": "VariantComponent",
+				"FullTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.VariantComponentMapper, Plugin.Hunk.Catalog.Test"
+			}
+		],
+		"RelationshipMappings": [
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+				"Key": "TrainingProducts",
+				"FullTypeName": "Plugin.Hunk.Catalog.RelationshipMappers.TrainingSellableItemToSellableItemRelationshipMapper, Plugin.Hunk.Catalog"
+			},
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+				"Key": "InstallationProducts",
+				"FullTypeName": "Plugin.Hunk.Catalog.RelationshipMappers.InstallationSellableItemToSellableItemRelationshipMapper, Plugin.Hunk.Catalog"
+			},
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+				"Key": "RelatedProducts",
+				"FullTypeName": "Plugin.Hunk.Catalog.RelationshipMappers.RelatedSellableItemToSellableItemRelationshipMapper, Plugin.Hunk.Catalog"
+			},
+			{
+				"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+				"Key": "WarrantyProducts",
+				"FullTypeName": "Plugin.Hunk.Catalog.RelationshipMappers.WarrantySellableItemToSellableItemRelationshipMapper, Plugin.Hunk.Catalog"
+			}
+		]
+	}
+}
+```
