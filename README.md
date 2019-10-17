@@ -540,12 +540,173 @@ see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine
    - "entity": This is serialzed value for your source entity, this will change based on your source entity.
 * **make sure to give some value in "Parents" property, this can be one or more catalog name or category name".** see [more info](#link-to-catalog)
 * Execute the request.
-* Open Business tools and verify sellable item has been added.
+* Open Business tools and verify sellable item and variants has been added.
 
 ### 3. Import sellable item with Languages
+
+#### 3.1 Set Localization Policy set
+In "PlugIn.LocalizeEntities.PolicySet-1.0.0.json" file set localization details for your entity.
+
+#### 3.2 Add language property to source sellable item class
+add following property in your source sellable item class.
+```c#
+public class SourceProduct : IEntity
+{
+	// other properties
+	
+	[Languages()]
+        public IList<LanguageEntity<SourceProduct>> Languages { get; set; }
+}
+```
+**notes**
+* this property should be decorated with Languages attribute and the type argument in property should represent your source product class.
+
+#### 3.3 Override method in mapper classes.
+each mapper class supports a method to map localize content, in your mapper class override this method:
+```c#
+protected override void MapLocalizeValues(SourceProduct localizedSourceEntity, SellableItem localizedTargetEntity)
+{
+    localizedTargetEntity.DisplayName = localizedSourceEntity.DisplayName;
+    localizedTargetEntity.Description = localizedSourceEntity.Description;
+}
+```
+
+#### 2.7 How to test?
+* Build and deploy commerce solution.
+* Bootstrap commerce engine using postman.
+* Import [Sample Postman Collection](https://github.com/vipin-banka/hunk-catalog/blob/master/postman/import/Catalog%20Import.postman_collection.json) in postman.
+* Execute GetToken API from your commerce Authentication collection.
+* Go to **Catalog Import** collection and open **Import Sellable Item With Languages** request.
+* Provide correct data in the request body.
+```json
+{
+	"metadata":{
+		"EntityType":"SellableItem",
+		"Components":["SellableItemComponent"],
+		"VariantComponents":["VariantComponent"]
+	},
+	"entity": {
+		"Id": "Sellable Item",
+		"Name": "Sellable Item",
+		"DisplayName": "Sellable Item Display Name",
+		"Description": "Sellable Item Description",
+		"Brand": "sample brand",
+		"Manufacturer": "sample manufacturer",
+		"TypeOfGood": "sample type of good",
+		"Tags":[{"Name":"tag1"},],
+		"Parents": ["Hunk1_Catalog/Hunk1_Category Name"],
+		"Accessories": "Accessories value",
+		"Dimensions": "Dimensions value",
+		"Variants": [
+			{
+				"Id": "Variant1",
+				"DisplayName": "Variant1 Display Name",
+				"Description": "Variant1 Description",
+				"Disabled": "true",
+				"Tags": [{"Name": "tag1"}],
+				"Breadth": "10m",
+				"Length": "100m"
+			}
+		],
+		"Languages":[
+			{
+				"Language":"fr-FR",
+				"Entity":{
+					"DisplayName": "fr-FR Sellable Item1 Display Name",
+					"Description": "fr-FR Sellable Item1 Description",
+					"Accessories": "fr-FR Accessories value",
+					"Dimensions": "fr-FR Dimensions value",
+					"Variants": [
+						{
+							"Id": "Variant1",
+							"DisplayName": "fr-FR Variant1 Display Name",
+							"Description": "fr-FR Variant1 Description",
+							"Breadth": "fr-FR 10m",
+							"Length": "fr-FR 100m"
+						}
+					]
+				}
+			}
+		]
+	}
+}
+```
+* Execute the request.
+* Open Business tools and verify sellable item has been added with localized content.
+
 ### 4. Import sellable item with relationships
+
+#### 4.1 Add relationship property to source sellable item class
+add following property in your source sellable item class.
+```c#
+public class SourceProduct : IEntity
+{
+	// other properties
+	
+	[Relationships()]
+        public IList<RelationshipDetail> RelationshipDetails { get; set; }
+}
+```
+**notes**
+* You have to add this property to your sellable item source class as is.
+
+#### 4.2 Verify commerce engine configuration
+see polict details [here](#catalog-import-policy), make sure all your mappers are configured properly.
+
+#### 4.3 How to test?
+* Build and deploy commerce solution.
+* Bootstrap commerce engine using postman.
+* Import [Sample Postman Collection](https://github.com/vipin-banka/hunk-catalog/blob/master/postman/import/Catalog%20Import.postman_collection.json) in postman.
+* Execute GetToken API from your commerce Authentication collection.
+* Go to **Catalog Import** collection and open **Import Sellable Item With Relationship** request.
+* Provide correct data in the request body.
+```json
+{
+	"metadata":{
+		"EntityType":"SellableItem",
+		"Components":["SellableItemComponent"],
+		"VariantComponents":["VariantComponent"]
+	},
+	"entity": {
+		"Id": "Sellable Item",
+		"Name": "Sellable Item",
+		"DisplayName": "Sellable Item Display Name",
+		"Description": "Sellable Item Description",
+		"Brand": "sample brand",
+		"Manufacturer": "sample manufacturer",
+		"TypeOfGood": "sample type of good",
+		"Tags":[{"Name":"tag1"}],
+		"Parents": ["Hunk1_Catalog/Hunk1_Category Name"],
+		"Accessories": "Accessories value",
+		"Dimensions": "Dimensions value",
+		"RelationshipDetails": [
+			{
+				"Name": "TrainingProducts",
+				"Ids":["6042325","6042283"]
+			},
+			{
+				"Name": "InstallationProducts",
+				"Ids":["6042878","6042183"]
+			},
+			{
+				"Name": "RelatedProducts",
+				"Ids":["6042430","6042886"]
+			},
+			{
+				"Name": "WarrantyProducts",
+				"Ids":["7042257","7042258"]
+			}
+		]
+	}
+}
+```
+* Execute the request.
+* Open Business tools and verify sellable item has been added with localized content.
+
 ### 5. Import Catalog item
+
 ### 6. Import Category item
+
 ### 7. Import Custom Entity
 
 ### <a name="link-to-catalog">8. Link sellable item with catalog & category
@@ -560,7 +721,7 @@ Examples:
 - A single value like "Hunk1_Catalog/Hunk1_Category Name" will associate sellable item with category inside catalog.
 - Mutiple values like "Hunk1_Catalog" and "Hunk1_Catalog/Hunk1_Category Name" will associate sellable item with both catalog and category.
 	
-### 9. Catalog Import Policy
+### <a name="catalog-import-policy">9. Catalog Import Policy
 Catalog import policy allows you to set followin values:
 
 1. **DeleteOrphanVariant** - You can set a boolen value. True will remove any variants those exists in Sitecore Commerce but does not come in external system content. False will keep the variants but will mark them as disabled.
