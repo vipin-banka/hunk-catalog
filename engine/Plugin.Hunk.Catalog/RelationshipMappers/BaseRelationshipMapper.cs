@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Plugin.Hunk.Catalog.Abstractions;
 using Sitecore.Commerce.Core;
+using Sitecore.Commerce.Plugin.Catalog;
 
 namespace Plugin.Hunk.Catalog.RelationshipMappers
 {

@@ -16,12 +16,12 @@ namespace Plugin.Hunk.Catalog.Handlers
 
         public virtual Component GetComponent(Type type)
         {
-            return ParenEntity.EntityComponents.FirstOrDefault(c => c.GetType() == type);
+            return ParenEntity.Components.FirstOrDefault(c => c.GetType() == type);
         }
 
         public virtual Component GetComponent(Type type, string id)
         {
-            return ParenEntity.EntityComponents.FirstOrDefault(c => 
+            return ParenEntity.Components.FirstOrDefault(c => 
                 (!string.IsNullOrEmpty(id) && c.Id.Equals(id, StringComparison.OrdinalIgnoreCase))
                 || c.GetType() == type);
         }

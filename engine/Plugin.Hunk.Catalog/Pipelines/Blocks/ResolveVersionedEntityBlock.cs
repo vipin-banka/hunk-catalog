@@ -13,13 +13,16 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
     public class ResolveVersionedEntityBlock : PipelineBlock<ImportEntityArgument, ImportEntityArgument, CommercePipelineExecutionContext>
     {
         private readonly FindEntityCommand _findEntityCommand;
+        private readonly FindEntityVersionsCommand _findEntityVersionsCommand;
         private readonly AddEntityVersionCommand _addEntityVersionCommand;
 
         public ResolveVersionedEntityBlock(
             FindEntityCommand findEntityCommand,
+            FindEntityVersionsCommand findEntityVersionsCommand,
             AddEntityVersionCommand addEntityVersionCommand)
         {
             _findEntityCommand = findEntityCommand;
+            _findEntityVersionsCommand = findEntityVersionsCommand;
             _addEntityVersionCommand = addEntityVersionCommand;
         }
 
@@ -36,11 +39,11 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
             if (entityToUpdate != null
                 && arg.CatalogImportPolicy.EntityVersioningScheme == EntityVersioningScheme.UpdateLatestUnpublished)
             {
-                VersioningEntity versioningEntity = await _findEntityCommand.Process(context.CommerceContext, typeof(VersioningEntity), VersioningEntity.GetIdBasedOnEntityId(entityToUpdate.Id), new int?()).ConfigureAwait(false) as VersioningEntity;
+                var entities = (await _findEntityVersionsCommand.Process(context.CommerceContext, typeof(CommerceEntity), entityToUpdate.Id).ConfigureAwait(false)).ToList();
 
-                if (versioningEntity?.Versions != null && versioningEntity.Versions.Any())
+                if (entities.Any())
                 {
-                    var unpublishedVersion = versioningEntity.Versions.Where(x => !x.Published).Max(x => x.Version);
+                    var unpublishedVersion = entities.Where(x => !x.Published).Max(x => x.Version);
                     if (unpublishedVersion <= 0 || entityToUpdate.EntityVersion != unpublishedVersion)
                     {
                         createNewVersion = true;

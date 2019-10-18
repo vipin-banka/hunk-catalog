@@ -33,7 +33,7 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
                 {
                     entityLocalizableProperties = await PerformEntityLocalization(arg, context, language, entityLocalizableProperties).ConfigureAwait(false);
 
-                    if (arg.CommerceEntity.EntityComponents == null || !arg.CommerceEntity.EntityComponents.Any())
+                    if (arg.CommerceEntity.Components == null || !arg.CommerceEntity.Components.Any())
                         continue;
 
                     await PerformEntityComponentsLocalization(arg, context, language, componentsPropertiesList).ConfigureAwait(false);
@@ -114,7 +114,7 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
         private async Task PerformEntityComponentsLocalization(ImportLocalizeContentArgument arg,
             CommercePipelineExecutionContext context, ILanguageEntity language, IList<LocalizableComponentPropertiesValues> componentsPropertiesList)
         {
-            foreach (var commerceEntityComponent in arg.CommerceEntity.EntityComponents)
+            foreach (var commerceEntityComponent in arg.CommerceEntity.Components)
             {
                 var entityComponentLocalizationMapper = await _commerceCommander
                     .Pipeline<IResolveComponentLocalizationMapperPipeline>()
