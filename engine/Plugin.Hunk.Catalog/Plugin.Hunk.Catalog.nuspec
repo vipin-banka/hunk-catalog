@@ -3,7 +3,7 @@
   <metadata>
     <id>Plugin.Hunk.Catalog</id>
     <title>Plugin.Hunk.Catalog</title>
-    <version>1.0.1</version>
+    <version>3.0.0</version>
     <authors>Vipin Banka</authors>
     <owners>Vipin Banka</owners>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
@@ -18,8 +18,8 @@
     <language>English</language>
     <dependencies>
       <group targetFramework=".NETFramework4.7.1">
-        <dependency id="Sitecore.Commerce.Core" version="4.0.72" exclude="Build,Analyzers" />
-        <dependency id="Sitecore.Commerce.Plugin.Catalog" version="4.0.61" exclude="Build,Analyzers" />
+        <dependency id="Sitecore.Commerce.Core" version="3.0.17" exclude="Build,Analyzers" />
+        <dependency id="Sitecore.Commerce.Plugin.Catalog" version="3.0.15" exclude="Build,Analyzers" />
         <dependency id="Sitecore.Framework.Pipelines.Common" version="4.1.1" exclude="Build,Analyzers" />
       </group>
     </dependencies>
