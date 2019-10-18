@@ -56,7 +56,7 @@ This plugin covers lot of things so lets go by samples.
 There are samples for following:
 1. [Import a Sellable Item](#import-sellable-item)
 2. [Import a Sellable Item With Variants](#import-sellable-item-with-variants)
-3. [Import a Sellable Item With Localized Content](#import-sellable-item-with-localize-content)
+3. [Import a Sellable Item With Localize Content](#import-sellable-item-with-localize-content)
 4. [Import a Sellable Item With Relationships](#import-sellable-item-with-relationships)
 5. [Import a Catalog Item](#import-catalog-item)
 6. [Import a Category Item](#import-category-item)
