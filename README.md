@@ -6,7 +6,7 @@ Plugin for Sitecore Commerce that allows you to write simple and maintainable cu
 ## What is this?
 In most of Sitecore Commerce projects you need to write custom catalog import code based on your specific requirements and catalog information in your PIM. Without a standard approach each team does it in a different way. The idea with this plugin is to create a standard approach for import processes that can be utilized in any commerce implementation without compromising with flexibility and extensibility of Sitecore commerce architecture and gives you type safe way to write your own custom implementations.
 
-In a typical catalog import implementation you create a plugin (at minimum) that reads data from external system, takes care of XC specific things (entities, components, pipelines, commands, versioning, localization etc.) and writes the source content to Sitecore XC entities.
+In a usual catalog import implementation you create a plugin (at minimum) that reads data from external system, takes care of XC specific things (entities, components, pipelines, commands, versioning, localization etc.) and writes the source content to Sitecore XC entities.
 ![A typical catalog import implementation](https://github.com/vipin-banka/hunk-catalog/blob/master/images/a-general-catalog-import-implementation.png)
 
 With **hunk-catalog** import implementation you still create a plugin that reads data from external system and writes the source content to Sitecore XC entities but **hunk-catalog** will take care of all XC specific things for you. With this implementation you are free from writing lots of boilerplate code for import process.
@@ -20,7 +20,7 @@ With **hunk-catalog** import implementation you still create a plugin that reads
 * Adding, updating and removing child components on item variants.
 * Managing parent child relationships between catalog, category and sellable items.
 * Managing relationships e.g. related, cross sell on sellable items.
-* Store Localized content for commerce entities, components, item variants and item variant child components.
+* Store Localize content for commerce entities, components, item variants and item variant child components.
 
 ## Flow Chart - A full flow for single entity import.
 ![alt text](https://github.com/vipin-banka/hunk-catalog/blob/master/docs/flow-chart.png)
@@ -52,8 +52,8 @@ Once your commerce engine solution is deployed and bootstrapped you can use the 
   - Using the Nuget package manager add a dependency on *Plugin.Hunk.Catalog*.
 
 ## <a name="getting-started">Getting started
-This plugin covers lot of things so let's go by samples. 
-There are samples for following:
+This plugin covers lot of things so let's see following samples:
+	
 1. [Import a Sellable Item](#import-sellable-item)
 2. [Import a Sellable Item with Variants](#import-sellable-item-with-variants)
 3. [Import a Sellable Item with Localize Content](#import-sellable-item-with-localize-content)
@@ -105,7 +105,7 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
     }
 }
 ```
-see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProduct.cs).
+See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProduct.cs).
 
 **notes**
 * Inherit your class from "IEntity" interface and implement it, this interface only demands for one string property named as Id.
@@ -129,7 +129,7 @@ namespace Plugin.Hunk.Catalog.Test.Components
     }
 }
 ```
-see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/Components/SellableItemComponent.cs).
+See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/Components/SellableItemComponent.cs).
 
 #### 1.3 Create Sellable Item mapper class
 In this class write code to read source content and write to Sitecore Commerce Sellable Item entity.
@@ -268,7 +268,7 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
     }
 }
 ```
-see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProductVariant.cs).
+See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProductVariant.cs).
 
 **notes**
 * Inherit your class from "IEntity" interface and implement it, this interface only demands for one string property named as Id.
@@ -284,7 +284,7 @@ public class SourceProduct : IEntity
         public IList<SourceProductVariant> Variants { get; set; }
 }
 ```
-see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProduct.cs).
+See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProduct.cs).
 
 **notes**
 * This property should be decorated with Variants attribute and the type argument in property should represent your source variant class.
@@ -301,7 +301,7 @@ namespace Plugin.Hunk.Catalog.Test.Components
     }
 }
 ```
-see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/Components/VariantComponent.cs).
+See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/Components/VariantComponent.cs).
 
 #### 2.4 Create Item Variant mapper class
 In this class write code to read from source variant and write to Sitecore Commerce Item Variant component.
@@ -417,7 +417,7 @@ public class SourceProduct : IEntity
         public IList<LanguageEntity<SourceProduct>> Languages { get; set; }
 }
 ```
-see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProduct.cs).
+See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProduct.cs).
 
 **notes**
 * This property should be decorated with Languages attribute and the type argument in property should represent your source product class.
@@ -431,7 +431,7 @@ protected override void MapLocalizeValues(SourceProduct localizedSourceEntity, S
     localizedTargetEntity.Description = localizedSourceEntity.Description;
 }
 ```
-see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProductImportHandler.cs).
+See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProductImportHandler.cs).
 
 #### 3.4 How to test?
 * Build and deploy commerce solution.
@@ -442,7 +442,7 @@ see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine
 ![import-with-localize-content](https://github.com/vipin-banka/hunk-catalog/blob/master/images/import-sellable-item-with-languages.png)
 * Provide correct data in the request body.
 * Execute the request.
-* Open Business tools and verify sellable item has been added with localized content.
+* Open Business tools and verify localize content for sellable item.
 
 ### <a name="import-sellable-item-with-relationships">4. Import sellable item with relationships
 
@@ -457,7 +457,7 @@ public class SourceProduct : IEntity
         public IList<RelationshipDetail> RelationshipDetails { get; set; }
 }
 ```
-see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProduct.cs)
+See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProduct.cs)
 
 **notes**
 * You must add this property to your sellable item source class as is. It must be decorated with Relationships attribute and must have return type as IList&lt;RelationshipDetail&gt;.
@@ -475,7 +475,7 @@ See policy details [here](#catalog-import-policy), make sure all mappers for rel
 ![import-sellable-item-with-relationships](https://github.com/vipin-banka/hunk-catalog/blob/master/images/import-sellable-item-with-relationship.png)
 * Provide correct data in the request body.
 * Execute the request.
-* Open Business tools and verify sellable item has been added with localized content.
+* Open Business tools and verify related items with sellable item.
 
 ### <a name="import-catalog-item">5. Import Catalog item
 
@@ -501,7 +501,7 @@ namespace Plugin.Hunk.Catalog.Test.CatalogEntityImport
     }
 }
 ```
-see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/CatalogEntityImport/SourceCatalog.cs).
+See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/CatalogEntityImport/SourceCatalog.cs).
 
 **notes**
 * Inherit your class from "IEntity" interface and implement it, this interface only demands for one string property named as Id.
@@ -594,7 +594,7 @@ namespace Plugin.Hunk.Catalog.Test.CategoryEntityImport
     }
 }
 ```
-see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/CategoryEntityImport/SourceCategory.cs).
+See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/CategoryEntityImport/SourceCategory.cs).
 
 **notes**
 * Inherit your class from "IEntity" interface and implement it, this interface only demands for one string property named as Id.
@@ -683,7 +683,7 @@ namespace Plugin.Hunk.Catalog.Test.CustomEntityImport
     }
 }
 ```
-see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/CustomEntityImport/SourceCustomEntity.cs).
+See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/CustomEntityImport/SourceCustomEntity.cs).
 
 **notes**
 * Inherit your class from "IEntity" interface and implement it, this interface only demands for one string property named as Id.
@@ -700,7 +700,7 @@ namespace Plugin.Hunk.Catalog.Test.CustomEntityImport
     }
 }
 ```
-see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/CustomEntityImport/CustomCommerceItem.cs).
+See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/CustomEntityImport/CustomCommerceItem.cs).
 
 **notes**
 - Inherit from CommerceEntity class from Sitecore.Commerce.Core.
