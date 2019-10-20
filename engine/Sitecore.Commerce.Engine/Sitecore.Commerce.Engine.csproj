@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Plugin.Hunk.Catalog.Test\Plugin.Hunk.Catalog.Test.csproj" />
+    <ProjectReference Include="..\Plugin.Hunk.Catalog\Plugin.Hunk.Catalog.csproj" />
     <ProjectReference Include="..\Plugin.Sample.AdventureWorks\Plugin.Sample.AdventureWorks.csproj" />
     <ProjectReference Include="..\Plugin.Sample.Habitat\Plugin.Sample.Habitat.csproj" />
     <ProjectReference Include="..\Plugin.Sample.Payments.Braintree\Plugin.Sample.Payments.Braintree.csproj" />
@@ -31,7 +32,6 @@
     <PackageReference Include="Microsoft.AspNetCore" Version="2.1.*" />
     <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.1.*" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.1.*" />
-    <PackageReference Include="Plugin.Hunk.Catalog" Version="4.0.0" />
 
     <PackageReference Include="Serilog.AspNetCore" Version="2.1.*" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />

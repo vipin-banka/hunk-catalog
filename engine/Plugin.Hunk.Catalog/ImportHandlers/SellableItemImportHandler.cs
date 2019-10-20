@@ -46,8 +46,7 @@ namespace Plugin.Hunk.Catalog.ImportHandlers
 
         public override bool HasVariants()
         {
-            var variants = typeof(TSourceEntity).GetPropertyValueWithAttribute<VariantsAttribute, IEnumerable>(SourceEntity);
-            return variants != null && variants.GetEnumerator().MoveNext();
+            return HasVariants(SourceEntity);
         }
 
         public override IList<IEntity> GetVariants()

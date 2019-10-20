@@ -1,28 +1,22 @@
-﻿using Plugin.Hunk.Catalog.ImportHandlers;
-using Sitecore.Commerce.Core;
+﻿using Sitecore.Commerce.Core;
 using System.Threading.Tasks;
 
 namespace Plugin.Hunk.Catalog.Test.CustomEntityImport
 {
-    public class SourceCustomEntityImportHandler : BaseEntityImportHandler<SourceCustomEntity, CustomCommerceItem>
+    /// <inheritdoc />
+    public class SourceCustomEntityImportHandler : Plugin.Hunk.Catalog. BaseEntityImportHandler<SourceCustomEntity, CustomCommerceItem>
     {
+        /// <inheritdoc />
         public SourceCustomEntityImportHandler(string sourceProduct, CommerceCommander commerceCommander, CommercePipelineExecutionContext context)
             : base(sourceProduct, commerceCommander, context)
         {
         }
 
-        public override async Task<CommerceEntity> Create()
+        protected override void Initialize()
         {
-            var commerceEntity = new CustomCommerceItem();
-            commerceEntity.Id = IdWithPrefix();
-            commerceEntity.Name = SourceEntity.Name;
-            commerceEntity.DisplayName = SourceEntity.DisplayName;
-            commerceEntity.Description = SourceEntity.Description;
-
-            await CommerceCommander.Pipeline<IPersistEntityPipeline>()
-                .Run(new PersistEntityArgument(commerceEntity), Context).ConfigureAwait(false);
-
-            return commerceEntity;
+            CommerceEntity.Name = SourceEntity.Name;
+            CommerceEntity.DisplayName = SourceEntity.DisplayName;
+            CommerceEntity.Description = SourceEntity.Description;
         }
 
         public override void Map()
@@ -36,6 +30,11 @@ namespace Plugin.Hunk.Catalog.Test.CustomEntityImport
         {
             localizedTargetEntity.DisplayName = localizedSourceEntity.DisplayName;
             localizedTargetEntity.Description = localizedSourceEntity.Description;
+        }
+
+        public override Task<CommerceEntity> Create()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

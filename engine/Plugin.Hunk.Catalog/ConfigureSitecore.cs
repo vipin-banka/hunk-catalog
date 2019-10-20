@@ -96,7 +96,13 @@ namespace Plugin.Hunk.Catalog
                     configure
                         .Add<Pipelines.Blocks.AssociateCategoryToParentBlock>()
                         .Add<AssociateSellableItemToParentBlock>()
+                        .Add<DisassociateFromNotLinkedParentBlock>()
                         .Add<Pipelines.Blocks.CreateRelationshipBlock>();
+                })
+                .AddPipeline<ICreateRelationshipPipeline, CreateRelationshipPipeline>(configure =>
+                {
+                    configure
+                        .Add<Pipelines.Blocks.UpdateCatalogHierarchyBlock>();
                 })
                 .AddPipeline<IImportLocalizeContentPipeline, ImportLocalizeContentPipeline>(configure =>
                 {

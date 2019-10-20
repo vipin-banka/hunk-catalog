@@ -102,6 +102,12 @@ namespace Plugin.Hunk.Catalog.ImportHandlers
             return false;
         }
 
+        protected bool HasVariants(object instance)
+        {
+            var variants = typeof(TSourceEntity).GetPropertyValueWithAttribute<VariantsAttribute, IEnumerable>(instance);
+            return variants != null && variants.GetEnumerator().MoveNext();
+        }
+
         public virtual IList<IEntity> GetVariants()
         {
             return new List<IEntity>();

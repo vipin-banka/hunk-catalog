@@ -50,6 +50,8 @@
 
         public const string UpdateEntityBlock = "CatalogImport.Framework.block.UpdateEntity";
 
+        public const string UpdateCatalogHierarchyBlock = "CatalogImport.Framework.block.UpdateCatalogHierarchy";
+
         public const string SetEntityComponentsBlock = "CatalogImport.Framework.block.SetEntityComponents";
 
         public const string ResolveComponentMapperBlock = "CatalogImport.Framework.block.ResolveComponentMapper"; 
@@ -61,6 +63,10 @@
         public const string AssociateCategoryToParentBlock = "CatalogImport.Framework.block.AssociateCategoryToParent";
 
         public const string AssociateSellableItemToParentBlock = "CatalogImport.Framework.block.AssociateSellableItemToParent";
+
+        public const string DisassociateFromNotLinkedParentBlock = "CatalogImport.Framework.block.DisassociateFromNotLinkedParent";
+
+        public const string DisassociateFromParentBlock = "CatalogImport.Framework.block.DisassociateFromParent";
 
         public const string CreateRelationshipBlock = "CatalogImport.Framework.block.CreateRelationship";
 
