@@ -4,15 +4,19 @@
 Plugin for Sitecore Commerce that allows you to write simple and maintainable custom catalog import implementations.
 
 ## What is this?
-In most of Sitecore Commerce projects you need to write custom catalog import code based on your specific requirements and catalog information in your PIM. Without a standard approach each team does it in a different way. The idea with this plugin is to create a standard approach for import processes that can be utilized in any commerce implementation without compromising with flexibility and extensibility of Sitecore commerce architecture and gives you type safe way to write your own custom implementations.
+In almost every Sitecore commerce implementation we write a custom catalog import process to import catalog content from a PIM system to Sitecore Commerce Engine. These custom implementations are very specific to a project requirement and hardly can be reused for another commerce project. The idea with this plugin is to create a standard approach for import process that can be used in any commerce implementation without compromising with flexibility and extensibility of Sitecore commerce framework. It simplifies your custom catalog implementations as it takes care of a bigger part of import process and with this you can write your import implementations quickly.
 
-In a usual catalog import implementation you create a plugin (at minimum) that reads data from external system, takes care of XC specific things (entities, components, pipelines, commands, versioning, localization etc.) and writes the source content to Sitecore XC entities.
-![A typical catalog import implementation](https://github.com/vipin-banka/hunk-catalog/blob/master/images/a-general-catalog-import-implementation.png)
+In a usual catalog import implementation we create a plugin (at minimum) that reads data from external system, transforms external content to Sitecore commerce content and writes the transformed content to Sitecore Commerce database. It includes lots of Sitecore Commerce specific things (e.g. managing entities and components, executing correct commands and pipelines, taking care of versioning and localization, and much more.)
+![A usual catalog import implementation](https://github.com/vipin-banka/hunk-catalog/blob/master/images/a-general-catalog-import-implementation.png)
 
-With **hunk-catalog** import implementation you still create a plugin that reads data from external system and writes the source content to Sitecore XC entities but **hunk-catalog** will take care of all XC specific things for you. With this implementation you are free from writing lots of boilerplate code for import process.
+With **hunk-catalog** plugin your custom import implementation will read data from external system, transforms source document in Sitecore Commerce document and triggers the import process. Import process design with hunk-catalog plugin will be as below:
 ![hunk-catalog import implementation](https://github.com/vipin-banka/hunk-catalog/blob/master/images/hunk-catalog-import-implementation.png)
 
-**This plugin supports following:**
+hunk-catalog plugin contains all Sitecore Commerce specific things. It exposes this functionality with an API endpoint and a commerce command. Its API endpoint and commerce command are designed to import a single source document into Sitecore Commerce at a time. For bulk import it can be triggered multiple times. Its API endpoint can be triggered from any external application such as postman, console application etc. Its commerce command can be used to trigger import process within the commerce engine itself such as triggering it from a minion or triggering it from other commands/pipelines etc.
+
+After writing your custom import implementation you should configure the import process using CatalogImportPolicy. Details of this policy is used by import process during serval operations to convert source data structure into target data structure.
+
+**hunk-catalog plugin supports following:**
 * Creation and update of Catalog, Category and SellableItem commerce entities.
 * Creation and update of any custom commerce entities.
 * Adding, updating and removing child components on commerce entities.
@@ -20,7 +24,7 @@ With **hunk-catalog** import implementation you still create a plugin that reads
 * Adding, updating and removing child components on item variants.
 * Managing parent child relationships between catalog, category and sellable items.
 * Managing relationships e.g. related, cross sell on sellable items.
-* Store Localize content for commerce entities, components, item variants and item variant child components.
+* Store localize content for commerce entities and components.
 
 ## Flow Chart - A full flow for single entity import.
 ![alt text](https://github.com/vipin-banka/hunk-catalog/blob/master/docs/flow-chart.png)
@@ -54,15 +58,18 @@ Once your commerce engine solution is deployed and bootstrapped you can use the 
 ## <a name="getting-started">Getting started
 This plugin covers lot of things so let's see following samples:
 	
-1. [Import a Sellable Item](#import-sellable-item)
-2. [Import a Sellable Item with Variants](#import-sellable-item-with-variants)
-3. [Import a Sellable Item with Localize Content](#import-sellable-item-with-localize-content)
-4. [Import a Sellable Item with Relationships](#import-sellable-item-with-relationships)
-5. [Import a Catalog Item](#import-catalog-item)
-6. [Import a Category Item](#import-category-item)
-7. [Import a Custom Entity](#import-custom-entity)
+1. [Import Sellable Item](#import-sellable-item)
+2. [Import Sellable Item with Variants](#import-sellable-item-with-variants)
+3. [Import Sellable Item with Localize Content](#import-sellable-item-with-localize-content)
+4. [Import Sellable Item with Relationships](#import-sellable-item-with-relationships)
+5. [Import Catalog Item](#import-catalog-item)
+6. [Import Category Item](#import-category-item)
+7. [Import content in custom commerce entity](#import-custom-entity)
+8. [Metadata](#metadata)
+9. [Catalog Import Policy](#catalog-import-policy)
+10. [API Endpoint](#api-endpoint)
 
-### <a name="import-sellable-item">1. Import a sellable item
+### <a name="import-sellable-item">1. Import sellable item
 Let's say you want to import a sellable item. Your sellable item has few custom fields i.e. "Accessories" and "Dimensions" and you need to add a custom commerce component for that.
 
 Follow below steps:
@@ -233,7 +240,7 @@ Once you are done with changes in policy set, you need to assign this policy set
 * Execute the request.
 * Open Business tools and check your new sellable item.
 
-### 2. <a name="import-sellable-item-with-variants">Import a Sellable Item with Variants
+### 2. <a name="import-sellable-item-with-variants">Import Sellable Item with Variants
 This sample depends on previous sample of importing a sellable item, make sure you have looked into that first.
 	
 Let's say you want to import a sellable item with variants. Your variant has few custom fields as well.
@@ -661,7 +668,7 @@ See sample configuration [here](#catalog-import-policy).
 * Execute the request.
 * Open Business tools and verify category item.
 
-### <a name="import-custom-entity">7. Import Custom Entity
+### <a name="import-custom-entity">7. Import content in custom commerce entity
 It is also possible to import content in a new custom commerce entity.
 	
 Follow below steps:
@@ -767,8 +774,11 @@ See sample configuration [here](#catalog-import-policy).
 * Execute the request.
 * You can check entity in database.
 
-### <a name="link-to-catalog">8. Link Sellable Item with Catalog & Category
-To link sellable item with catalog or category or both, in your source sellable item class you should have a property like below
+### <a name="metadata">8. Metadata
+This plugin supports some attributes those can be used to define the data for the import process.
+	
+#### <a name="link-to-catalog">8.1 Link Sellable Item with Catalog & Category
+To link sellable item with catalog or category or both, in your source sellable item class you should have a property like below:
 ```c#
         [Parents()]
         public IList<string> Parents { get; set; }
@@ -779,7 +789,32 @@ Examples:
 - A single value like "Hunk1_Catalog/Hunk1_Category Name" will associate sellable item with category inside catalog.
 - Multiple values like "Hunk1_Catalog" and "Hunk1_Catalog/Hunk1_Category Name" will associate sellable item with both catalog and category.
 	
-### <a name="catalog-import-policy">9. Catalog Import Policy Set
+#### <a name="defining-variants">8.2 Defining Variants for Sellable Item
+To define varaints you should create a class for source variant content and in your source sellable item class add a property like below:
+```c#
+        [Variants()]
+        public IList<{YOUR-VARIANT-CLASS-NAME}> Variants { get; set; }
+```
+If you send content for this property then import process will also import the item variant content in Sitecore Commerce entity.
+	
+#### <a name="defining-localize-content">8.3 Defining localize content
+To inform import process about localize content you should add a property in your source class like below
+```c#
+        [Languages()]
+        public IList<LanguageEntity<{YOUR-SOURCE-CLASS-NAME}>> Languages { get; set; }
+```
+If you send content for this property then import process will also import localize content.
+Success of this process will also depends upon your configuration for localize content in Sitecore Commerce engine environment.
+	
+#### <a name="defining-relationship-content">8.4 Defining relationship content
+To send relation details in import process your source class should have following property
+```c#
+        [Relationships()]
+        public IList<RelationshipDetail> RelationshipDetails { get; set; }
+```
+Each item in this list will provide a relationship name and one or more entity friendly ids.
+	
+### <a name="catalog-import-policy">9. Catalog Import Policy
 I recommend that for all configuration a separate Policy Set should be created, and that policy set must define CatalogImportPolicy this plugin heavily relies on.
 
 Catalog import policy allows you to set following values:
@@ -876,3 +911,24 @@ A complete Catalog Import Policy is below:
   }
 }
 ```
+### <a name="api-endpoint">10. Import API Endpoint
+**hunk-catalog** plugin exposes an API endpoint that can be called to import a single source document in Sitecore Commerce.
+
+### Request Headers
+Following must exists as headers:
+- Content-Type:application/json
+- Environment: Commerce environment name that should contain Catalog Import Policy.
+
+### Request Body
+In the request body following parameters should exists:
+
+1. **metadata**: This metata will be used by import process to determine the entity to import and control the execution flow. This must contains following:
+
+  - **EntityType**: This defines the entity your import process will going to run for. It will be a string value. It should match with one of the entity mappings keys defined in the catalog import policy.
+  - **Components**: This will be a comma separated string value. This should match with component mapping keys defined in the catalog import policy. This is an optional parameter and can be ignored if your entity does not need to import content inside a custom component.
+  - **VariantComponents**: This will be a comma separated string value. This should match with variation component mapping keys defined in the catalog import policy. This is an optional parameter and can be ignored if your entity does not need to import item variants and if your item varaint does not need to import custom content inside a custom component.
+  
+2. **entity**: This is serialized value for your source entity, this will change based on your source entity.
+
+### Response Body
+In response body it will return the commerce command with Sitecore Commerce Messages and Models containing the status of import process.
