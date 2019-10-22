@@ -1,10 +1,11 @@
-﻿using Sitecore.Commerce.Core;
+﻿using Plugin.Hunk.Catalog.ImportHandlers;
+using Sitecore.Commerce.Core;
 using System.Threading.Tasks;
 
 namespace Plugin.Hunk.Catalog.Test.CustomEntityImport
 {
     /// <inheritdoc />
-    public class SourceCustomEntityImportHandler : Plugin.Hunk.Catalog. BaseEntityImportHandler<SourceCustomEntity, CustomCommerceItem>
+    public class SourceCustomEntityImportHandler : CustomEntityImportHandler<SourceCustomEntity, CustomCommerceItem>
     {
         /// <inheritdoc />
         public SourceCustomEntityImportHandler(string sourceProduct, CommerceCommander commerceCommander, CommercePipelineExecutionContext context)
@@ -30,11 +31,6 @@ namespace Plugin.Hunk.Catalog.Test.CustomEntityImport
         {
             localizedTargetEntity.DisplayName = localizedSourceEntity.DisplayName;
             localizedTargetEntity.Description = localizedSourceEntity.Description;
-        }
-
-        public override Task<CommerceEntity> Create()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

@@ -55,6 +55,16 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
                         result.Add(catalogId, new List<string>());
                     }
 
+                    if (names.Length <= 1)
+                    {
+                        if (!result[catalogId].Contains(catalogId))
+                        {
+                            result[catalogId].Add(catalogId);
+                        }
+
+                        continue;
+                    }
+
                     var categoryId = await GetCategoryId(catalogId, names[names.Length - 1], context);
                     if (!string.IsNullOrEmpty(categoryId))
                     {

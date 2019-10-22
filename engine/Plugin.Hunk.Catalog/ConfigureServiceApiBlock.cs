@@ -16,7 +16,8 @@ namespace Plugin.Hunk.Catalog
             string entitySetName = "Commands";
 
             ActionConfiguration actionConfiguration = modelBuilder.Action("ImportEntity");
-            actionConfiguration.Parameter<SourceEntityDetail>("sourceEntity");
+            actionConfiguration.Parameter<string>("metadata");
+            actionConfiguration.Parameter<string>("entity");
             actionConfiguration.ReturnsFromEntitySet<CommerceCommand>(entitySetName);
 
             return Task.FromResult(modelBuilder);

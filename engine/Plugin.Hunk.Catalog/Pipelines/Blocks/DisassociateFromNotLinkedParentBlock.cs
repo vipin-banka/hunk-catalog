@@ -34,19 +34,7 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
             {
                 var component = commerceEntity.GetComponent<ParentEntitiesComponent>();
 
-                var allIds = new List<string>();
-
-                foreach (var catalog in arg.ImportHandler.ParentEntityIds)
-                {
-                    allIds.Add(catalog.Key);
-                    if (catalog.Value != null && catalog.Value.Any())
-                    {
-                        foreach (var parentId in catalog.Value)
-                        {
-                            allIds.Add(parentId);
-                        }
-                    }
-                }
+                var allIds = arg.ImportHandler.ParentEntityIds.SelectMany(x => x.Value).Distinct().ToList();
 
                 var relationshipNamePostfix = "To" + commerceEntity.GetType().Name;
 
@@ -72,8 +60,8 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
                         if (!string.IsNullOrEmpty(relationshipName))
                         {
                             await _deleteRelationshipCommand.Process(context.CommerceContext,
-                                    commerceEntity.Id,
                                     componentEntityId,
+                                    commerceEntity.Id,
                                     relationshipName)
                                 .ConfigureAwait(false);
                         }

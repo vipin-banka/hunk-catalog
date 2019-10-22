@@ -102,7 +102,8 @@ namespace Plugin.Hunk.Catalog
                 .AddPipeline<ICreateRelationshipPipeline, CreateRelationshipPipeline>(configure =>
                 {
                     configure
-                        .Add<Pipelines.Blocks.UpdateCatalogHierarchyBlock>();
+                        .Add<Pipelines.Blocks.UpdateCatalogHierarchyBlock>()
+                        .After<Sitecore.Commerce.Plugin.Catalog.UpdateCatalogHierarchyBlock>();
                 })
                 .AddPipeline<IImportLocalizeContentPipeline, ImportLocalizeContentPipeline>(configure =>
                 {

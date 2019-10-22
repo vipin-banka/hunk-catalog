@@ -1,6 +1,5 @@
 ﻿using Plugin.Hunk.Catalog.Abstractions;
 using Sitecore.Commerce.Core;
-using Sitecore.Commerce.Plugin.Catalog;
 using System.Threading.Tasks;
 
 namespace Plugin.Hunk.Catalog.ImportHandlers
@@ -22,6 +21,7 @@ namespace Plugin.Hunk.Catalog.ImportHandlers
             Initialize();
             if (CommerceEntity == null)
             {
+                Context.Abort(Context.CommerceContext.AddMessage(Context.GetPolicy<KnownResultCodes>().Error, "EntityIsMissing", null, "Entity cannot be null.").Result, Context);
             }
 
             await CommerceCommander.Pipeline<IPersistEntityPipeline>()

@@ -25,60 +25,74 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
             {
                 var relationships = arg.ImportHandler.GetRelationships();
 
+                var commerceEntity = arg.ImportHandler.GetCommerceEntity();
+
                 foreach (var relationshipDetail in relationships)
                 {
-                    if (!string.IsNullOrEmpty(relationshipDetail.Name) && relationshipDetail.Ids != null &&
-                        relationshipDetail.Ids.Any())
+                    if (!string.IsNullOrEmpty(relationshipDetail.Name))
                     {
                         var relationShipMapper = await _commerceCommander.Pipeline<IResolveRelationshipMapperPipeline>()
                             .Run(new ResolveRelationshipMapperArgument(arg, relationshipDetail.Name), context).ConfigureAwait(false);
 
                         if (relationShipMapper == null)
                             continue;
-                        
+
                         if (!string.IsNullOrEmpty(relationShipMapper.Name))
                         {
-                            var targetIds = await relationShipMapper.GetEntityIds(relationshipDetail.Ids).ConfigureAwait(false);
-                            if (targetIds.Any())
+                            IList<string> targetIds = new List<string>();
+                            if (relationshipDetail.Ids != null && relationshipDetail.Ids.Any())
                             {
-                                IDictionary<string, IList<string>> dictionary = await _commerceCommander.Pipeline<IGetListsEntityIdsPipeline>().Run(new GetListsEntityIdsArgument(relationShipMapper.Name), context).ConfigureAwait(false);
+                                targetIds = await relationShipMapper.GetEntityIds(relationshipDetail.Ids)
+                                    .ConfigureAwait(false);
+                            }
 
-                                if (dictionary != null && dictionary.Values.Any())
+                            var listName = $"{relationShipMapper.Name}-{commerceEntity.FriendlyId}";
+
+                            if (commerceEntity.EntityVersion > 1)
+                            {
+                                listName = $"{listName}-{commerceEntity.EntityVersion}";
+                            }
+
+                            IDictionary<string, IList<string>> dictionary = await _commerceCommander.Pipeline<IGetListsEntityIdsPipeline>().Run(new GetListsEntityIdsArgument(listName), context).ConfigureAwait(false);
+
+                            var deleteIdsFromList = new List<string>();
+
+                            if (dictionary != null && dictionary.Values.Any())
+                            {
+                                var firstList = dictionary.ElementAt(0);
+                                foreach (var entityId in firstList.Value)
                                 {
-                                    var deleteIdsFromList = new List<string>();
-                                    var firstList = dictionary.ElementAt(0);
-                                    foreach (var entityId in firstList.Value)
+                                    if (targetIds != null
+                                        && targetIds.Contains(entityId))
                                     {
-                                        if (targetIds.Contains(entityId))
-                                        {
-                                            targetIds.Remove(entityId);
-                                        }
-                                        else
-                                        {
-                                            deleteIdsFromList.Add(entityId);
-                                        }
+                                        targetIds.Remove(entityId);
                                     }
-
-                                    if (targetIds.Any())
+                                    else
                                     {
-                                        var targetName = targetIds.JoinIds();
-
-                                        await _commerceCommander.Command<CreateRelationshipCommand>().Process(
-                                            context.CommerceContext,
-                                            arg.ImportHandler.GetCommerceEntity().Id,
-                                            targetName, relationShipMapper.Name);
-                                    }
-
-                                    if (deleteIdsFromList.Any())
-                                    {
-                                        var targetName = deleteIdsFromList.JoinIds();
-
-                                        await _commerceCommander.Command<DeleteRelationshipCommand>().Process(
-                                            context.CommerceContext,
-                                            arg.ImportHandler.GetCommerceEntity().Id,
-                                            targetName, relationShipMapper.Name);
+                                        deleteIdsFromList.Add(entityId);
                                     }
                                 }
+
+                                if (targetIds != null
+                                    && targetIds.Any())
+                                {
+                                    var targetName = targetIds.JoinIds();
+
+                                    await _commerceCommander.Command<CreateRelationshipCommand>().Process(
+                                        context.CommerceContext,
+                                        arg.ImportHandler.GetCommerceEntity().Id,
+                                        targetName, relationShipMapper.Name);
+                                }
+                            }
+
+                            if (deleteIdsFromList.Any())
+                            {
+                                var targetName = deleteIdsFromList.JoinIds();
+
+                                await _commerceCommander.Command<DeleteRelationshipCommand>().Process(
+                                    context.CommerceContext,
+                                    arg.ImportHandler.GetCommerceEntity().Id,
+                                    targetName, relationShipMapper.Name);
                             }
                         }
                     }
