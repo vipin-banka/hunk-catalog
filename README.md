@@ -1,20 +1,14 @@
 ![hunk-catalog](https://github.com/vipin-banka/hunk-catalog/blob/master/images/hunk.png)
 
 # hunk-catalog for Sitecore Commerce
-Plugin for Sitecore Commerce that allows you to write simple and maintainable custom catalog import implementations.
+Plugin for Sitecore Commerce that enable you to write simple and consistent custom catalog import implementations quickly.
 
 ## What is this?
-In almost every Sitecore commerce implementation we write a custom catalog import process to import catalog content from a PIM system to Sitecore Commerce Engine. These custom implementations are very specific to a project requirement and hardly can be reused for another commerce project. The idea with this plugin is to create a standard approach for import process that can be used in any commerce implementation without compromising with flexibility and extensibility of Sitecore commerce framework. It simplifies your custom catalog implementations as it takes care of a bigger part of import process and with this you can write your import implementations quickly.
+In any catalog import process for Sitecore Commerce there are two major sections. First section deals with your PIM specific things and other section deals with Sitecore Commerce specific things, e.g. creating entities, versioning, localization and etc. The idea here is to take all Sitecore Specific things in a separate plugin and reuse in various implementation. This will make custom implementations super simple to build.
 
-In a usual catalog import implementation we create a plugin (at minimum) that reads data from external system, transforms external content to Sitecore commerce content and writes the transformed content to Sitecore Commerce database. It includes lots of Sitecore Commerce specific things (e.g. managing entities and components, executing correct commands and pipelines, taking care of versioning and localization, and much more.)
-![A usual catalog import implementation](https://github.com/vipin-banka/hunk-catalog/blob/master/images/a-general-catalog-import-implementation.png)
-
-With **hunk-catalog** plugin your custom import implementation will read data from external system, transforms source document in Sitecore Commerce document and triggers the import process. Import process design with hunk-catalog plugin will be as below:
+hunk-catalog plugin exposes its functionality with an API endpoint and a commerce command. These plugin is designed to import a single source document into Sitecore Commerce at a time. For bulk import operation can be triggered multiple times. Its API endpoint can be triggered from any external application such as postman, console application etc. Its commerce command can be used to trigger import process within the commerce engine itself such as triggering it from a minion or triggering it from other commands/pipelines etc.
+Overall your implementation with hunk-catalog will look like below:
 ![hunk-catalog import implementation](https://github.com/vipin-banka/hunk-catalog/blob/master/images/hunk-catalog-import-implementation.png)
-
-hunk-catalog plugin contains all Sitecore Commerce specific things. It exposes this functionality with an API endpoint and a commerce command. Its API endpoint and commerce command are designed to import a single source document into Sitecore Commerce at a time. For bulk import it can be triggered multiple times. Its API endpoint can be triggered from any external application such as postman, console application etc. Its commerce command can be used to trigger import process within the commerce engine itself such as triggering it from a minion or triggering it from other commands/pipelines etc.
-
-After writing your custom import implementation you should configure the import process using CatalogImportPolicy. Details of this policy is used by import process during serval operations to convert source data structure into target data structure.
 
 **hunk-catalog plugin supports following:**
 * Creation and update of Catalog, Category and SellableItem commerce entities.
@@ -26,10 +20,7 @@ After writing your custom import implementation you should configure the import 
 * Managing relationships e.g. related, cross sell on sellable items.
 * Store localize content for commerce entities and components.
 
-## Flow Chart - A full flow for single entity import.
-![alt text](https://github.com/vipin-banka/hunk-catalog/blob/master/docs/flow-chart.png)
-
-## What is your responsibility?
+## What you need to do?
 You need to do following:
 * **Create a plugin**
   - you need to create a XC plugin that will reference **hunk-catalog** plugin.
@@ -39,7 +30,7 @@ You need to do following:
 * **Model Commerce Entities and Components**
   - Create custom Sitecore commerce entity classes (optional, for a catalog import not necessary)
   - Create custom Sitecore commerce component classes, these will be simple POCO classes representing information that will be stored in commerce engine.
-* **Write Mappers**
+* **Write Transformation Blocks**
   - Create c# classes and write simple mapping code.
   - Write code to read information from source and write in target.
 * **Configure Commerce Engine**
@@ -117,7 +108,7 @@ See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine
 **notes**
 * Inherit your class from "IEntity" interface and implement it, this interface only demands for one string property named as Id.
 * You can design this class as you want.
-* To be able to set relationship with Catalogs and Categories add a property like below and decorate it with Parents attribute. You can name it anything you like.
+* To be able to set relationship with Catalogs and Categories add a property like below and decorate it with Parents attribute.
 ```c#
         [Parents()]
         public IList<string> Parents { get; set; }
@@ -215,11 +206,9 @@ See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine
 * Override *Map* method similar to sample above. 
 
 #### 1.5 Configure commerce engine
-I would recommend to creating a separate Policy Set file and add CatalogImportPolicy in it.
 You need to configure your custom mapper classes in this policy as shown in below image:
 ![entity-mappings](https://github.com/vipin-banka/hunk-catalog/blob/master/images/Entity-mappings.png)
 see complete policy details [here](#catalog-import-policy).
-Once you are done with changes in policy set, you need to assign this policy set to a commerce environment.
 
 #### 1.6 How to test?
 * Build and deploy commerce solution.
@@ -229,19 +218,12 @@ Once you are done with changes in policy set, you need to assign this policy set
 * Go to **Catalog Import** collection and open **Import Sellable Item** request.
 ![import-sellable-item](https://github.com/vipin-banka/hunk-catalog/blob/master/images/import-sellable-item.png)
 * Provide correct data in the request body.
-* notes
-  - you need to pass two parameters
-   - "metadata": this is to tell import process what to import, it includes following
-     - EntityType: The entity key defined for entity  mapper in the policy, for this sample it is SellableItem.
-     - Components: Comma separated component mapper keys defined in the policy, for this sample it is SellableItemComponent.
-     - VariantComponents: Comma separated variant component mapper keys defined in the policy, for this sample there is none so we can leave it blank.
-   - "entity": This is serialized value for your source entity, this will change based on your source entity.
 * **make sure to give some value for "Parents".** see details [here](#link-to-catalog).
 * Execute the request.
 * Open Business tools and check your new sellable item.
 
 ### 2. <a name="import-sellable-item-with-variants">Import Sellable Item with Variants
-This sample depends on previous sample of importing a sellable item, make sure you have looked into that first.
+This sample depends on previous sample of importing a sellable item. Please follow that before continuing with this.
 	
 Let's say you want to import a sellable item with variants. Your variant has few custom fields as well.
 
@@ -382,7 +364,7 @@ See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine
 * Override *Map* method like sample above.
 
 #### 2.6 Configure Commerce Engine
-In the previous sample we created a policy set file, you need to configure your variant custom mapper classes there as shown in below image:
+Configure your variant custom mapper classes in Catalog Import Policy as shown in below image:
 ![variant-mappings](https://github.com/vipin-banka/hunk-catalog/blob/master/images/variant-mappings.png)
 see complete policy details [here](#catalog-import-policy).
 
@@ -394,13 +376,6 @@ see complete policy details [here](#catalog-import-policy).
 * Go to **Catalog Import** collection and open **Import Sellable Item with Variants** request.
 ![import-sellable-items-with-variants](https://github.com/vipin-banka/hunk-catalog/blob/master/images/import-sellable-item-with-variants.png)
 * Provide correct data in the request body.
-* notes
-  - you need to pass two parameters
-   - "metadata": this is to tell import process what to import, it includes following
-     - EntityType: The unique name defined for entity  mapper in the policy, for current sample it is SellableItem.
-     - Components: Comma separated component mapper keys defined in the policy, for current sample it is SellableItemComponent.
-     - VariantComponents: Comma separated variant component mapper keys defined in the policy, for current sample it is VariantComponent.
-   - "entity": This is serialized value for your source entity, this will change based on your source entity.
 * **make sure to give some value in "Parents" property.** see details [here](#link-to-catalog)
 * Execute the request.
 * Open Business tools and check your sellable item and variants.
@@ -410,7 +385,7 @@ This sample depends on previous sample of importing a sellable item. Please foll
 The sample is focused on sellable item, but localize content can be imported for other entities similarly.
 
 #### 3.1 Set Localization Policy set
-In "PlugIn.LocalizeEntities.	PolicySet-1.0.0.json" file set localization details for your entity.
+In "PlugIn.LocalizeEntities.PolicySet-1.0.0.json" file set localization details for your entity.
 see sample [here](https://github.com/vipin-banka/hunk-catalog/blob/maste/engine/Sitecore.Commerce.Engine/wwwroot/data/Environments/PlugIn.LocalizeEntities.PolicySet-1.0.0.json).
 
 #### 3.2 Add language property to source sellable item class
@@ -427,7 +402,8 @@ public class SourceProduct : IEntity
 See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProduct.cs).
 
 **notes**
-* This property should be decorated with Languages attribute and the type argument in property should represent your source product class.
+* This property should be decorated with Languages attribute 
+* Type argument in property should represent your source product class.
 
 #### 3.3 Override method in mapper classes.
 Each mapper class supports a method to map localize content, in your mapper class override this method:
@@ -467,7 +443,8 @@ public class SourceProduct : IEntity
 See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/SellableItemEntityImport/SourceProduct.cs)
 
 **notes**
-* You must add this property to your sellable item source class as is. It must be decorated with Relationships attribute and must have return type as IList&lt;RelationshipDetail&gt;.
+* You must add this property to your sellable item source class as is. 
+* It must be decorated with Relationships attribute and must have return type as IList&lt;RelationshipDetail&gt;.
 
 #### 4.2 Verify commerce engine configuration
 See policy details [here](#catalog-import-policy), make sure all mappers for relationship details from this plugin are configured properly.
