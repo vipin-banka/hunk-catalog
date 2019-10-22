@@ -46,7 +46,7 @@ Once your commerce engine solution is deployed and bootstrapped you can use the 
   - From the package manager console: *Install-Package Plugin.Hunk.Catalog*
   - Using the Nuget package manager add a dependency on *Plugin.Hunk.Catalog*.
 
-## <a name="getting-started">Getting started
+## Getting started
 This plugin covers lot of things so let's see following samples:
 	
 1. [Import Sellable Item](#import-sellable-item)
@@ -60,7 +60,7 @@ This plugin covers lot of things so let's see following samples:
 9. [Catalog Import Policy](#catalog-import-policy)
 10. [API Endpoint](#api-endpoint)
 
-### <a name="import-sellable-item">1. Import sellable item
+### 1. Import sellable item
 Let's say you want to import a sellable item. Your sellable item has few custom fields i.e. "Accessories" and "Dimensions" and you need to add a custom commerce component for that.
 
 Follow below steps:
@@ -222,7 +222,7 @@ see complete policy details [here](#catalog-import-policy).
 * Execute the request.
 * Open Business tools and check your new sellable item.
 
-### 2. <a name="import-sellable-item-with-variants">Import Sellable Item with Variants
+### 2. Import Sellable Item with Variants
 This sample depends on previous sample of importing a sellable item. Please follow that before continuing with this.
 	
 Let's say you want to import a sellable item with variants. Your variant has few custom fields as well.
@@ -380,7 +380,7 @@ see complete policy details [here](#catalog-import-policy).
 * Execute the request.
 * Open Business tools and check your sellable item and variants.
 
-### 3. <a name="import-sellable-item-with-localize-content">Import Sellable Item with Localize Content
+### 3. Import Sellable Item with Localize Content
 This sample depends on previous sample of importing a sellable item. Please follow that before continuing with this.
 The sample is focused on sellable item, but localize content can be imported for other entities similarly.
 
@@ -461,7 +461,7 @@ See policy details [here](#catalog-import-policy), make sure all mappers for rel
 * Execute the request.
 * Open Business tools and verify related items with sellable item.
 
-### <a name="import-catalog-item">5. Import Catalog item
+### 5. Import Catalog item
 
 #### 5.1 Create a c# class for source catalog item.
 ```c#
@@ -548,7 +548,7 @@ See sample configuration [here](#catalog-import-policy).
 * Execute the request.
 * Open Business tools and verify catalog item there.
 
-### <a name="import-category-item">6. Import Category item
+### 6. Import Category item
 
 #### 6.1 Create a c# class for source category item.
 ```c#
@@ -645,7 +645,7 @@ See sample configuration [here](#catalog-import-policy).
 * Execute the request.
 * Open Business tools and verify category item.
 
-### <a name="import-custom-entity">7. Import content in custom commerce entity
+### 7. Import content in custom commerce entity
 It is also possible to import content in a new custom commerce entity.
 	
 Follow below steps:
@@ -751,10 +751,10 @@ See sample configuration [here](#catalog-import-policy).
 * Execute the request.
 * You can check entity in database.
 
-### <a name="metadata">8. Metadata
+### 8. Metadata
 This plugin supports some attributes those can be used to define the data for the import process.
 	
-#### <a name="link-to-catalog">8.1 Link Sellable Item with Catalog & Category
+#### 8.1 Link Sellable Item with Catalog & Category
 To link sellable item with catalog or category or both, in your source sellable item class you should have a property like below:
 ```c#
         [Parents()]
@@ -766,7 +766,7 @@ Examples:
 - A single value like "Hunk1_Catalog/Hunk1_Category Name" will associate sellable item with category inside catalog.
 - Multiple values like "Hunk1_Catalog" and "Hunk1_Catalog/Hunk1_Category Name" will associate sellable item with both catalog and category.
 	
-#### <a name="defining-variants">8.2 Defining Variants for Sellable Item
+#### 8.2 Defining Variants for Sellable Item
 To define varaints you should create a class for source variant content and in your source sellable item class add a property like below:
 ```c#
         [Variants()]
@@ -774,7 +774,7 @@ To define varaints you should create a class for source variant content and in y
 ```
 If you send content for this property then import process will also import the item variant content in Sitecore Commerce entity.
 	
-#### <a name="defining-localize-content">8.3 Defining localize content
+#### 8.3 Defining localize content
 To inform import process about localize content you should add a property in your source class like below
 ```c#
         [Languages()]
@@ -783,7 +783,7 @@ To inform import process about localize content you should add a property in you
 If you send content for this property then import process will also import localize content.
 Success of this process will also depends upon your configuration for localize content in Sitecore Commerce engine environment.
 	
-#### <a name="defining-relationship-content">8.4 Defining relationship content
+#### 8.4 Defining relationship content
 To send relation details in import process your source class should have following property
 ```c#
         [Relationships()]
@@ -791,7 +791,7 @@ To send relation details in import process your source class should have followi
 ```
 Each item in this list will provide a relationship name and one or more entity friendly ids.
 	
-### <a name="catalog-import-policy">9. Catalog Import Policy
+### 9. Catalog Import Policy
 I recommend that for all configuration a separate Policy Set should be created, and that policy set must define CatalogImportPolicy this plugin heavily relies on.
 
 Catalog import policy allows you to set following values:
@@ -888,7 +888,7 @@ A complete Catalog Import Policy is below:
   }
 }
 ```
-### <a name="api-endpoint">10. Import API Endpoint
+### 10. Import API Endpoint
 **hunk-catalog** plugin exposes an API endpoint that can be called to import a single source document in Sitecore Commerce.
 
 ### Request Headers
@@ -902,7 +902,9 @@ In the request body following parameters should exists:
 1. **metadata**: This metata will be used by import process to determine the entity to import and control the execution flow. This must contains following:
 
   - **EntityType**: This defines the entity your import process will going to run for. It will be a string value. It should match with one of the entity mappings keys defined in the catalog import policy.
+  
   - **Components**: This will be a comma separated string value. This should match with component mapping keys defined in the catalog import policy. This is an optional parameter and can be ignored if your entity does not need to import content inside a custom component.
+  
   - **VariantComponents**: This will be a comma separated string value. This should match with variation component mapping keys defined in the catalog import policy. This is an optional parameter and can be ignored if your entity does not need to import item variants and if your item varaint does not need to import custom content inside a custom component.
   
 2. **entity**: This is serialized value for your source entity, this will change based on your source entity.
