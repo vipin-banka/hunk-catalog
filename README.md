@@ -49,19 +49,16 @@ Once your commerce engine solution is deployed and bootstrapped you can use the 
 ## Getting started
 This plugin covers lot of things so let's see following samples:
 	
-1. [Import Sellable Item](#import-sellable-item)
-2. [Import Sellable Item with Variants](#import-sellable-item-with-variants)
-3. [Import Sellable Item with Localize Content](#import-sellable-item-with-localize-content)
-4. [Import Sellable Item with Relationships](#import-sellable-item-with-relationships)
-5. [Import Catalog Item](#import-catalog-item)
-6. [Import Category Item](#import-category-item)
-7. [Import content in custom commerce entity](#import-custom-entity)
-8. [Metadata](#metadata)
-9. [Catalog Import Policy](#catalog-import-policy)
-10. [API Endpoint](#api-endpoint)
+1. [Import Sellable Item](#1-import-sellable-item)
+2. [Import Sellable Item with Variants](#2-import-sellable-item-with-variants)
+3. [Import Sellable Item with Localize Content](#3-import-sellable-item-with-localize-content)
+4. [Import Sellable Item with Relationships](#4-import-sellable-item-with-relationships)
+5. [Import Catalog Item](#5-import-catalog-item)
+6. [Import Category Item](#6-import-category-item)
+7. [Import content in custom commerce entity](#7-import-content-in-custom-commerce-entity)
 
 ### 1. Import sellable item
-Let's say you want to import a sellable item. Your sellable item has few custom fields i.e. "Accessories" and "Dimensions" and you need to add a custom commerce component for that.
+Let's assume you want to import a sellable item. Your sellable item has few custom fields i.e. "Accessories" and "Dimensions" and you need to add a custom commerce component for that.
 
 Follow below steps:
 
@@ -208,7 +205,7 @@ See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine
 #### 1.5 Configure commerce engine
 You need to configure your custom mapper classes in this policy as shown in below image:
 ![entity-mappings](https://github.com/vipin-banka/hunk-catalog/blob/master/images/Entity-mappings.png)
-see complete policy details [here](#catalog-import-policy).
+See complete policy details [here](#catalog-import-policy).
 
 #### 1.6 How to test?
 * Build and deploy commerce solution.
@@ -217,15 +214,15 @@ see complete policy details [here](#catalog-import-policy).
 * Execute GetToken API from your commerce Authentication collection.
 * Go to **Catalog Import** collection and open **Import Sellable Item** request.
 ![import-sellable-item](https://github.com/vipin-banka/hunk-catalog/blob/master/images/import-sellable-item.png)
-* Provide correct data in the request body.
-* **make sure to give some value for "Parents".** see details [here](#link-to-catalog).
+* Provide source content in the request body. See API details [here](#api-endpoint).
+* Set Parents field values as per details [here](#parents-association).
 * Execute the request.
 * Open Business tools and check your new sellable item.
 
 ### 2. Import Sellable Item with Variants
 This sample depends on previous sample of importing a sellable item. Please follow that before continuing with this.
 	
-Let's say you want to import a sellable item with variants. Your variant has few custom fields as well.
+Let's assume you want to import a sellable item with variants. Your variant has few custom fields as well.
 
 Follow all the steps to import a sellable item and do the following.
 
@@ -375,8 +372,8 @@ see complete policy details [here](#catalog-import-policy).
 * Execute GetToken API from your commerce Authentication collection.
 * Go to **Catalog Import** collection and open **Import Sellable Item with Variants** request.
 ![import-sellable-items-with-variants](https://github.com/vipin-banka/hunk-catalog/blob/master/images/import-sellable-item-with-variants.png)
-* Provide correct data in the request body.
-* **make sure to give some value in "Parents" property.** see details [here](#link-to-catalog)
+* Provide source content in the request body. See API details [here](#api-endpoint).
+* Set Parents field values as per details [here](#parents-association).
 * Execute the request.
 * Open Business tools and check your sellable item and variants.
 
@@ -423,11 +420,11 @@ See sample [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine
 * Execute GetToken API from your commerce Authentication collection.
 * Go to **Catalog Import** collection and open **Import Sellable Item with Languages** request.
 ![import-with-localize-content](https://github.com/vipin-banka/hunk-catalog/blob/master/images/import-sellable-item-with-languages.png)
-* Provide correct data in the request body.
+* Provide source content in the request body. See API details [here](#api-endpoint).
 * Execute the request.
 * Open Business tools and verify localize content for sellable item.
 
-### <a name="import-sellable-item-with-relationships">4. Import sellable item with relationships
+### 4. Import sellable item with relationships
 
 #### 4.1 Add relationship property to source sellable item class
 Add following property in your source sellable item class.
@@ -457,7 +454,7 @@ See policy details [here](#catalog-import-policy), make sure all mappers for rel
 * Execute GetToken API from your commerce Authentication collection.
 * Go to **Catalog Import** collection and open **Import Sellable Item with Relationship** request.
 ![import-sellable-item-with-relationships](https://github.com/vipin-banka/hunk-catalog/blob/master/images/import-sellable-item-with-relationship.png)
-* Provide correct data in the request body.
+* Provide source content in the request body. See API details [here](#api-endpoint).
 * Execute the request.
 * Open Business tools and verify related items with sellable item.
 
@@ -544,7 +541,7 @@ See sample configuration [here](#catalog-import-policy).
 * Execute GetToken API from your commerce Authentication collection.
 * Go to **Catalog Import** collection and open **Import Catalog Item** request.
 ![import-catalog-item](https://github.com/vipin-banka/hunk-catalog/blob/master/images/import-catalog-item.png)
-* Provide correct data in the request body.
+* Provide source content in the request body. See API details [here](#api-endpoint).
 * Execute the request.
 * Open Business tools and verify catalog item there.
 
@@ -641,7 +638,8 @@ See sample configuration [here](#catalog-import-policy).
 * Execute GetToken API from your commerce Authentication collection.
 * Go to **Catalog Import** collection and open **Import Category Item** request.
 ![import-category-item](https://github.com/vipin-banka/hunk-catalog/blob/master/images/import-category-item.png)
-* Provide correct data in the request body.
+* Provide source content in the request body. See API details [here](#api-endpoint).
+* Set Parents field values as per details [here](#parents-association).
 * Execute the request.
 * Open Business tools and verify category item.
 
@@ -747,15 +745,21 @@ See sample configuration [here](#catalog-import-policy).
 * Execute GetToken API from your commerce Authentication collection.
 * Go to **Catalog Import** collection and open **Import Custom Entity** request.
 ![import-custom-entity](https://github.com/vipin-banka/hunk-catalog/blob/master/images/import-custom-item.png)
-* Provide correct data in the request body.
+* Provide source content in the request body. See API details [here](#api-endpoint).
 * Execute the request.
-* You can check entity in database.
+* You can check entity in commerce database.
 
-### 8. Metadata
+## Documentation
+Below is some more inforamtion for this plugin:
+1. [Metadata](#8-metadata)
+2. [Catalog Import Policy](#9-catalog-import-policy)
+3. [API Endpoint](#10-import-api-endpoint)
+
+### 1. Metadata
 This plugin supports some attributes those can be used to define the data for the import process.
 	
-#### 8.1 Link Sellable Item with Catalog & Category
-To link sellable item with catalog or category or both, in your source sellable item class you should have a property like below:
+#### <a name="parents-association">1.1 Link Sellable Item with Catalog & Category
+To link sellable item with catalog or category or both, in your source sellable item class add a property like below:
 ```c#
         [Parents()]
         public IList<string> Parents { get; set; }
@@ -766,33 +770,34 @@ Examples:
 - A single value like "Hunk1_Catalog/Hunk1_Category Name" will associate sellable item with category inside catalog.
 - Multiple values like "Hunk1_Catalog" and "Hunk1_Catalog/Hunk1_Category Name" will associate sellable item with both catalog and category.
 	
-#### 8.2 Defining Variants for Sellable Item
-To define varaints you should create a class for source variant content and in your source sellable item class add a property like below:
+#### 1.2 Defining Variants for Sellable Item
+To define varaints, create a class for source variant content and in your source sellable item class add a property like below:
 ```c#
         [Variants()]
         public IList<{YOUR-VARIANT-CLASS-NAME}> Variants { get; set; }
 ```
 If you send content for this property then import process will also import the item variant content in Sitecore Commerce entity.
 	
-#### 8.3 Defining localize content
-To inform import process about localize content you should add a property in your source class like below
+#### 1.3 Defining localize content
+To inform import process about localize content add below property in your source data class like below
 ```c#
         [Languages()]
         public IList<LanguageEntity<{YOUR-SOURCE-CLASS-NAME}>> Languages { get; set; }
 ```
+Change **{YOUR-SOURCE-CLASS-NAME}** with your source data class name.
 If you send content for this property then import process will also import localize content.
 Success of this process will also depends upon your configuration for localize content in Sitecore Commerce engine environment.
 	
-#### 8.4 Defining relationship content
-To send relation details in import process your source class should have following property
+#### 1.4 Defining relationship content
+To send relation details in import process add below property in your source data class
 ```c#
         [Relationships()]
         public IList<RelationshipDetail> RelationshipDetails { get; set; }
 ```
-Each item in this list will provide a relationship name and one or more entity friendly ids.
+Each item in this list will provide a relationship name and one or more entity ids.
 	
-### 9. Catalog Import Policy
-I recommend that for all configuration a separate Policy Set should be created, and that policy set must define CatalogImportPolicy this plugin heavily relies on.
+### <a name="catalog-import-policy">2. Catalog Import Policy
+This plugin works based on the configuration done in **CatalogImportPolicy**. I recommend that for all configuration a separate Policy Set should be created, and this policy should be placed under that policy set.
 
 Catalog import policy allows you to set following values:
 
@@ -888,11 +893,11 @@ A complete Catalog Import Policy is below:
   }
 }
 ```
-### 10. Import API Endpoint
-**hunk-catalog** plugin exposes an API endpoint that can be called to import a single source document in Sitecore Commerce.
+### <a name="api-endpoint">3. Import API Endpoint
+**hunk-catalog** plugin exposes an API endpoint that can be called to import a single source document in Sitecore Commerce. You can call this API endpoint from Postman or console application or from any other application.
 
 ### Request Headers
-Following must exists as headers:
+Following must exists as headers in the call:
 - Content-Type:application/json
 - Environment: Commerce environment name that should contain Catalog Import Policy.
 
@@ -910,4 +915,4 @@ In the request body following parameters should exists:
 2. **entity**: This is serialized value for your source entity, this will change based on your source entity.
 
 ### Response Body
-In response body it will return the commerce command with Sitecore Commerce Messages and Models containing the status of import process.
+This plugin follows the OOTB standard and in response body it returns the commerce command with Sitecore Commerce Messages and Models containing the status of import process.
