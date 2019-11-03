@@ -4,7 +4,6 @@ using Plugin.Hunk.Catalog.Pipelines.Arguments;
 using Sitecore.Commerce.Core;
 using Sitecore.Commerce.Core.Commands;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Plugin.Hunk.Catalog.Commands
@@ -38,6 +37,15 @@ namespace Plugin.Hunk.Catalog.Commands
                         new ImportLocalizeContentArgument(result, importEntityArgument);
                     await PerformTransaction(commerceContext, async () => await Pipeline<IImportLocalizeContentPipeline>().Run(
                         importLocalizeContentArgument, commerceContext.PipelineContextOptions));
+
+                    // Manage default price book for catalog.
+                    await PerformTransaction(commerceContext, async () => await Pipeline<IAssociatePriceBookPipeline>().Run(importEntityArgument, commerceContext.PipelineContextOptions));
+
+                    // Manage default promotion book for catalog.
+                    await PerformTransaction(commerceContext, async () => await Pipeline<IAssociatePromotionBookPipeline>().Run(importEntityArgument, commerceContext.PipelineContextOptions));
+
+                    // Manage default inventory set for catalog.
+                    await PerformTransaction(commerceContext, async () => await Pipeline<IAssociateInventorySetPipeline>().Run(importEntityArgument, commerceContext.PipelineContextOptions));
                 }
             }
 

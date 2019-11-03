@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Plugin.Hunk.Catalog.Model;
 using Sitecore.Commerce.Core;
@@ -38,6 +39,10 @@ namespace Plugin.Hunk.Catalog.Abstractions
         bool HasRelationships();
 
         IList<RelationshipDetail> GetRelationships();
+
+        TOutput GetPropertyValueFromSource<TMetadata, TOutput>() 
+            where TMetadata : Attribute
+            where TOutput : class;
     }
 
     public interface IEntityImportHandler<TCommerceEntity>

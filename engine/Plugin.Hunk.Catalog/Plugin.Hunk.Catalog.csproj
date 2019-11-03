@@ -36,6 +36,10 @@
   <ItemGroup>
     <PackageReference Include="Sitecore.Commerce.Core" Version="4.0.72" />
     <PackageReference Include="Sitecore.Commerce.Plugin.Catalog" Version="4.0.61" />
+    <PackageReference Include="Sitecore.Commerce.Plugin.Customers" Version="4.0.16" />
+    <PackageReference Include="Sitecore.Commerce.Plugin.Inventory" Version="4.0.26" />
+    <PackageReference Include="Sitecore.Commerce.Plugin.Pricing" Version="4.0.13" />
+    <PackageReference Include="Sitecore.Commerce.Plugin.Promotions" Version="4.0.14" />
     <PackageReference Include="Sitecore.Framework.Pipelines.Common" Version="4.1.1" />
   </ItemGroup>
 

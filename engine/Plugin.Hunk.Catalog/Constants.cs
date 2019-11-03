@@ -22,6 +22,12 @@
 
         public const string SetComponentsPipeline = "CatalogImport.Framework.pipeline.SetComponents";
 
+        public const string AssociatePriceBookPipeline = "CatalogImport.Framework.pipeline.AssociatePriceBook";
+
+        public const string AssociatePromotionBookPipeline = "CatalogImport.Framework.pipeline.AssociatePromotionBook";
+
+        public const string AssociateInventorySetPipeline = "CatalogImport.Framework.pipeline.AssociateInventorySet";
+
         public const string RegisteredPluginBlock = "CatalogImport.Framework.block.RegisteredPlugin";
 
         public const string ConfigureServiceApiBlock = "CatalogImport.Framework.block.ConfigureServiceApi";
@@ -44,7 +50,15 @@
 
         public const string ValidateSourceEntityBlock = "CatalogImport.Framework.block.ValidateSourceEntity";
 
+        public const string AssociateCatalogToPriceBookBlock = "CatalogImport.Framework.block.AssociateCatalogToPriceBook";
+
+        public const string AssociateCatalogToPromotionBookBlock = "CatalogImport.Framework.block.AssociateCatalogToPromotionBook";
+
+        public const string AssociateCatalogToInventorySetBlock = "CatalogImport.Framework.block.AssociateCatalogToInventorySet";
+
         public const string ImportEntityBlock = "CatalogImport.Framework.block.ImportEntity";
+
+        public const string PersistEntityBlock = "CatalogImport.Framework.block.PersistEntity";
 
         public const string ResolveVersionedEntityBlock = "CatalogImport.Framework.block.ResolveVersionedEntity";
 

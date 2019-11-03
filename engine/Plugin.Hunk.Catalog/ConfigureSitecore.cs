@@ -6,6 +6,7 @@ using Sitecore.Commerce.Plugin.Catalog;
 using Sitecore.Framework.Configuration;
 using Sitecore.Framework.Pipelines.Definitions.Extensions;
 using System.Reflection;
+using Sitecore.Commerce.Plugin.Pricing;
 
 namespace Plugin.Hunk.Catalog
 {
@@ -34,7 +35,23 @@ namespace Plugin.Hunk.Catalog
                         .Add<GetSourceEntityBlock>()
                         .Add<ValidateSourceEntityBlock>()
                         .Add<ResolveVersionedEntityBlock>()
-                        .Add<ImportEntityBlock>();
+                        .Add<ImportEntityBlock>()
+                        .Add<PersistEntityBlock>();
+                })
+                .AddPipeline<IAssociatePriceBookPipeline, AssociatePriceBookPipeline>(configure =>
+                {
+                    configure
+                        .Add<Pipelines.Blocks.AssociateCatalogToPriceBookBlock>();
+                })
+                .AddPipeline<IAssociatePromotionBookPipeline, AssociatePromotionBookPipeline>(configure =>
+                {
+                    configure
+                        .Add<Pipelines.Blocks.AssociateCatalogToPromotionBookBlock>();
+                })
+                .AddPipeline<IAssociateInventorySetPipeline, AssociateInventorySetPipeline>(configure =>
+                {
+                    configure
+                        .Add<Pipelines.Blocks.AssociateCatalogToInventorySetBlock>();
                 })
                 .AddPipeline<IResolveEntityImportHandlerPipeline, ResolveEntityImportHandlerPipeline>(configure =>
                 {
@@ -72,24 +89,6 @@ namespace Plugin.Hunk.Catalog
                 {
                     configure
                         .Add<ResolveComponentLocalizationMapperBlock>();
-                })
-                .ConfigurePipeline<ICreateCatalogPipeline>(configure =>
-                {
-                    configure
-                        .Add<SetComponentsOnCatalogEntityBlock>()
-                        .After<CreateCatalogBlock>();
-                })
-                .ConfigurePipeline<ICreateCategoryPipeline>(configure =>
-                {
-                    configure
-                        .Add<SetComponentsOnCatalogEntityBlock>()
-                        .After<CreateCategoryBlock>();
-                })
-                .ConfigurePipeline<ICreateSellableItemPipeline>(configure =>
-                {
-                    configure
-                        .Add<SetComponentsOnCatalogEntityBlock>()
-                        .After<CreateSellableItemBlock>();
                 })
                 .AddPipeline<IAssociateParentsPipeline, AssociateParentsPipeline>(configure =>
                 {

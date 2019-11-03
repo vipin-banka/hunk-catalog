@@ -213,5 +213,12 @@ namespace Plugin.Hunk.Catalog.ImportHandlers
         protected virtual void MapLocalizeValues(TSourceEntity localizedSourceEntity, TCommerceEntity localizedTargetEntity)
         {
         }
+
+        public TOutput GetPropertyValueFromSource<TMetadata, TOutput>() 
+            where TMetadata : Attribute
+            where TOutput : class
+        {
+            return typeof(TSourceEntity).GetPropertyValueWithAttribute<TMetadata, TOutput>(SourceEntity);
+        }
     }
 }
