@@ -46,6 +46,9 @@ namespace Plugin.Hunk.Catalog.Commands
 
                     // Manage default inventory set for catalog.
                     await PerformTransaction(commerceContext, async () => await Pipeline<IAssociateInventorySetPipeline>().Run(importEntityArgument, commerceContext.PipelineContextOptions));
+
+                    // Manage inventory information for variants.
+                    await PerformTransaction(commerceContext, async () => await Pipeline<IAssociateInventoryInformationPipeline>().Run(importEntityArgument, commerceContext.PipelineContextOptions));
                 }
             }
 

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Plugin.Hunk.Catalog.Extensions;
 
 namespace Plugin.Hunk.Catalog.Pipelines.Blocks
 {
@@ -82,32 +83,15 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
         private async Task<string> GetCatalogId(string catalogName, CommercePipelineExecutionContext context)
         {
             var catalogId = catalogName.ToEntityId<Sitecore.Commerce.Plugin.Catalog.Catalog>();
-            var result = await ValidateEntityId(typeof(Sitecore.Commerce.Plugin.Catalog.Catalog),
-                catalogId, context);
+            var result = await context.ValidateEntityId(_doesEntityExistPipeline, typeof(Sitecore.Commerce.Plugin.Catalog.Catalog),
+                catalogId);
             return await Task.FromResult(result);
         }
 
         private async Task<string> GetCategoryId(string catalogId, string categoryName, CommercePipelineExecutionContext context)
         {
             var categoryId = categoryName.ToCategoryId(catalogId.SimplifyEntityName());
-            var result = await ValidateEntityId(typeof(Category),
-                categoryId, context);
-            return await Task.FromResult(result);
-        }
-
-        private async Task<string> ValidateEntityId(Type entityType, string entityId, CommercePipelineExecutionContext context)
-        {
-            var result = string.Empty;
-            var entityExists = await _doesEntityExistPipeline.Run(new FindEntityArgument(entityType,
-                entityId,
-                null), context)
-                .ConfigureAwait(false);
-
-            if (entityExists)
-            {
-                result = entityId;
-            }
-
+            var result = await context.ValidateEntityId(_doesEntityExistPipeline, typeof(Category), categoryId);
             return await Task.FromResult(result);
         }
     }

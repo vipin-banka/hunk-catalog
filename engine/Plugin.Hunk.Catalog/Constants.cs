@@ -28,6 +28,8 @@
 
         public const string AssociateInventorySetPipeline = "CatalogImport.Framework.pipeline.AssociateInventorySet";
 
+        public const string AssociateInventoryInformationPipeline = "CatalogImport.Framework.pipeline.AssociateInventoryInformation";
+
         public const string RegisteredPluginBlock = "CatalogImport.Framework.block.RegisteredPlugin";
 
         public const string ConfigureServiceApiBlock = "CatalogImport.Framework.block.ConfigureServiceApi";
@@ -71,6 +73,8 @@
         public const string ResolveComponentMapperBlock = "CatalogImport.Framework.block.ResolveComponentMapper"; 
 
         public const string ImportEntityVariantsBlock = "CatalogImport.Framework.block.ImportEntityVariants";
+
+        public const string AssociateInventoryInformationBlock = "CatalogImport.Framework.block.AssociateInventoryInformation";
 
         public const string SetComponentsOnCatalogEntityBlock = "CatalogImport.Framework.block.SetComponentsOnCatalogEntity";
 

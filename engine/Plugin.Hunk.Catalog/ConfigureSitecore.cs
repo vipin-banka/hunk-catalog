@@ -111,6 +111,11 @@ namespace Plugin.Hunk.Catalog
                         .Add<GetLocalizationEntityBlock>()
                         .Add<SetLocalizePropertiesBlock>();
                 })
+                .AddPipeline<IAssociateInventoryInformationPipeline, AssociateInventoryInformationPipeline>(configure =>
+                {
+                    configure
+                        .Add<AssociateInventoryInformationBlock>();
+                })
             );
 
             services.RegisterAllCommands(assembly);
