@@ -1,4 +1,5 @@
-﻿using Plugin.Hunk.Catalog.Model;
+﻿using System.Collections.Generic;
+using Plugin.Hunk.Catalog.Model;
 
 namespace Plugin.Hunk.Catalog.Policy
 {
@@ -9,6 +10,7 @@ namespace Plugin.Hunk.Catalog.Policy
             DeleteOrphanVariant = true;
             EntityVersioningScheme = EntityVersioningScheme.UpdateLatestUnpublished;
             Mappings = new Mappings();
+            VariantComponents = new List<string>();
         }
 
         public bool DeleteOrphanVariant { get; set; }
@@ -16,5 +18,7 @@ namespace Plugin.Hunk.Catalog.Policy
         public Mappings Mappings { get; set; }
 
         public EntityVersioningScheme EntityVersioningScheme { get; set; }
+
+        public IList<string> VariantComponents { get; set; }
     }
 }

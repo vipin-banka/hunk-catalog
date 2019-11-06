@@ -19,17 +19,34 @@
             {
               "$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
               "Key": "Catalog",
-              "ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.CatalogEntityImport.SourceCatalogImportHandler, Plugin.Hunk.Catalog.Test"
+              "ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.CatalogEntityImport.SourceCatalogImportHandler, Plugin.Hunk.Catalog.Test",
+              "BulkImporterTypeName": "Plugin.Hunk.Catalog.Test.BulkImport.CatalogImport, Plugin.Hunk.Catalog.Test",
+              "Components": {
+                "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+                "$values": []
+              }
             },
             {
               "$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
               "Key": "Category",
-              "ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.CategoryEntityImport.SourceCategoryImportHandler, Plugin.Hunk.Catalog.Test"
+              "ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.CategoryEntityImport.SourceCategoryImportHandler, Plugin.Hunk.Catalog.Test",
+              "BulkImporterTypeName": "Plugin.Hunk.Catalog.Test.BulkImport.CategoryImport, Plugin.Hunk.Catalog.Test",
+              "Components": {
+                "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+                "$values": []
+              }
             },
             {
               "$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
               "Key": "SellableItem",
-              "ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.SourceProductImportHandler, Plugin.Hunk.Catalog.Test"
+              "ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.SourceProductImportHandler, Plugin.Hunk.Catalog.Test",
+              "BulkImporterTypeName": "Plugin.Hunk.Catalog.Test.BulkImport.SellableItemImport, Plugin.Hunk.Catalog.Test",
+              "Components": {
+                "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+                "$values": [
+                  "SellableItemComponent"
+                ]
+              }
             },
             {
               "$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
@@ -78,7 +95,13 @@
               "Key": "WarrantyProducts",
               "FullTypeName": "Plugin.Hunk.Catalog.RelationshipMappers.WarrantySellableItemToSellableItemRelationshipMapper, Plugin.Hunk.Catalog"
             }
-          ] 
+          ]
+        },
+        "VariantComponents": {
+          "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+          "$values": [
+            "VariantComponent"
+          ]
         }
       }
     ]
