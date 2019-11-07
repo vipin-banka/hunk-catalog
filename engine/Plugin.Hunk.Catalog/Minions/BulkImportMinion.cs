@@ -60,6 +60,10 @@ namespace Plugin.Hunk.Catalog.Minions
                 }
             }
 
+            MinionContext.ClearEntities();
+            MinionContext.ClearMessages();
+            MinionContext.ClearModels();
+            MinionContext.ClearObjects();
             return new MinionRunResultsModel();
         }
     }

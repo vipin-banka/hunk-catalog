@@ -35,7 +35,10 @@ namespace Plugin.Hunk.Catalog
                         .Add<GetSourceEntityBlock>()
                         .Add<ValidateSourceEntityBlock>()
                         .Add<ResolveVersionedEntityBlock>()
-                        .Add<ImportEntityBlock>()
+                        .Add<CreateEntityBlock>()
+                        .Add<UpdateEntityBlock>()
+                        .Add<SetEntityComponentsBlock>()
+                        .Add<ImportEntityVariantsBlock>()
                         .Add<PersistEntityBlock>();
                 })
                 .AddPipeline<IAssociatePriceBookPipeline, AssociatePriceBookPipeline>(configure =>
@@ -57,13 +60,6 @@ namespace Plugin.Hunk.Catalog
                 {
                     configure
                         .Add<ResolveEntityImportHandlerBlock>();
-                })
-                .AddPipeline<ISetComponentsPipeline, SetComponentsPipeline>(configure =>
-                {
-                    configure
-                        .Add<UpdateEntityBlock>()
-                        .Add<SetEntityComponentsBlock>()
-                        .Add<ImportEntityVariantsBlock>();
                 })
                 .AddPipeline<IResolveEntityMapperPipeline, ResolveEntityMapperPipeline>(configure =>
                 {

@@ -1,20 +1,17 @@
 ﻿using Plugin.Hunk.Catalog.Extensions;
+using Plugin.Hunk.Catalog.Metadata;
 using Plugin.Hunk.Catalog.Model;
 using Plugin.Hunk.Catalog.Pipelines.Arguments;
 using Sitecore.Commerce.Core;
-using Sitecore.Commerce.Plugin.Catalog;
-using Sitecore.Framework.Pipelines;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Plugin.Hunk.Catalog.Metadata;
 using Sitecore.Commerce.EntityViews;
 using Sitecore.Commerce.Plugin.Inventory;
+using Sitecore.Framework.Pipelines;
+using System.Threading.Tasks;
 
 namespace Plugin.Hunk.Catalog.Pipelines.Blocks
 {
     [PipelineDisplayName(Constants.AssociateInventoryInformationBlock)]
-    public class AssociateInventoryInformationBlock : PipelineBlock<CommerceEntity, CommerceEntity, CommercePipelineExecutionContext>
+    public class AssociateInventoryInformationBlock : PipelineBlock<ImportEntityArgument, ImportEntityArgument, CommercePipelineExecutionContext>
     {
         private readonly CommerceCommander _commerceCommander;
 
@@ -23,12 +20,11 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
             _commerceCommander = commerceCommander;
         }
 
-        public override async Task<CommerceEntity> Run(CommerceEntity arg, CommercePipelineExecutionContext context)
+        public override async Task<ImportEntityArgument> Run(ImportEntityArgument arg, CommercePipelineExecutionContext context)
         {
-            var importEntityArgument = context.CommerceContext.GetObject<ImportEntityArgument>();
-            if (importEntityArgument?.SourceEntity != null)
+            if (arg != null)
             {
-                await ImportVariantsInventory(arg, importEntityArgument, context)
+                await ImportVariantsInventory(arg.ImportHandler.GetCommerceEntity(), arg, context)
                     .ConfigureAwait(false);
             }
 
@@ -49,18 +45,22 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
                     var inventorySetId = await context.ValidateEntityId(_commerceCommander.Pipeline<IDoesEntityExistPipeline>(), typeof(InventorySet), inventorySetName.ToEntityId<InventorySet>())
                         .ConfigureAwait(false);
 
-                    var variants = importEntityArgument.ImportHandler.GetVariants();
-
-                    foreach (var variant in variants)
+                    if (!string.IsNullOrEmpty(inventorySetId))
                     {
-                        var inventoryDetail = variant.GetType()
-                            .GetPropertyValueWithAttribute<InventoryDetailAttribute, InventoryDetail>(variant);
+                        var variants = importEntityArgument.ImportHandler.GetVariants();
 
-                        if (inventoryDetail != null)
+                        foreach (var variant in variants)
                         {
-                            await _commerceCommander.Command<AssociateSellableItemToInventorySetCommand>()
-                                .Process(context.CommerceContext, commerceEntity.Id, variant.Id, inventorySetId, ConvertToEntityView(inventoryDetail))
-                                .ConfigureAwait(false);
+                            var inventoryDetail = variant.GetType()
+                                .GetPropertyValueWithAttribute<InventoryDetailAttribute, InventoryDetail>(variant);
+
+                            if (inventoryDetail != null)
+                            {
+                                await _commerceCommander.Command<AssociateSellableItemToInventorySetCommand>()
+                                    .Process(context.CommerceContext, commerceEntity.Id, variant.Id, inventorySetId,
+                                        ConvertToEntityView(inventoryDetail))
+                                    .ConfigureAwait(false);
+                            }
                         }
                     }
                 }

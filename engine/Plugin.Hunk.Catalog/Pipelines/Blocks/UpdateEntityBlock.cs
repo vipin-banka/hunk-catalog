@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Plugin.Hunk.Catalog.Pipelines.Blocks
 {
     [PipelineDisplayName(Constants.UpdateEntityBlock)]
-    public class UpdateEntityBlock : PipelineBlock<CommerceEntity, CommerceEntity, CommercePipelineExecutionContext>
+    public class UpdateEntityBlock : PipelineBlock<ImportEntityArgument, ImportEntityArgument, CommercePipelineExecutionContext>
     {
         private readonly CommerceCommander _commerceCommander;
 
@@ -16,12 +16,11 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
             _commerceCommander = commerceCommander;
         }
 
-        public override async Task<CommerceEntity> Run(CommerceEntity arg, CommercePipelineExecutionContext context)
+        public override async Task<ImportEntityArgument> Run(ImportEntityArgument arg, CommercePipelineExecutionContext context)
         {
-            var importEntityArgument = context.CommerceContext.GetObject<ImportEntityArgument>();
-            if (importEntityArgument?.SourceEntity != null)
+            if (arg?.SourceEntity != null)
             {
-                await SetCommerceEntityDetails(arg, importEntityArgument, context).ConfigureAwait(false);
+                await SetCommerceEntityDetails(arg.ImportHandler.GetCommerceEntity(), arg, context).ConfigureAwait(false);
             }
 
             return arg;

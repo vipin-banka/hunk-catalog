@@ -58,6 +58,7 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
 
             if (entityToUpdate != null)
             {
+                arg.IsNew = false;
                 arg.ImportHandler.SetCommerceEntity(entityToUpdate);
             }
 

@@ -20,6 +20,7 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
         protected override void Map(ItemVariationComponent component)
         {
             component.Id = SourceVariant.Id;
+            component.Name = SourceVariant.Name;
             component.DisplayName = SourceVariant.DisplayName;
             component.Description = SourceVariant.Description;
             component.Disabled = SourceVariant.Disabled;

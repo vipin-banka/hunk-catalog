@@ -25,6 +25,11 @@ namespace Plugin.Hunk.Catalog.BulkImport
 
         protected virtual async Task<ImportEntityCommand> ImportContent(SourceEntityDetail sourceEntityDetail)
         {
+            CommerceContext.ClearEntities();
+            CommerceContext.ClearMessages();
+            CommerceContext.ClearModels();
+            CommerceContext.ClearObjects();
+            
             var command = ServiceProvider.GetService<ImportEntityCommand>();
             await command.Process(CommerceContext, sourceEntityDetail)
                 .ConfigureAwait(false);

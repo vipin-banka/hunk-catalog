@@ -58,7 +58,7 @@
 
         public const string AssociateCatalogToInventorySetBlock = "CatalogImport.Framework.block.AssociateCatalogToInventorySet";
 
-        public const string ImportEntityBlock = "CatalogImport.Framework.block.ImportEntity";
+        public const string CreateEntityBlock = "CatalogImport.Framework.block.CreateEntity";
 
         public const string PersistEntityBlock = "CatalogImport.Framework.block.PersistEntity";
 
