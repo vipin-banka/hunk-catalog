@@ -1,16 +1,17 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Plugin.Hunk.Catalog.Abstractions;
+using Plugin.Hunk.Catalog.Model;
+using Sitecore.Commerce.Core;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Plugin.Hunk.Catalog.Model;
-using Sitecore.Commerce.Core;
 
 namespace Plugin.Hunk.Catalog.BulkImport
 {
     public abstract class BaseJsonFileBulkImporter<T> : BaseFileBulkImporter
-    where T : class
+    where T : IEntity
     {
         protected BaseJsonFileBulkImporter(IServiceProvider serviceProvider,
             CommerceContext commerceContext)
@@ -30,8 +31,17 @@ namespace Plugin.Hunk.Catalog.BulkImport
                     foreach (var sourceEntity in sourceEntities)
                     {
                         sourceEntityDetail.SerializedEntity = JsonConvert.SerializeObject(sourceEntity);
-                        await ImportContent(sourceEntityDetail)
+                        var command = await ImportContent(sourceEntityDetail)
                                 .ConfigureAwait(false);
+
+                        var sourceEntityModel = GetSourceEntityModel(sourceEntity, sourceEntityDetail);
+                        if (sourceEntityModel != null)
+                        {
+                            command.Models.Add(sourceEntityModel);
+                        }
+
+                        var task = this.Log(command);
+                        Task.WaitAll(task);
                     }
                 }
             }

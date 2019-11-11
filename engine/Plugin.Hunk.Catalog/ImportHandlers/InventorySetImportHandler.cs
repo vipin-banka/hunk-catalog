@@ -1,12 +1,12 @@
 ﻿using Plugin.Hunk.Catalog.Abstractions;
 using Sitecore.Commerce.Core;
-using Sitecore.Commerce.Plugin.Promotions;
+using Sitecore.Commerce.Plugin.Inventory;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Plugin.Hunk.Catalog.ImportHandlers
 {
-    public abstract class PromotionBookImportHandler<TSourceEntity> : BaseEntityImportHandler<TSourceEntity, PromotionBook>
+    public abstract class InventorySetImportHandler<TSourceEntity> : BaseEntityImportHandler<TSourceEntity, InventorySet>
         where TSourceEntity : IEntity
     {
         protected string Name { get; set; }
@@ -15,9 +15,7 @@ namespace Plugin.Hunk.Catalog.ImportHandlers
 
         protected string Description { get; set; }
 
-        protected string ParentBook { get; set; }
-
-        protected PromotionBookImportHandler(string sourceEntity, CommerceCommander commerceCommander, CommercePipelineExecutionContext context)
+        protected InventorySetImportHandler(string sourceEntity, CommerceCommander commerceCommander, CommercePipelineExecutionContext context)
         :base(sourceEntity, commerceCommander, context)
         {
         }
@@ -25,8 +23,8 @@ namespace Plugin.Hunk.Catalog.ImportHandlers
         public override async Task<CommerceEntity> Create()
         {
             Initialize();
-            var command  = CommerceCommander.Command<AddPromotionBookCommand>();
-            CommerceEntity = await command.Process(Context.CommerceContext, Name, DisplayName, Description, ParentBook);
+            var command  = CommerceCommander.Command<CreateInventorySetCommand>();
+            CommerceEntity = await command.Process(Context.CommerceContext, Name, DisplayName, Description);
             return CommerceEntity;
         }
 

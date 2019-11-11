@@ -2,7 +2,11 @@
 {
     public static class Constants
     {
+        public const string PrepareImportEntityPipeline = "CatalogImport.Framework.pipeline.PrepareImportEntity";
+
         public const string ImportEntityPipeline = "CatalogImport.Framework.pipeline.ImportEntity";
+
+        public const string LogEntityImportResultPipeline = "CatalogImport.Framework.pipeline.LogEntityImportResult"; 
 
         public const string ResolveEntityImportHandlerPipeline = "CatalogImport.Framework.pipeline.ResolveEntityImportHandler";
 
@@ -34,7 +38,7 @@
 
         public const string ConfigureServiceApiBlock = "CatalogImport.Framework.block.ConfigureServiceApi";
 
-        public const string PrepImportEntityBlock = "CatalogImport.Framework.block.PrepImportEntity";
+        public const string GetCatalogImportPolicyBlock = "CatalogImport.Framework.block.GetCatalogImportPolicy";
 
         public const string ResolveImportHandlerInstanceBlock = "CatalogImport.Framework.block.ResolveImportHandlerInstance";
 
@@ -60,9 +64,13 @@
 
         public const string CreateEntityBlock = "CatalogImport.Framework.block.CreateEntity";
 
-        public const string PersistEntityBlock = "CatalogImport.Framework.block.PersistEntity";
+        public const string LogEntityImportResultBlock = "CatalogImport.Framework.block.LogEntityImportResult"; 
+
+        public const string PersistEntityBlock = "CatalogImport.Framework.block.PersistEntity"; 
 
         public const string ResolveVersionedEntityBlock = "CatalogImport.Framework.block.ResolveVersionedEntity";
+
+        public const string GetEntityBlock = "CatalogImport.Framework.block.GetEntity";
 
         public const string UpdateEntityBlock = "CatalogImport.Framework.block.UpdateEntity";
 
@@ -76,7 +84,7 @@
 
         public const string AssociateInventoryInformationBlock = "CatalogImport.Framework.block.AssociateInventoryInformation";
 
-        public const string SetComponentsOnCatalogEntityBlock = "CatalogImport.Framework.block.SetComponentsOnCatalogEntity";
+        public const string ImportInventoryInformationBlock = "CatalogImport.Framework.block.ImportInventoryInformation";
 
         public const string AssociateCategoryToParentBlock = "CatalogImport.Framework.block.AssociateCategoryToParent";
 

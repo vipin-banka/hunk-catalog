@@ -6,7 +6,6 @@ using Sitecore.Commerce.Plugin.Catalog;
 using Sitecore.Framework.Configuration;
 using Sitecore.Framework.Pipelines.Definitions.Extensions;
 using System.Reflection;
-using Sitecore.Commerce.Plugin.Pricing;
 
 namespace Plugin.Hunk.Catalog
 {
@@ -27,13 +26,18 @@ namespace Plugin.Hunk.Catalog
                 {
                     configure.Add<ConfigureServiceApiBlock>();
                 })
-                .AddPipeline<IImportEntityPipeline, ImportEntityPipeline>(configure =>
+                .AddPipeline<IPrepareImportEntityPipeline, PrepareImportEntityPipeline>(configure =>
                 {
                     configure
-                        .Add<PrepImportEntityBlock>()
+                        .Add<GetCatalogImportPolicyBlock>()
                         .Add<ResolveImportHandlerInstanceBlock>()
                         .Add<GetSourceEntityBlock>()
                         .Add<ValidateSourceEntityBlock>()
+                        .Add<GetEntityBlock>();
+                })
+                .AddPipeline<IImportEntityPipeline, ImportEntityPipeline>(configure =>
+                {
+                    configure
                         .Add<ResolveVersionedEntityBlock>()
                         .Add<CreateEntityBlock>()
                         .Add<UpdateEntityBlock>()
@@ -54,7 +58,7 @@ namespace Plugin.Hunk.Catalog
                 .AddPipeline<IAssociateInventorySetPipeline, AssociateInventorySetPipeline>(configure =>
                 {
                     configure
-                        .Add<Pipelines.Blocks.AssociateCatalogToInventorySetBlock>();
+                        .Add<AssociateCatalogToInventorySetBlock>();
                 })
                 .AddPipeline<IResolveEntityImportHandlerPipeline, ResolveEntityImportHandlerPipeline>(configure =>
                 {
@@ -110,7 +114,13 @@ namespace Plugin.Hunk.Catalog
                 .AddPipeline<IAssociateInventoryInformationPipeline, AssociateInventoryInformationPipeline>(configure =>
                 {
                     configure
-                        .Add<AssociateInventoryInformationBlock>();
+                        .Add<AssociateInventoryInformationBlock>()
+                        .Add<ImportInventoryInformationBlock>();
+                })
+                .AddPipeline<ILogEntityImportResultPipeline, LogEntityImportResultPipeline>(configure =>
+                {
+                    configure
+                        .Add<LogEntityImportResultBlock>();
                 })
             );
 

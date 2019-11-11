@@ -4,10 +4,6 @@ namespace Plugin.Hunk.Catalog.Model
 {
     public class InventoryDetail
     {
-        public InventoryDetail()
-        {
-        }
-
         public int Quantity { get; set; }
 
         public decimal InvoiceUnitPrice { get; set; }

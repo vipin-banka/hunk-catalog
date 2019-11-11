@@ -52,6 +52,18 @@
               "$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
               "Key": "SourceCustomEntity",
               "ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.CustomEntityImport.SourceCustomEntityImportHandler, Plugin.Hunk.Catalog.Test"
+            },
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+              "Key": "SellableItemRelationship",
+              "ImportHandlerTypeName": "Plugin.Hunk.Catalog.ImportHandlers.SellableItemRelationshipImportHandler, Plugin.Hunk.Catalog",
+              "BulkImporterTypeName": "Plugin.Hunk.Catalog.BulkImport.SellableItemRelationshipsImport, Plugin.Hunk.Catalog"
+            },
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+              "Key": "SellableItemInventory",
+              "ImportHandlerTypeName": "Plugin.Hunk.Catalog.ImportHandlers.SellableItemInventoryImportHandler, Plugin.Hunk.Catalog",
+              "BulkImporterTypeName": "Plugin.Hunk.Catalog.BulkImport.SellableItemInventoryImport, Plugin.Hunk.Catalog"
             }
           ],
           "EntityComponentMappings": [

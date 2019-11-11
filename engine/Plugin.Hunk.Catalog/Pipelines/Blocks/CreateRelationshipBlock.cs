@@ -80,7 +80,7 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
 
                                     await _commerceCommander.Command<CreateRelationshipCommand>().Process(
                                         context.CommerceContext,
-                                        arg.ImportHandler.GetCommerceEntity().Id,
+                                        commerceEntity.Id,
                                         targetName, relationShipMapper.Name);
                                 }
                             }
@@ -91,7 +91,7 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
 
                                 await _commerceCommander.Command<DeleteRelationshipCommand>().Process(
                                     context.CommerceContext,
-                                    arg.ImportHandler.GetCommerceEntity().Id,
+                                    commerceEntity.Id,
                                     targetName, relationShipMapper.Name);
                             }
                         }

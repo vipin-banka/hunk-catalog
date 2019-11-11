@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using Plugin.Hunk.Catalog.Abstractions;
+using Sitecore.Commerce.Core;
+using Sitecore.Commerce.Plugin.Catalog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Plugin.Hunk.Catalog.Abstractions;
-using Plugin.Hunk.Catalog.Extensions;
-using Plugin.Hunk.Catalog.Metadata;
-using Sitecore.Commerce.Core;
-using Sitecore.Commerce.Plugin.Catalog;
 
 namespace Plugin.Hunk.Catalog.ImportHandlers
 {

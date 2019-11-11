@@ -1,4 +1,5 @@
-﻿using Plugin.Hunk.Catalog.Metadata;
+﻿using System;
+using Plugin.Hunk.Catalog.Metadata;
 using Plugin.Hunk.Catalog.Pipelines.Arguments;
 using Sitecore.Commerce.Core;
 using Sitecore.Commerce.Plugin.Pricing;
@@ -26,9 +27,9 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
 
         public override async Task<ImportEntityArgument> Run(ImportEntityArgument arg, CommercePipelineExecutionContext context)
         {
-            var commerceEntity = arg.ImportHandler.GetCommerceEntity();
+            var commerceEntity = arg.ImportHandler.GetCommerceEntity() as Sitecore.Commerce.Plugin.Catalog.Catalog;
 
-            if (!(commerceEntity is Sitecore.Commerce.Plugin.Catalog.Catalog))
+            if (commerceEntity == null)
             {
                 return await Task.FromResult(arg);
             }
@@ -49,8 +50,13 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
                 await _addPriceBookCommand.Process(context.CommerceContext, priceBookName).ConfigureAwait(false);
             }
 
-            await _associateCatalogToBookCommand.Process(context.CommerceContext, priceBookName, commerceEntity.Name)
-                .ConfigureAwait(false);
+            if (string.IsNullOrEmpty(commerceEntity.PriceBookName)
+                || !priceBookName.Equals(commerceEntity.PriceBookName, StringComparison.OrdinalIgnoreCase))
+            {
+                await _associateCatalogToBookCommand
+                    .Process(context.CommerceContext, priceBookName, commerceEntity.Name)
+                    .ConfigureAwait(false);
+            }
 
             return await Task.FromResult(arg);
         }

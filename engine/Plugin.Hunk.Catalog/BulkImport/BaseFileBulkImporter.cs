@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Plugin.Hunk.Catalog.Model;
+using Plugin.Hunk.Catalog.Policy;
+using Sitecore.Commerce.Core;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Plugin.Hunk.Catalog.Model;
-using Plugin.Hunk.Catalog.Policy;
-using Sitecore.Commerce.Core;
 
 namespace Plugin.Hunk.Catalog.BulkImport
 {

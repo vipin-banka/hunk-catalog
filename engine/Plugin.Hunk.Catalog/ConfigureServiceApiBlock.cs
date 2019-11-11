@@ -3,7 +3,6 @@ using Sitecore.Commerce.Core;
 using Sitecore.Commerce.Core.Commands;
 using Sitecore.Framework.Pipelines;
 using System.Threading.Tasks;
-using Plugin.Hunk.Catalog.Model;
 
 namespace Plugin.Hunk.Catalog
 {

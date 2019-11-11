@@ -1,9 +1,8 @@
 ﻿using Plugin.Hunk.Catalog.Abstractions;
 using Sitecore.Commerce.Core;
-using Sitecore.Commerce.Plugin.Pricing;
+using Sitecore.Commerce.Plugin.Promotions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Sitecore.Commerce.Plugin.Promotions;
 
 namespace Plugin.Hunk.Catalog.ImportHandlers
 {

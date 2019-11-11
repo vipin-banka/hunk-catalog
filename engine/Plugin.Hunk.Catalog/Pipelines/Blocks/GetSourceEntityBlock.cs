@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Plugin.Hunk.Catalog.Extensions;
+using Plugin.Hunk.Catalog.Model;
 
 namespace Plugin.Hunk.Catalog.Pipelines.Blocks
 {
@@ -30,7 +31,7 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
             }
 
             var parentList = arg.ImportHandler.GetParentList();
-            
+
             if (parentList != null && parentList.Any())
             {
                 arg.ImportHandler.ParentEntityIds = await GetParentEntities(parentList, context)
@@ -43,7 +44,7 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
         private async Task<IDictionary<string, IList<string>>> GetParentEntities(IList<string> parents, CommercePipelineExecutionContext context)
         {
             var result = new Dictionary<string, IList<string>>();
-
+            var missingReferences = new List<string>();
             var separators = new List<string> { "/" }.ToArray();
             foreach (var parentItem in parents)
             {
@@ -74,7 +75,21 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
                             result[catalogId].Add(categoryId);
                         }
                     }
+                    else
+                    {
+                        missingReferences.Add(parentItem);
+                    }
                 }
+                else
+                {
+                    missingReferences.Add(parentItem);
+                }
+            }
+
+            if (missingReferences.Any())
+            {
+                context.CommerceContext.AddModel(new MissingReferencesModel()
+                    { Name = "Missing-Parents", MissingReferences = missingReferences });
             }
 
             return result;

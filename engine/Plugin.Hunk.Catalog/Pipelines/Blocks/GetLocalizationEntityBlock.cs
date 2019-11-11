@@ -1,5 +1,4 @@
-﻿using Plugin.Hunk.Catalog.Extensions;
-using Plugin.Hunk.Catalog.Pipelines.Arguments;
+﻿using Plugin.Hunk.Catalog.Pipelines.Arguments;
 using Sitecore.Commerce.Core;
 using Sitecore.Framework.Pipelines;
 using System.Threading.Tasks;

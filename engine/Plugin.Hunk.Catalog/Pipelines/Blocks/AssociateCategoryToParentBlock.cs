@@ -1,5 +1,4 @@
-﻿using System;
-using Plugin.Hunk.Catalog.Pipelines.Arguments;
+﻿using Plugin.Hunk.Catalog.Pipelines.Arguments;
 using Sitecore.Commerce.Core;
 using Sitecore.Commerce.Plugin.Catalog;
 using Sitecore.Framework.Pipelines;

@@ -4,6 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Plugin.Hunk.Catalog.Abstractions;
 using Plugin.Hunk.Catalog.Commands;
 using Plugin.Hunk.Catalog.Model;
+using Plugin.Hunk.Catalog.Pipelines;
+using Plugin.Hunk.Catalog.Pipelines.Arguments;
 using Sitecore.Commerce.Core;
 
 namespace Plugin.Hunk.Catalog.BulkImport
@@ -25,15 +27,56 @@ namespace Plugin.Hunk.Catalog.BulkImport
 
         protected virtual async Task<ImportEntityCommand> ImportContent(SourceEntityDetail sourceEntityDetail)
         {
-            CommerceContext.ClearEntities();
-            CommerceContext.ClearMessages();
-            CommerceContext.ClearModels();
-            CommerceContext.ClearObjects();
-            
-            var command = ServiceProvider.GetService<ImportEntityCommand>();
-            await command.Process(CommerceContext, sourceEntityDetail)
+            using (var newCommerceContext = new CommerceContext(CommerceContext.Logger, CommerceContext.TelemetryClient,
+                CommerceContext.LocalizableMessagePipeline)
+            {
+                GlobalEnvironment = CommerceContext.GlobalEnvironment,
+                Environment = CommerceContext.Environment,
+                Headers = CommerceContext.Headers
+            })
+            {
+                string[] policyKeys =
+                {
+                    "IgnoreCaching"
+                };
+
+                newCommerceContext.AddPolicyKeys(policyKeys);
+
+                var command = ServiceProvider.GetService<ImportEntityCommand>();
+                await command.Process(newCommerceContext, sourceEntityDetail)
+                    .ConfigureAwait(false);
+
+                return command;
+            }
+        }
+
+        protected virtual SourceEntityModel GetSourceEntityModel<T>(T sourceEntity, SourceEntityDetail sourceEntityDetail)
+            where T : IEntity
+        {
+            var entity = sourceEntity as IEntity;
+            if (entity == null)
+            {
+                return null;
+            }
+
+            return new SourceEntityModel()
+            {
+                Id = entity.Id,
+                EntityType = sourceEntityDetail.EntityType
+            };
+        }
+
+        protected virtual async Task Log(ImportEntityCommand command)
+        {
+            var commercePipelineExecutionContextOptions = new CommercePipelineExecutionContextOptions(
+                new CommerceContext(CommerceContext.Logger, CommerceContext.TelemetryClient)
+                {
+                    Environment = CommerceContext.Environment
+                });
+
+            await ServiceProvider.GetService<ILogEntityImportResultPipeline>()
+                .Run(new LogEntityImportResultArgument(command), commercePipelineExecutionContextOptions)
                 .ConfigureAwait(false);
-            return command;
         }
     }
 }

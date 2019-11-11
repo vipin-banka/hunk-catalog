@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Plugin.Hunk.Catalog.Components;
 using Plugin.Hunk.Catalog.Pipelines.Arguments;
 using Sitecore.Commerce.Core;
 using Sitecore.Commerce.Plugin.Catalog;
 using Sitecore.Framework.Pipelines;
 using System.Linq;
 using System.Threading.Tasks;
-using Plugin.Hunk.Catalog.Components;
 
 namespace Plugin.Hunk.Catalog.Pipelines.Blocks
 {
@@ -51,9 +50,9 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
                                                relationshipNamePostfix;
                         }
                         else if (componentEntityId.StartsWith(CommerceEntity
-                            .IdPrefix<Sitecore.Commerce.Plugin.Catalog.Category>()))
+                            .IdPrefix<Category>()))
                         {
-                            relationshipName = typeof(Sitecore.Commerce.Plugin.Catalog.Category).Name +
+                            relationshipName = typeof(Category).Name +
                                                relationshipNamePostfix;
                         }
 

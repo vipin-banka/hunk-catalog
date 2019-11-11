@@ -25,16 +25,35 @@ namespace Plugin.Hunk.Catalog.Minions
 
         public override Task StartAsync()
         {
-            this.Logger.LogDebug(this.Name + " - Bulk import minion do not auto start");
-            return (Task)null;
+            if (!this.Policy.WakeupInterval.HasValue)
+                this.Logger.LogDebug(this.Name + " - Bulk import minion do not auto start.");
+            else
+            {
+                return base.StartAsync();
+            }
+
+            return null;
         }
 
         protected override async Task<MinionRunResultsModel> Execute()
         {
             var catalogImportPolicy = MinionContext.GetPolicy<CatalogImportPolicy>();
-            if (catalogImportPolicy.Mappings != null && catalogImportPolicy.Mappings.EntityMappings != null 
-                    && catalogImportPolicy.Mappings.EntityMappings.Any())
+            if (catalogImportPolicy.Mappings?.EntityMappings != null 
+                && catalogImportPolicy.Mappings.EntityMappings.Any())
             {
+                if (catalogImportPolicy.IgnoreIndexUpdates)
+                {
+                    string[] policyKeys = {
+                        "IgnoreIndexDeletedSitecoreItem",
+                        "IgnoreIndexUpdatedSitecoreItem",
+                        "IgnoreAddEntityToIndexList"
+                    };
+
+                    MinionContext.AddPolicyKeys(policyKeys);
+                }
+
+                bool success = true;
+
                 foreach (var entityMapping in catalogImportPolicy.Mappings.EntityMappings)
                 {
                     if (!string.IsNullOrEmpty(entityMapping.Key) 
@@ -53,17 +72,14 @@ namespace Plugin.Hunk.Catalog.Minions
                             if (Activator.CreateInstance(t, _serviceProvider, MinionContext) is IEntityBulkImporter
                                 instance)
                             {
-                                await instance.Import(sourceEntityDetail).ConfigureAwait(false);
+                                var result = await instance.Import(sourceEntityDetail).ConfigureAwait(false);
+                                success = result && !success;
                             }
                         }
                     }
                 }
             }
 
-            MinionContext.ClearEntities();
-            MinionContext.ClearMessages();
-            MinionContext.ClearModels();
-            MinionContext.ClearObjects();
             return new MinionRunResultsModel();
         }
     }

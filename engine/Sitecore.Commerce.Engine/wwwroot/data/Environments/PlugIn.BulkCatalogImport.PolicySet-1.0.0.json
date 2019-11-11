@@ -27,6 +27,16 @@
               "$type": "Plugin.Hunk.Catalog.Policy.ImportFileSetting, Plugin.Hunk.Catalog",
               "Key": "SellableItem",
               "FileNamePattern": "SellableItem*.json"
+            },
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.ImportFileSetting, Plugin.Hunk.Catalog",
+              "Key": "SellableItemRelationship",
+              "FileNamePattern": "SellableItemRelationship*.json"
+            },
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.ImportFileSetting, Plugin.Hunk.Catalog",
+              "Key": "SellableItemInventory",
+              "FileNamePattern": "SellableItemInventory*.json"
             }
           ]
         }

@@ -1,4 +1,5 @@
-﻿using Plugin.Hunk.Catalog.Metadata;
+﻿using System;
+using Plugin.Hunk.Catalog.Metadata;
 using Plugin.Hunk.Catalog.Pipelines.Arguments;
 using Sitecore.Commerce.Core;
 using Sitecore.Commerce.Plugin.Inventory;
@@ -26,9 +27,9 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
 
         public override async Task<ImportEntityArgument> Run(ImportEntityArgument arg, CommercePipelineExecutionContext context)
         {
-            var commerceEntity = arg.ImportHandler.GetCommerceEntity();
+            var commerceEntity = arg.ImportHandler.GetCommerceEntity() as Sitecore.Commerce.Plugin.Catalog.Catalog;
 
-            if (!(commerceEntity is Sitecore.Commerce.Plugin.Catalog.Catalog))
+            if (commerceEntity == null)
             {
                 return await Task.FromResult(arg);
             }
@@ -50,9 +51,13 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
                     .ConfigureAwait(false);
             }
 
-            await _associateCatalogToInventorySetCommand
-                .Process(context.CommerceContext, inventorySetName, commerceEntity.Name)
-                .ConfigureAwait(false);
+            if (string.IsNullOrEmpty(commerceEntity.DefaultInventorySetName)
+                || !inventorySetName.Equals(commerceEntity.DefaultInventorySetName, StringComparison.OrdinalIgnoreCase))
+            {
+                await _associateCatalogToInventorySetCommand
+                    .Process(context.CommerceContext, inventorySetName, commerceEntity.Name)
+                    .ConfigureAwait(false);
+            }
 
             return await Task.FromResult(arg);
         }

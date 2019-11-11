@@ -20,5 +20,7 @@ namespace Plugin.Hunk.Catalog.Policy
         public EntityVersioningScheme EntityVersioningScheme { get; set; }
 
         public IList<string> VariantComponents { get; set; }
+
+        public bool IgnoreIndexUpdates { get; set; }
     }
 }

@@ -24,36 +24,35 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
         public override async Task<RelationshipArgument> Run(RelationshipArgument arg,
             CommercePipelineExecutionContext context)
         {
-            if (!(new string[4]
+            if (!(new[]
             {
                 "CatalogToCategory",
                 "CatalogToSellableItem",
                 "CategoryToCategory",
                 "CategoryToSellableItem"
-            }).Contains<string>(arg.RelationshipType, (IEqualityComparer<string>)StringComparer.OrdinalIgnoreCase))
+            }).Contains(arg.RelationshipType, StringComparer.OrdinalIgnoreCase))
                 return arg;
             CatalogItemBase source = arg.SourceEntity as CatalogItemBase;
             if (source == null)
                 source = await _commerceCommander.Pipeline<IFindEntityPipeline>()
-                    .Run(new FindEntityArgument(typeof(CatalogItemBase), arg.SourceName, false), context)
+                    .Run(new FindEntityArgument(typeof(CatalogItemBase), arg.SourceName), context)
                     .ConfigureAwait(false) as CatalogItemBase;
 
             List<Tuple<string, CatalogItemBase>> tupleList = new List<Tuple<string, CatalogItemBase>>();
             if (arg.TargetName.Contains("|"))
             {
                 string targetName = arg.TargetName;
-                char[] chArray = new char[1] { '|' };
+                char[] chArray = { '|' };
                 foreach (string str in targetName.Split(chArray))
                     tupleList.Add(new Tuple<string, CatalogItemBase>(str, null));
             }
             else
                 tupleList.Add(new Tuple<string, CatalogItemBase>(arg.TargetName, arg.TargetEntity as CatalogItemBase));
 
-            ValueWrapper<bool> sourceChanged = new ValueWrapper<bool>(false);
             foreach (Tuple<string, CatalogItemBase> tuple in tupleList)
             {
                 CatalogItemBase catalogItemBase = tuple.Item2 ?? await _commerceCommander.Pipeline<IFindEntityPipeline>()
-                                                      .Run(new FindEntityArgument(typeof(CatalogItemBase), tuple.Item1, false), context).ConfigureAwait(false) as CatalogItemBase;
+                                                      .Run(new FindEntityArgument(typeof(CatalogItemBase), tuple.Item1), context).ConfigureAwait(false) as CatalogItemBase;
 
                 if (source != null && catalogItemBase != null)
                 {
@@ -82,7 +81,7 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
 
                     if (changed)
                     {
-                        PersistEntityArgument persistEntityArgument = await _commerceCommander
+                        await _commerceCommander
                             .Pipeline<IPersistEntityPipeline>().Run(new PersistEntityArgument(catalogItemBase), context)
                             .ConfigureAwait(false);
                     }

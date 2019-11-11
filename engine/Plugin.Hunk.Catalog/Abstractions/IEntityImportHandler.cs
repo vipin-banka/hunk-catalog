@@ -43,6 +43,8 @@ namespace Plugin.Hunk.Catalog.Abstractions
         TOutput GetPropertyValueFromSource<TMetadata, TOutput>() 
             where TMetadata : Attribute
             where TOutput : class;
+
+        bool IsEntityImport { get; }
     }
 
     public interface IEntityImportHandler<TCommerceEntity>
