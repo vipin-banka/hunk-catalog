@@ -72,17 +72,17 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
                                         deleteIdsFromList.Add(entityId);
                                     }
                                 }
+                            }
 
-                                if (targetIds != null
-                                    && targetIds.Any())
-                                {
-                                    var targetName = targetIds.JoinIds();
+                            if (targetIds != null
+                                && targetIds.Any())
+                            {
+                                var targetName = targetIds.JoinIds();
 
-                                    await _commerceCommander.Command<CreateRelationshipCommand>().Process(
-                                        context.CommerceContext,
-                                        commerceEntity.Id,
-                                        targetName, relationShipMapper.Name);
-                                }
+                                await _commerceCommander.Command<CreateRelationshipCommand>().Process(
+                                    context.CommerceContext,
+                                    commerceEntity.Id,
+                                    targetName, relationShipMapper.Name);
                             }
 
                             if (deleteIdsFromList.Any())

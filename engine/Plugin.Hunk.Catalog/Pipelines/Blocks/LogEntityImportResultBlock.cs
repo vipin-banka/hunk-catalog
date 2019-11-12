@@ -86,15 +86,10 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
                         stringBuilder.AppendLine();
                         stringBuilder.Append("-->");
                         stringBuilder.Append(missingReferencesModel.Name);
-                        stringBuilder.AppendLine();
-                        stringBuilder.Append("------------------------------");
-                        stringBuilder.AppendLine();
-                        foreach (var missingReference in missingReferencesModel.MissingReferences)
-                        {
-                            stringBuilder.Append(missingReference);
-                            stringBuilder.AppendLine();
-                        }
-                        stringBuilder.Append("------------------------------");
+                        var list = missingReferencesModel.MissingReferences.Aggregate(new StringBuilder(),
+                            (s, i) => s.Append($"{i},"), s => s.ToString()).Trim(',');
+                        stringBuilder.Append("=");
+                        stringBuilder.Append(list);
                     }
                 }
             }
@@ -106,7 +101,7 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
             var fileImportPolicy = context.GetPolicy<FileImportPolicy>();
             var directoryInfo = GetDirectory(Path.GetFullPath(fileImportPolicy.RootFolder));
             var logFile = directoryInfo.GetFiles("log*.txt").FirstOrDefault();
-            
+
             if (logFile == null)
             {
                 File.WriteAllText(Path.Combine(directoryInfo.FullName, "Log.txt"), "");
