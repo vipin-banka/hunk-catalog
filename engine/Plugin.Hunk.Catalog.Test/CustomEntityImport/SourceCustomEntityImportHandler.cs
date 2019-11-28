@@ -8,8 +8,8 @@ namespace Plugin.Hunk.Catalog.Test.CustomEntityImport
     public class SourceCustomEntityImportHandler : CustomEntityImportHandler<SourceCustomEntity, CustomCommerceItem>
     {
         /// <inheritdoc />
-        public SourceCustomEntityImportHandler(string sourceProduct, CommerceCommander commerceCommander, CommercePipelineExecutionContext context)
-            : base(sourceProduct, commerceCommander, context)
+        public SourceCustomEntityImportHandler(string customEntity, CommerceCommander commerceCommander, CommercePipelineExecutionContext context)
+            : base(customEntity, commerceCommander, context)
         {
         }
 
