@@ -225,5 +225,9 @@ namespace Plugin.Hunk.Catalog.ImportHandlers
         {
             return typeof(TSourceEntity).GetPropertyValueWithAttribute<TMetadata, TOutput>(SourceEntity);
         }
+
+        public virtual void BeforePersistEntity() { }
+
+        public virtual void AfterPersistEntity() { }
     }
 }

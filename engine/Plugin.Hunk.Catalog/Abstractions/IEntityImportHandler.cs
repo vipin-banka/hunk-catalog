@@ -45,6 +45,10 @@ namespace Plugin.Hunk.Catalog.Abstractions
             where TOutput : class;
 
         bool IsEntityImport { get; }
+
+        void BeforePersistEntity();
+
+        void AfterPersistEntity();
     }
 
     public interface IEntityImportHandler<TCommerceEntity>

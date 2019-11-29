@@ -25,8 +25,12 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
                 return await Task.FromResult((CommerceEntity) null);
             }
 
+            arg.ImportHandler.BeforePersistEntity();
+
             await _persistEntityPipeline.Run(new PersistEntityArgument(commerceEntity), context)
                     .ConfigureAwait(false);
+
+            arg.ImportHandler.AfterPersistEntity();
 
             return await Task.FromResult(commerceEntity);
         }

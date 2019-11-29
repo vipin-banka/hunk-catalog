@@ -28,23 +28,28 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
 
         private async Task SetCommerceEntityDetails(CommerceEntity commerceEntity, ImportEntityArgument importEntityArgument, CommercePipelineExecutionContext context)
         {
-            if (importEntityArgument.ImportHandler is IEntityMapper mapper)
+            if (!importEntityArgument.IsNew)
             {
-                mapper.Map();
-            }
-            else
-            {
-                mapper = await _commerceCommander.Pipeline<IResolveEntityMapperPipeline>()
-                    .Run(new ResolveEntityMapperArgument(importEntityArgument, commerceEntity), context)
-                    .ConfigureAwait(false);
-
-                if (mapper == null)
+                if (importEntityArgument.ImportHandler is IEntityMapper mapper)
                 {
-                    await context.CommerceContext.AddMessage(context.GetPolicy<KnownResultCodes>().Warning, "EntityMapperMissing", null, $"Entity mapper instance for entityType={importEntityArgument.SourceEntityDetail.EntityType} not resolved.");
+                    mapper.Map();
                 }
                 else
                 {
-                    mapper.Map();
+                    mapper = await _commerceCommander.Pipeline<IResolveEntityMapperPipeline>()
+                        .Run(new ResolveEntityMapperArgument(importEntityArgument, commerceEntity), context)
+                        .ConfigureAwait(false);
+
+                    if (mapper == null)
+                    {
+                        await context.CommerceContext.AddMessage(context.GetPolicy<KnownResultCodes>().Warning,
+                            "EntityMapperMissing", null,
+                            $"Entity mapper instance for entityType={importEntityArgument.SourceEntityDetail.EntityType} not resolved.");
+                    }
+                    else
+                    {
+                        mapper.Map();
+                    }
                 }
             }
         }
