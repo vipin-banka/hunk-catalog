@@ -1,0 +1,9 @@
+[
+	{
+		"Id": "Hunk1_Category Name",
+		"Name": "Hunk1_Category Name",
+		"DisplayName": "Hunk1 Category Display Name",
+		"Description": "Hunk1 Category Description",
+		"Parents": ["Hunk1_Catalog"]
+	}
+]

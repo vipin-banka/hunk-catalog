@@ -1,0 +1,65 @@
+[
+	{
+		"Id": "Sellable Item 101",
+		"RelationshipDetails": [
+			{
+				"Name": "TrainingProducts",
+				"Ids":["6042325","6042283","100000000-1"]
+			},
+			{
+				"Name": "InstallationProducts",
+				"Ids":["6042878","6042183","100000000-2"]
+			},
+			{
+				"Name": "RelatedProducts",
+				"Ids":["6042430","6042886","100000000-3"]
+			},
+			{
+				"Name": "WarrantyProducts",
+				"Ids":["7042257","7042258","100000000-4"]
+			}
+		]
+	},
+	{
+		"Id": "Sellable Item 102",
+		"RelationshipDetails": [
+			{
+				"Name": "TrainingProducts",
+				"Ids":["6042325","6042283","100000000-11"]
+			},
+			{
+				"Name": "InstallationProducts",
+				"Ids":["6042878","6042183","100000000-12"]
+			},
+			{
+				"Name": "RelatedProducts",
+				"Ids":["6042430","6042886","100000000-13"]
+			},
+			{
+				"Name": "WarrantyProducts",
+				"Ids":["7042257","7042258","100000000-14"]
+			}
+		]
+	},
+	{
+		"Id": "Sellable Item 103",
+		"RelationshipDetails": [
+			{
+				"Name": "TrainingProducts",
+				"Ids":["6042325","6042283","100000000-21"]
+			},
+			{
+				"Name": "InstallationProducts",
+				"Ids":["6042878","6042183","100000000-22"]
+			},
+			{
+				"Name": "RelatedProducts",
+				"Ids":["6042430","6042886","100000000-23"]
+			},
+			{
+				"Name": "WarrantyProducts",
+				"Ids":["7042257","7042258","100000000-24"]
+			}
+		]
+	}
+]
