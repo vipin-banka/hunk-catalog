@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Plugin.Hunk.Catalog.Extensions;
 
 namespace Plugin.Hunk.Catalog.BulkImport
 {
@@ -21,25 +23,23 @@ namespace Plugin.Hunk.Catalog.BulkImport
         {
             var fileImportPolicy = CommerceContext.GetPolicy<FileImportPolicy>();
 
-            if (!string.IsNullOrEmpty(fileImportPolicy.RootFolder))
+            DirectoryInfo directoryInfo = string.IsNullOrEmpty(fileImportPolicy.RootFolder) ? GetDefaultDirectory() : GetDirectory(Path.GetFullPath(fileImportPolicy.RootFolder));
+
+            if (directoryInfo != null)
             {
-                var directoryInfo = GetDirectory(Path.GetFullPath(fileImportPolicy.RootFolder));
+                var setting = fileImportPolicy.ImportFileSettings.FirstOrDefault(x =>
+                    x.Key.Equals(sourceEntityDetail.EntityType, StringComparison.OrdinalIgnoreCase));
 
-                if (directoryInfo != null)
+                if (setting != null)
                 {
-                    var setting = fileImportPolicy.ImportFileSettings.FirstOrDefault(x =>
-                        x.Key.Equals(sourceEntityDetail.EntityType, StringComparison.OrdinalIgnoreCase));
+                    var files = GetFiles(directoryInfo, setting.FileNamePattern);
 
-                    if (setting != null)
+                    foreach (var fileInfo in files)
                     {
-                        var files = GetFiles(directoryInfo, setting.FileNamePattern);
-
-                        foreach (var fileInfo in files)
-                        {
-                            await ImportFileContent(sourceEntityDetail, fileInfo);
-                        }
+                        await ImportFileContent(sourceEntityDetail, fileInfo);
                     }
                 }
+
             }
 
             return true;
@@ -49,6 +49,16 @@ namespace Plugin.Hunk.Catalog.BulkImport
         {
             return new DirectoryInfo(rootFolderName).GetDirectories()
                 .OrderByDescending(d => d.LastWriteTimeUtc).FirstOrDefault();
+        }
+
+        protected virtual DirectoryInfo GetDefaultDirectory()
+        {
+            if (ServiceProvider.GetService(typeof(IHostingEnvironment)) is IHostingEnvironment hostingEnvironment)
+            {
+                return hostingEnvironment.GetDefaultCustomCatalogContentDirectory();
+            }
+
+            return null;
         }
 
         protected virtual IList<FileInfo> GetFiles(DirectoryInfo directoryInfo, string fileNamePattern)

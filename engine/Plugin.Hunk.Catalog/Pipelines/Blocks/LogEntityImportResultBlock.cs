@@ -10,12 +10,21 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Plugin.Hunk.Catalog.Extensions;
 
 namespace Plugin.Hunk.Catalog.Pipelines.Blocks
 {
     [PipelineDisplayName(Constants.LogEntityImportResultBlock)]
     public class LogEntityImportResultBlock : PipelineBlock<LogEntityImportResultArgument, LogEntityImportResultArgument, CommercePipelineExecutionContext>
     {
+        private readonly IHostingEnvironment _hostingEnvironment;
+
+        public LogEntityImportResultBlock(IHostingEnvironment hostingEnvironment)
+        {
+            _hostingEnvironment = hostingEnvironment;
+        }
+
         public override async Task<LogEntityImportResultArgument> Run(LogEntityImportResultArgument arg, CommercePipelineExecutionContext context)
         {
             var model = arg.ImportEntityCommand.Models.OfType<SourceEntityModel>().FirstOrDefault();
@@ -99,7 +108,7 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
         private void WriteLog(StringBuilder stringBuilder, CommercePipelineExecutionContext context)
         {
             var fileImportPolicy = context.GetPolicy<FileImportPolicy>();
-            var directoryInfo = GetDirectory(Path.GetFullPath(fileImportPolicy.RootFolder));
+            var directoryInfo = string.IsNullOrEmpty(fileImportPolicy.RootFolder) ? _hostingEnvironment.GetDefaultCustomCatalogContentDirectory() : GetDirectory(Path.GetFullPath(fileImportPolicy.RootFolder));
             var logFile = directoryInfo.GetFiles("log*.txt").FirstOrDefault();
 
             if (logFile == null)

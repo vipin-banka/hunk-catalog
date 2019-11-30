@@ -55,6 +55,31 @@
             },
             {
               "$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+              "Key": "InventorySet",
+              "ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.InventorySetEntityImport.SourceInventorySetImportHandler, Plugin.Hunk.Catalog.Test"
+            },
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+              "Key": "PriceBook",
+              "ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.PriceBookEntityImport.SourcePriceBookImportHandler, Plugin.Hunk.Catalog.Test"
+            },
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+              "Key": "PriceCard",
+              "ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.PriceCardEntityImport.SourcePriceCardImportHandler, Plugin.Hunk.Catalog.Test"
+            },
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+              "Key": "PromotionBook",
+              "ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.PromotionBookEntityImport.SourcePromotionBookImportHandler, Plugin.Hunk.Catalog.Test"
+            },
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+              "Key": "Promotion",
+              "ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.PromotionEntityImport.SourcePromotionImportHandler, Plugin.Hunk.Catalog.Test"
+            },
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
               "Key": "SellableItemRelationship",
               "ImportHandlerTypeName": "Plugin.Hunk.Catalog.ImportHandlers.SellableItemRelationshipImportHandler, Plugin.Hunk.Catalog",
               "BulkImporterTypeName": "Plugin.Hunk.Catalog.BulkImport.SellableItemRelationshipsImport, Plugin.Hunk.Catalog"
