@@ -56,9 +56,9 @@ This plugin covers lot of things so let's see following samples:
 5. [Import Catalog Item](#5-import-catalog-item)
 6. [Import Category Item](#6-import-category-item)
 7. [Import content in custom commerce entity](#7-import-content-in-custom-commerce-entity)
-8. [Import entity relationships](#7-import-entity-relationships)
-9. [Import inventory detail](#7-import-inventory-detail)
-10. [Bulk Import](#7-bulk-import)
+8. [Import Sellable Item Relationships](#8-import-sellable-item-relationships)
+9. [Import Variant Inventory Detail](#9-import-variant-inventory-detail)
+10. [Bulk Import](#10-bulk-import)
 
 ### 1. Import sellable item
 Let's assume you want to import a sellable item. Your sellable item has few custom fields i.e. "Accessories" and "Dimensions" and you need to add a custom commerce component for that.
@@ -745,62 +745,171 @@ See sample configuration [here](#catalog-import-policy).
 * Execute the request.
 * You can check entity in commerce database.
 
-### 8. Import entity relationships
-It is also possible to import entity relationships separately.
-	
+### 8. Import Sellable Item Relationships
+It is also possible to import sellable item relationships separately.
+
 Follow below steps:
 
-#### 8.1 How to test?
+#### 8.1 Configure Commerce Engine
+This plugin contains entity and mapper classes for this feature to work, you need to make sure that import policy is configured correctly.
+![sellable-item-relationships-mappings](https://github.com/vipin-banka/hunk-catalog/blob/master/images/sellableitem-relationships-mappings.png)
+see full policy [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Sitecore.Commerce.Engine/wwwroot/data/Environments/PlugIn.CatalogImport.PolicySet-1.0.0.json).
+
+#### 8.2 How to test?
 * Build and deploy commerce solution.
 * Bootstrap commerce engine using postman.
 * Import [Sample Postman Collection](https://github.com/vipin-banka/hunk-catalog/blob/master/postman/import/Catalog%20Import.postman_collection.json) in postman.
 * Execute GetToken API from your commerce Authentication collection.
-* Go to **Catalog Import** collection and open **Import Entity Relationships** request.
-![import-custom-entity](https://github.com/vipin-banka/hunk-catalog/blob/master/images/import-custom-item.png)
-* Provide source content in the request body. See API details [here](#api-endpoint).
+* Go to **Catalog Import** collection and open **Import Sellable Item Relationships** request.
+![import-sellableitem-relationships-entity](https://github.com/vipin-banka/hunk-catalog/blob/master/images/import-sellableitem-relationships.png)
+* In the request body send sellable item id and related entities ids as per above image.
 * Execute the request.
 * Open Business tools and verify relevant item.
 
-### 9. Import inventory details
-There are two ways to import inventory details.
-You can import it with sellable item variant or you can import it separately.
-	
-Follow below steps:
+### 9. Import Variant Inventory Detail
+You can import inventory details for sellable item variants.
 
-#### 9.1 How to test?
+Follow below steps:
+#### 9.1 Configure Commerce Engine
+This plugin contains entity and mapper classes for this feature to work, you need to make sure that import policy is configured correctly.
+![variant-inventory-mappings](https://github.com/vipin-banka/hunk-catalog/blob/master/images/variant-inventory-mappings.png)
+see full policy [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Sitecore.Commerce.Engine/wwwroot/data/Environments/PlugIn.CatalogImport.PolicySet-1.0.0.json).
+
+#### 9.2 How to test?
 * Build and deploy commerce solution.
 * Bootstrap commerce engine using postman.
 * Import [Sample Postman Collection](https://github.com/vipin-banka/hunk-catalog/blob/master/postman/import/Catalog%20Import.postman_collection.json) in postman.
 * Execute GetToken API from your commerce Authentication collection.
-* Go to **Catalog Import** collection and open **Import Entity Relationships** request.
-![import-custom-entity](https://github.com/vipin-banka/hunk-catalog/blob/master/images/import-custom-item.png)
-* Provide source content in the request body. See API details [here](#api-endpoint).
+* Go to **Catalog Import** collection and open **Import Variant Inventory Detail** request.
+![import-variant-inventory](https://github.com/vipin-banka/hunk-catalog/blob/master/images/import-variant-inventory.png)
+* In the request body send sellable item id, variant id, inventory set name and inventory details as per above image.
 * Execute the request.
 * Open Business tools and verify relevant item.
 
 ### 10. Bulk Import
-It is also possible to import multiple entities in a background process.
-	
+It is also possible to import multiple entities using a minion. Bulk import process will read json files in the sequence of entity mappings in the catalog import policy and import content in sitecore commerce engine database.
+
 Follow below steps:
 
-#### 10.1 Create Bulk Import for each entity
+#### 10.1 Create Json files
+Create json files as shown below and place at "**{ServiceRoot}\wwwroot\data\CustomCatalogs**".
+![bulk-import-json-files](https://github.com/vipin-banka/hunk-catalog/blob/master/images/bulk-import-json-files.png)
 
-#### 10.2 Configure Bulk Import class
+In each file place content in json format for your entities.
+See sample files:
+* [Catalog](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Sitecore.Commerce.Engine/wwwroot/data/CustomCatalogs/Catalog.1.json)
+* [Category](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Sitecore.Commerce.Engine/wwwroot/data/CustomCatalogs/Category.1.json)
+* [Sellable Item](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Sitecore.Commerce.Engine/wwwroot/data/CustomCatalogs/SellableItem.1.json)
+* [Sellable Item Relationships](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Sitecore.Commerce.Engine/wwwroot/data/CustomCatalogs/SellableItemRelationship.1.json)
+* [Variant Inventory](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Sitecore.Commerce.Engine/wwwroot/data/CustomCatalogs/SellableItemInventory.1.json)
 
-#### 10.3 Configure Minion
+#### 10.2 Create bulk import classes
+Create bulk import hanlder classes for your catalog.
 
-#### 10.4 How to test?
+**Catalog Bulk Import Class**
+```c#
+public class CatalogImport : BaseJsonFileBulkImporter<SourceCatalog>
+{
+    public CatalogImport(IServiceProvider serviceProvider, 
+        CommerceContext commerceContext) 
+       : base(serviceProvider, commerceContext)
+    {
+    }
+}
+```
+see full content [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/BulkImport/CatalogImport.cs).
+
+**Category Bulk Import Class**
+```c#
+public class CategoryImport : BaseJsonFileBulkImporter<SourceCategory>
+{
+    public CategoryImport(IServiceProvider serviceProvider, 
+        CommerceContext commerceContext) 
+       : base(serviceProvider, commerceContext)
+    {
+    }
+}
+```
+see full content [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/BulkImport/CategoryImport.cs).
+
+**Sellable Item Bulk Import Class**
+```c#
+public class SellableItemImport : BaseJsonFileBulkImporter<SourceProduct>
+{
+    public SellableItemImport(IServiceProvider serviceProvider, 
+        CommerceContext commerceContext) 
+        : base(serviceProvider, commerceContext)
+    {
+    }
+}
+```
+see full content [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Plugin.Hunk.Catalog.Test/BulkImport/SellableItemImport.cs).
+
+#### 10.3 Configure Bulk Import class
+In catalog import policy configure bulk import type names and component names as shown in below image.
+![bulk-import-type-mappings](https://github.com/vipin-banka/hunk-catalog/blob/master/images/bulk-import-type-mappings.png)
+see full policy [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Sitecore.Commerce.Engine/wwwroot/data/Environments/PlugIn.CatalogImport.PolicySet-1.0.0.json).
+
+#### 10.4 Configure Bulk Import Policy
+There is a separate policy to configure for bulk import process. In this policy you need to define your json file names for each entity. 
+**To support future extensibility this policy has been defined separately then catalog import policy.**
+```json
+{
+    "$type": "Plugin.Hunk.Catalog.Policy.FileImportPolicy, Plugin.Hunk.Catalog",
+    "RootFolder": "",
+    "ImportFileSettings": {
+	"$type": "System.Collections.Generic.List`1[[Plugin.Hunk.Catalog.Policy.ImportFileSetting, Plugin.Hunk.Catalog]], mscorlib",
+	"$values": [
+	    {
+		"$type": "Plugin.Hunk.Catalog.Policy.ImportFileSetting, Plugin.Hunk.Catalog",
+		"Key": "Catalog",
+		"FileNamePattern": "Catalog*.json"
+	    },
+	    {
+		"$type": "Plugin.Hunk.Catalog.Policy.ImportFileSetting, Plugin.Hunk.Catalog",
+		"Key": "Category",
+		"FileNamePattern": "Category*.json"
+	    },
+	    {
+		"$type": "Plugin.Hunk.Catalog.Policy.ImportFileSetting, Plugin.Hunk.Catalog",
+		"Key": "SellableItem",
+		"FileNamePattern": "SellableItem*.json"
+	    },
+	    {
+		"$type": "Plugin.Hunk.Catalog.Policy.ImportFileSetting, Plugin.Hunk.Catalog",
+		"Key": "SellableItemRelationship",
+		"FileNamePattern": "SellableItemRelationship*.json"
+	    },
+	    {
+		"$type": "Plugin.Hunk.Catalog.Policy.ImportFileSetting, Plugin.Hunk.Catalog",
+		"Key": "SellableItemInventory",
+		"FileNamePattern": "SellableItemInventory*.json"
+	    }
+       ]
+    }
+}
+```
+see full content [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Sitecore.Commerce.Engine/wwwroot/data/Environments/PlugIn.BulkCatalogImport.PolicySet-1.0.0.json). 
+
+#### 10.5 Configure Minion
+configure the minion
+```json
+{
+    "$type": "Sitecore.Commerce.Core.MinionPolicy, Sitecore.Commerce.Core",
+    "FullyQualifiedName": "Plugin.Hunk.Catalog.Minions.BulkImportMinion, Plugin.Hunk.Catalog"
+}
+```
+see full content [here](https://github.com/vipin-banka/hunk-catalog/blob/master/engine/Sitecore.Commerce.Engine/wwwroot/data/Environments/PlugIn.BulkCatalogImport.PolicySet-1.0.0.json). 
+
+#### 10.6 How to test?
 * Build and deploy commerce solution.
 * Bootstrap commerce engine using postman.
 * Import [Sample Postman Collection](https://github.com/vipin-banka/hunk-catalog/blob/master/postman/import/Catalog%20Import.postman_collection.json) in postman.
 * Execute GetToken API from your commerce Authentication collection.
-* Go to **Catalog Import** collection and open **Import Entity Relationships** request.
-![import-custom-entity](https://github.com/vipin-banka/hunk-catalog/blob/master/images/import-custom-item.png)
-* Provide source content in the request body. See API details [here](#api-endpoint).
+* Go to **Catalog Import** collection and open **Run Bulk Import Minion** request.
+![bulk-import-minion](https://github.com/vipin-banka/hunk-catalog/blob/master/images/bulk-import-minion.png)
 * Execute the request.
-* Open Business tools and verify relevant item.
-* Execute the request.
-* You can check entity in commerce database.
+* Open Business tools and verify content.
 
 ## Documentation
 Below is some more inforamtion for this plugin:
@@ -861,7 +970,7 @@ Catalog import policy allows you to set following values:
    - UpdateLatestUnpublished - This option will first look for your latest version and if that version is in unpublished state, it will make updates in that version only but if latest version is already published than it will create a new version.
    - UpdateLatest - This will not create a new version and will always update in the latest version no matter whether published or not.
  
-3. **EntityMappings** - In this section you must configure all custom entity mappers you have created. Give a unique key to each entry, you need to use these keys as entity name in "EntityType" property for metadata in import api.
+3. **EntityMappings** - In this section you must configure all custom entity mappers you have created. Give a unique key to each entry, you need to use these keys as entity name in "EntityType" property for metadata in import api. For each entitiy you can define the bulk import hanlder type full name and component names those will be used in bulk import process.
  
 4. **EntityComponentMappings** - In this section you have to configure all custom component mappers you have created. Give a unique key to each entry, you need to use these keys as component names in "Components" property for metadata in import api.
  
@@ -871,79 +980,134 @@ Catalog import policy allows you to set following values:
  
 7. **RelationshipMappings** - In this section you must configure all relationship mappers, OOTB this plugin comes with four which supports relationship of sellable item to sellable item. Give a unique key to each entry, you need to use these keys with your relationship data to pass to import process.
 
+8. **VariantComponents** - In this section you can configure default variant component names that will be used in bulk import process.
+
 A complete Catalog Import Policy is below:
 ```json{
-{
-  "$type": "Plugin.Hunk.Catalog.Policy.CatalogImportPolicy, Plugin.Hunk.Catalog",
-  "DeleteOrphanVariant": true,
-  "EntityVersioningScheme": "UpdateLatest",
-  "Mappings": {
-    "EntityMappings": [
-      {
-     	"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
-	"Key": "Catalog",
-	"ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.CatalogEntityImport.SourceCatalogImportHandler, Plugin.Hunk.Catalog.Test"
-      },
-      {
-	"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
-	"Key": "Category",
-	"ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.CategoryEntityImport.SourceCategoryImportHandler, Plugin.Hunk.Catalog.Test"
-      },
-      {
-	"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
-	"Key": "SellableItem",
-	"ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.SourceProductImportHandler, Plugin.Hunk.Catalog.Test"
-      },
-      {
-	"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
-	"Key": "SourceCustomEntity",
-	"ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.CustomEntityImport.SourceCustomEntityImportHandler, 
-	Plugin.Hunk.Catalog.Test"
-      }
-   ],
-  "EntityComponentMappings": [
-     {
-	"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
-	"Key": "SellableItemComponent",
-	"FullTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.SellableItemComponentMapper, Plugin.Hunk.Catalog.Test"
-     }
-   ],
-  "ItemVariationMappings": [
-    {
-	"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
-	"FullTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.ItemVariationComponentMapper, Plugin.Hunk.Catalog.Test"
-    }
-   ],
-  "ItemVariationComponentMappings": [
-    {
-	"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
-	"Key": "VariantComponent",
-	"FullTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.VariantComponentMapper, Plugin.Hunk.Catalog.Test"
-    }
-   ],
-  "RelationshipMappings": [
-    {
-	"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
-	"Key": "TrainingProducts",
-	"FullTypeName": "Plugin.Hunk.Catalog.RelationshipMappers.TrainingSellableItemToSellableItemRelationshipMapper, Plugin.Hunk.Catalog"
-    },
-    {
-	"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
-	"Key": "InstallationProducts",
-	"FullTypeName": "Plugin.Hunk.Catalog.RelationshipMappers.InstallationSellableItemToSellableItemRelationshipMapper, Plugin.Hunk.Catalog"
-    },
-    {
-	"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
-	"Key": "RelatedProducts",
-	"FullTypeName": "Plugin.Hunk.Catalog.RelationshipMappers.RelatedSellableItemToSellableItemRelationshipMapper, Plugin.Hunk.Catalog"
-    },
-    {
-	"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
-	"Key": "WarrantyProducts",
-	"FullTypeName": "Plugin.Hunk.Catalog.RelationshipMappers.WarrantySellableItemToSellableItemRelationshipMapper, Plugin.Hunk.Catalog"
-     }
-   ]
-  }
+	"$type": "Plugin.Hunk.Catalog.Policy.CatalogImportPolicy, Plugin.Hunk.Catalog",
+	"DeleteOrphanVariant": true,
+	"EntityVersioningScheme": "UpdateLatest",
+	"Mappings": {
+		"EntityMappings": [
+		{
+			"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+			"Key": "Catalog",
+			"ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.CatalogEntityImport.SourceCatalogImportHandler, Plugin.Hunk.Catalog.Test",
+			"BulkImporterTypeName": "Plugin.Hunk.Catalog.Test.BulkImport.CatalogImport, Plugin.Hunk.Catalog.Test",
+			"Components": {
+				"$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+				"$values": []
+			}
+		},
+		{
+			"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+			"Key": "Category",
+			"ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.CategoryEntityImport.SourceCategoryImportHandler, Plugin.Hunk.Catalog.Test",
+			"BulkImporterTypeName": "Plugin.Hunk.Catalog.Test.BulkImport.CategoryImport, Plugin.Hunk.Catalog.Test",
+			"Components": {
+				"$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+				"$values": []
+			}
+		},
+		{
+			"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+			"Key": "SellableItem",
+			"ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.SourceProductImportHandler, Plugin.Hunk.Catalog.Test",
+			"BulkImporterTypeName": "Plugin.Hunk.Catalog.Test.BulkImport.SellableItemImport, Plugin.Hunk.Catalog.Test",
+			"Components": {
+				"$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+				"$values": [
+					"SellableItemComponent"
+				]
+			}
+		},
+		{
+			"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+			"Key": "SourceCustomEntity",
+			"ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.CustomEntityImport.SourceCustomEntityImportHandler, Plugin.Hunk.Catalog.Test"
+		},
+		{
+			"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+			"Key": "InventorySet",
+			"ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.InventorySetEntityImport.SourceInventorySetImportHandler, Plugin.Hunk.Catalog.Test"
+		},
+		{
+			"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+			"Key": "PriceBook",
+			"ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.PriceBookEntityImport.SourcePriceBookImportHandler, Plugin.Hunk.Catalog.Test"
+		},
+		{
+			"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+			"Key": "PriceCard",
+			"ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.PriceCardEntityImport.SourcePriceCardImportHandler, Plugin.Hunk.Catalog.Test"
+		},
+		{
+			"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+			"Key": "PromotionBook",
+			"ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.PromotionBookEntityImport.SourcePromotionBookImportHandler, Plugin.Hunk.Catalog.Test"
+		},
+		{
+			"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+			"Key": "Promotion",
+			"ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.PromotionEntityImport.SourcePromotionImportHandler, Plugin.Hunk.Catalog.Test"
+		},
+		{
+			"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+			"Key": "SellableItemRelationship",
+			"ImportHandlerTypeName": "Plugin.Hunk.Catalog.ImportHandlers.SellableItemRelationshipImportHandler, Plugin.Hunk.Catalog",
+			"BulkImporterTypeName": "Plugin.Hunk.Catalog.BulkImport.SellableItemRelationshipsImport, Plugin.Hunk.Catalog"
+		},
+		{
+			"$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+			"Key": "SellableItemInventory",
+			"ImportHandlerTypeName": "Plugin.Hunk.Catalog.ImportHandlers.SellableItemInventoryImportHandler, Plugin.Hunk.Catalog",
+			"BulkImporterTypeName": "Plugin.Hunk.Catalog.BulkImport.SellableItemInventoryImport, Plugin.Hunk.Catalog"
+		}],
+		"EntityComponentMappings": [
+		{
+			"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+			"Key": "SellableItemComponent",
+			"FullTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.SellableItemComponentMapper, Plugin.Hunk.Catalog.Test"
+		}],
+		"ItemVariationMappings": [
+		{
+			"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+			"FullTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.ItemVariationComponentMapper, Plugin.Hunk.Catalog.Test"
+		}],
+		"ItemVariationComponentMappings": [
+		{
+			"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+			"Key": "VariantComponent",
+			"FullTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.VariantComponentMapper, Plugin.Hunk.Catalog.Test"
+		}],
+		"RelationshipMappings": [
+		{
+			"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+			"Key": "TrainingProducts",
+			"FullTypeName": "Plugin.Hunk.Catalog.RelationshipMappers.TrainingSellableItemToSellableItemRelationshipMapper, Plugin.Hunk.Catalog"
+		},
+		{
+			"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+			"Key": "InstallationProducts",
+			"FullTypeName": "Plugin.Hunk.Catalog.RelationshipMappers.InstallationSellableItemToSellableItemRelationshipMapper, Plugin.Hunk.Catalog"
+		},
+		{
+			"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+			"Key": "RelatedProducts",
+			"FullTypeName": "Plugin.Hunk.Catalog.RelationshipMappers.RelatedSellableItemToSellableItemRelationshipMapper, Plugin.Hunk.Catalog"
+		},
+		{
+			"$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+			"Key": "WarrantyProducts",
+			"FullTypeName": "Plugin.Hunk.Catalog.RelationshipMappers.WarrantySellableItemToSellableItemRelationshipMapper, Plugin.Hunk.Catalog"
+		}]
+	},
+	"VariantComponents": {
+		"$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+		"$values": [
+			"VariantComponent"
+		]
+	}
 }
 ```
 ### <a name="api-endpoint">3. Import API Endpoint
@@ -969,3 +1133,10 @@ In the request body following parameters should exists:
 
 ### Response Body
 This plugin follows the OOTB standard and in response body it returns the commerce command with Sitecore Commerce Messages and Models containing the status of import process.
+
+## Contributors
+1. Vipin Banka
+- Twitter: https://twitter.com/bankavipin
+2. Justin Bradley
+- Twitter: https://twitter.com/jbsitecore
+- Github: https://github.com/justbradley
