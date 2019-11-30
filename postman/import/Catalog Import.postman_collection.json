@@ -77,6 +77,583 @@
 					"response": []
 				},
 				{
+					"name": "Run Bulk Import Minion",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "{{SitecoreIdToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"minionFullName\":\"Plugin.Hunk.Catalog.Minions.BulkImportMinion, Plugin.Hunk.Catalog\",\n    \"environmentName\": \"HabitatCatalogImport\",\n    \"policies\": [\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{ServiceHost}}/{{OpsApi}}/RunMinion()",
+							"host": [
+								"{{ServiceHost}}"
+							],
+							"path": [
+								"{{OpsApi}}",
+								"RunMinion()"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Catalog With Default Books and InventorySet",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "ShopName",
+								"type": "text",
+								"value": "{{ShopName}}"
+							},
+							{
+								"key": "ShopperId",
+								"type": "text",
+								"value": "{{ShopperId}}"
+							},
+							{
+								"key": "Language",
+								"type": "text",
+								"value": "{{Language}}"
+							},
+							{
+								"key": "Currency",
+								"type": "text",
+								"value": "{{Currency}}"
+							},
+							{
+								"key": "Environment",
+								"type": "text",
+								"value": "{{Environment}}"
+							},
+							{
+								"key": "GeoLocation",
+								"type": "text",
+								"value": "{{GeoLocation}}"
+							},
+							{
+								"key": "CustomerId",
+								"type": "text",
+								"value": "{{CustomerId}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{SitecoreIdToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"metadata\":{\n\t\t\"EntityType\":\"Catalog\",\n\t\t\"Components\":[],\n\t\t\"VariantComponents\":[]\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Hunk1_Catalog\",\n\t\t\"Name\": \"Hunk1_Catalog\",\n\t\t\"DisplayName\": \"Hunk1 Catalog Display Name\",\n\t\t\"PriceBookName\": \"Hunk1_PriceBook\",\n\t\t\"PromotionBookName\": \"Hunk1_PromotionBook\",\n\t\t\"InventorySetName\": \"Hunk1_Inventory\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
+							"host": [
+								"{{ServiceHost}}"
+							],
+							"path": [
+								"{{ShopsApi}}",
+								"ImportEntity()"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Price Book",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "ShopName",
+								"type": "text",
+								"value": "{{ShopName}}"
+							},
+							{
+								"key": "ShopperId",
+								"type": "text",
+								"value": "{{ShopperId}}"
+							},
+							{
+								"key": "Language",
+								"type": "text",
+								"value": "{{Language}}"
+							},
+							{
+								"key": "Currency",
+								"type": "text",
+								"value": "{{Currency}}"
+							},
+							{
+								"key": "Environment",
+								"type": "text",
+								"value": "{{Environment}}"
+							},
+							{
+								"key": "GeoLocation",
+								"type": "text",
+								"value": "{{GeoLocation}}"
+							},
+							{
+								"key": "CustomerId",
+								"type": "text",
+								"value": "{{CustomerId}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{SitecoreIdToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"metadata\":{\n\t\t\"EntityType\":\"PriceBook\",\n\t\t\"Components\":[],\n\t\t\"VariantComponents\":[]\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Hunk1_PriceBook\",\n\t\t\"Name\": \"Hunk1_PriceBook\",\n\t\t\"DisplayName\": \"Hunk1 Price Book Display Name\",\n\t\t\"Description\": \"Hunk1 Price Book Description\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
+							"host": [
+								"{{ServiceHost}}"
+							],
+							"path": [
+								"{{ShopsApi}}",
+								"ImportEntity()"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import InventorySet",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "ShopName",
+								"type": "text",
+								"value": "{{ShopName}}"
+							},
+							{
+								"key": "ShopperId",
+								"type": "text",
+								"value": "{{ShopperId}}"
+							},
+							{
+								"key": "Language",
+								"type": "text",
+								"value": "{{Language}}"
+							},
+							{
+								"key": "Currency",
+								"type": "text",
+								"value": "{{Currency}}"
+							},
+							{
+								"key": "Environment",
+								"type": "text",
+								"value": "{{Environment}}"
+							},
+							{
+								"key": "GeoLocation",
+								"type": "text",
+								"value": "{{GeoLocation}}"
+							},
+							{
+								"key": "CustomerId",
+								"type": "text",
+								"value": "{{CustomerId}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{SitecoreIdToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"metadata\":{\n\t\t\"EntityType\":\"InventorySet\",\n\t\t\"Components\":[],\n\t\t\"VariantComponents\":[]\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Hunk1_Inventory\",\n\t\t\"Name\": \"Hunk1_Inventory\",\n\t\t\"DisplayName\": \"Hunk1 Inventory Display Name\",\n\t\t\"Description\": \"Hunk1 Inventory Description\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
+							"host": [
+								"{{ServiceHost}}"
+							],
+							"path": [
+								"{{ShopsApi}}",
+								"ImportEntity()"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Price Card",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "ShopName",
+								"type": "text",
+								"value": "{{ShopName}}"
+							},
+							{
+								"key": "ShopperId",
+								"type": "text",
+								"value": "{{ShopperId}}"
+							},
+							{
+								"key": "Language",
+								"type": "text",
+								"value": "{{Language}}"
+							},
+							{
+								"key": "Currency",
+								"type": "text",
+								"value": "{{Currency}}"
+							},
+							{
+								"key": "Environment",
+								"type": "text",
+								"value": "{{Environment}}"
+							},
+							{
+								"key": "GeoLocation",
+								"type": "text",
+								"value": "{{GeoLocation}}"
+							},
+							{
+								"key": "CustomerId",
+								"type": "text",
+								"value": "{{CustomerId}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{SitecoreIdToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"metadata\":{\n\t\t\"EntityType\":\"PriceCard\",\n\t\t\"Components\":[],\n\t\t\"VariantComponents\":[]\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Hunk1_PriceCard\",\n\t\t\"Name\": \"Hunk1_PriceCard\",\n\t\t\"DisplayName\": \"Hunk1 Price Card Display Name\",\n\t\t\"Description\": \"Hunk1 Price Card Description\",\n\t\t\"BookName\": \"Hunk1_PriceBook\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
+							"host": [
+								"{{ServiceHost}}"
+							],
+							"path": [
+								"{{ShopsApi}}",
+								"ImportEntity()"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Promotion Book",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "ShopName",
+								"type": "text",
+								"value": "{{ShopName}}"
+							},
+							{
+								"key": "ShopperId",
+								"type": "text",
+								"value": "{{ShopperId}}"
+							},
+							{
+								"key": "Language",
+								"type": "text",
+								"value": "{{Language}}"
+							},
+							{
+								"key": "Currency",
+								"type": "text",
+								"value": "{{Currency}}"
+							},
+							{
+								"key": "Environment",
+								"type": "text",
+								"value": "{{Environment}}"
+							},
+							{
+								"key": "GeoLocation",
+								"type": "text",
+								"value": "{{GeoLocation}}"
+							},
+							{
+								"key": "CustomerId",
+								"type": "text",
+								"value": "{{CustomerId}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{SitecoreIdToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"metadata\":{\n\t\t\"EntityType\":\"PromotionBook\",\n\t\t\"Components\":[],\n\t\t\"VariantComponents\":[]\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Hunk1_PromotionBook\",\n\t\t\"Name\": \"Hunk1_PromotionBook\",\n\t\t\"DisplayName\": \"Hunk1 Promotion Book Display Name\",\n\t\t\"Description\": \"Hunk1 Promotion Book Description\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
+							"host": [
+								"{{ServiceHost}}"
+							],
+							"path": [
+								"{{ShopsApi}}",
+								"ImportEntity()"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Promotion",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "ShopName",
+								"type": "text",
+								"value": "{{ShopName}}"
+							},
+							{
+								"key": "ShopperId",
+								"type": "text",
+								"value": "{{ShopperId}}"
+							},
+							{
+								"key": "Language",
+								"type": "text",
+								"value": "{{Language}}"
+							},
+							{
+								"key": "Currency",
+								"type": "text",
+								"value": "{{Currency}}"
+							},
+							{
+								"key": "Environment",
+								"type": "text",
+								"value": "{{Environment}}"
+							},
+							{
+								"key": "GeoLocation",
+								"type": "text",
+								"value": "{{GeoLocation}}"
+							},
+							{
+								"key": "CustomerId",
+								"type": "text",
+								"value": "{{CustomerId}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{SitecoreIdToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"metadata\":{\n\t\t\"EntityType\":\"Promotion\",\n\t\t\"Components\":[],\n\t\t\"VariantComponents\":[]\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Hunk1_Promotion\",\n\t\t\"Name\": \"Hunk1_Promotion\",\n\t\t\"DisplayName\": \"Hunk1 Promotion Display Name\",\n\t\t\"Description\": \"Hunk1 Promotion Description\",\n\t\t\"BookName\": \"Hunk1_PromotionBook\",\n\t\t\"ValidFrom\": \"2019-11-20T10:00:00\",\n\t\t\"ValidTo\": \"2019-12-05T17:30:00\",\n\t\t\"Text\": \"$10 Off Cart (Coupon)\",\n\t\t\"CartText\": \"$10 Off Cart (Coupon)\",\n\t\t\"IsExclusive\": false\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
+							"host": [
+								"{{ServiceHost}}"
+							],
+							"path": [
+								"{{ShopsApi}}",
+								"ImportEntity()"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Variant Inventory Detail",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "ShopName",
+								"type": "text",
+								"value": "{{ShopName}}"
+							},
+							{
+								"key": "ShopperId",
+								"type": "text",
+								"value": "{{ShopperId}}"
+							},
+							{
+								"key": "Language",
+								"type": "text",
+								"value": "{{Language}}"
+							},
+							{
+								"key": "Currency",
+								"type": "text",
+								"value": "{{Currency}}"
+							},
+							{
+								"key": "Environment",
+								"type": "text",
+								"value": "{{Environment}}"
+							},
+							{
+								"key": "GeoLocation",
+								"type": "text",
+								"value": "{{GeoLocation}}"
+							},
+							{
+								"key": "CustomerId",
+								"type": "text",
+								"value": "{{CustomerId}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{SitecoreIdToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"metadata\":{\n\t\t\"EntityType\":\"SellableItemInventory\",\n\t\t\"Components\":[],\n\t\t\"VariantComponents\":[]\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Sellable Item\",\n\t\t\"VariantId\": \"Variant1\",\t\t\n\t\t\"InventorySetName\": \"Hunk1_Inventory\",\n\t\t\"InventoryDetail\": {\n\t\t\t\"Quantity\": 10000,\n\t\t\t\"InvoiceUnitPrice\": 100.54,\n\t\t\t\"InvoiceUnitPriceCurrency\": \"USD\",\n\t\t\t\"Preorderable\": true,\n\t\t\t\"PreorderAvailabilityDate\": \"2019-11-29T14:40:21\",\n\t\t\t\"PreorderLimit\": 5,\n\t\t\t\"Backorderable\": true,\n\t\t\t\"BackorderAvailabilityDate\": \"2019-12-05T00:10:00\",\n\t\t\t\"BackorderLimit\": 2\n\t\t}\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
+							"host": [
+								"{{ServiceHost}}"
+							],
+							"path": [
+								"{{ShopsApi}}",
+								"ImportEntity()"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Sellable Item Relationships",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "ShopName",
+								"type": "text",
+								"value": "{{ShopName}}"
+							},
+							{
+								"key": "ShopperId",
+								"type": "text",
+								"value": "{{ShopperId}}"
+							},
+							{
+								"key": "Language",
+								"type": "text",
+								"value": "{{Language}}"
+							},
+							{
+								"key": "Currency",
+								"type": "text",
+								"value": "{{Currency}}"
+							},
+							{
+								"key": "Environment",
+								"type": "text",
+								"value": "{{Environment}}"
+							},
+							{
+								"key": "GeoLocation",
+								"type": "text",
+								"value": "{{GeoLocation}}"
+							},
+							{
+								"key": "CustomerId",
+								"type": "text",
+								"value": "{{CustomerId}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{SitecoreIdToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"metadata\":{\n\t\t\"EntityType\":\"SellableItemRelationship\",\n\t\t\"Components\":[],\n\t\t\"VariantComponents\":[]\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Sellable Item\",\n\t\t\"RelationshipDetails\": [\n\t\t\t{\n\t\t\t\t\"Name\": \"TrainingProducts\",\n\t\t\t\t\"Ids\":[\"6042325\",\"6042283\"]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Name\": \"InstallationProducts\",\n\t\t\t\t\"Ids\":[\"6042878\",\"6042183\"]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Name\": \"RelatedProducts\",\n\t\t\t\t\"Ids\":[\"6042430\",\"6042886\"]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Name\": \"WarrantyProducts\",\n\t\t\t\t\"Ids\":[\"7042257\",\"7042258\"]\n\t\t\t}\n\t\t]\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
+							"host": [
+								"{{ServiceHost}}"
+							],
+							"path": [
+								"{{ShopsApi}}",
+								"ImportEntity()"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Import Catalog Item With Languages",
 					"request": {
 						"method": "PUT",
@@ -538,6 +1115,74 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"metadata\":{\n\t\t\"EntityType\":\"SellableItem\",\n\t\t\"Components\":[\"SellableItemComponent\"],\n\t\t\"VariantComponents\":[\"VariantComponent\"]\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Sellable Item\",\n\t\t\"Name\": \"Sellable Item\",\n\t\t\"DisplayName\": \"Sellable Item Display Name\",\n\t\t\"Description\": \"Sellable Item Description\",\n\t\t\"Brand\": \"sample brand\",\n\t\t\"Manufacturer\": \"sample manufacturer\",\n\t\t\"TypeOfGood\": \"sample type of good\",\n\t\t\"Tags\":[{\"Name\":\"tag1\"}],\n\t\t\"Parents\": [\"Hunk1_Catalog/Hunk1_Category Name\"],\n\t\t\"Accessories\": \"Accessories value\",\n\t\t\"Dimensions\": \"Dimensions value\",\n\t\t\"Variants\": [\n\t\t\t{\n\t\t\t\t\"Id\": \"Variant1\",\n\t\t\t\t\"DisplayName\": \"Variant1 Display Name\",\n\t\t\t\t\"Description\": \"Variant1 Description\",\n\t\t\t\t\"Disabled\": \"false\",\n\t\t\t\t\"Tags\": [{\"Name\": \"tag1\"}],\n\t\t\t\t\"Breadth\": \"10m\",\n\t\t\t\t\"Length\": \"100m\"\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"Id\": \"Variant2\",\n\t\t\t\t\"DisplayName\": \"Variant2 Display Name\",\n\t\t\t\t\"Description\": \"Variant2 Description\",\n\t\t\t\t\"Disabled\": \"false\",\n\t\t\t\t\"Tags\": [{\"Name\":\"22cuft\"}, {\"Name\":\"v2\", \"Excluded\": true}],\n\t\t\t\t\"Breadth\": \"20m\",\n\t\t\t\t\"Length\": \"200m\"\n\t\t\t}\n\t\t]\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",
+							"host": [
+								"{{ServiceHost}}"
+							],
+							"path": [
+								"{{ShopsApi}}",
+								"ImportEntity()"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Sellable Item With Variant and Inventory",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "ShopName",
+								"type": "text",
+								"value": "{{ShopName}}"
+							},
+							{
+								"key": "ShopperId",
+								"type": "text",
+								"value": "{{ShopperId}}"
+							},
+							{
+								"key": "Language",
+								"type": "text",
+								"value": "{{Language}}"
+							},
+							{
+								"key": "Currency",
+								"type": "text",
+								"value": "{{Currency}}"
+							},
+							{
+								"key": "Environment",
+								"type": "text",
+								"value": "{{Environment}}"
+							},
+							{
+								"key": "GeoLocation",
+								"type": "text",
+								"value": "{{GeoLocation}}"
+							},
+							{
+								"key": "CustomerId",
+								"type": "text",
+								"value": "{{CustomerId}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "{{SitecoreIdToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"metadata\":{\n\t\t\"EntityType\":\"SellableItem\",\n\t\t\"Components\":[\"SellableItemComponent\"],\n\t\t\"VariantComponents\":[\"VariantComponent\"]\n\t},\n\t\"entity\": {\n\t\t\"Id\": \"Sellable Item\",\n\t\t\"Name\": \"Sellable Item\",\n\t\t\"DisplayName\": \"Sellable Item Display Name\",\n\t\t\"Description\": \"Sellable Item Description\",\n\t\t\"Brand\": \"sample brand\",\n\t\t\"Manufacturer\": \"sample manufacturer\",\n\t\t\"TypeOfGood\": \"sample type of good\",\n\t\t\"Tags\":[{\"Name\":\"tag1\"}],\n\t\t\"Parents\": [\"Hunk1_Catalog/Hunk1_Category Name\"],\n\t\t\"Accessories\": \"Accessories value\",\n\t\t\"Dimensions\": \"Dimensions value\",\n\t\t\"InventorySetName\": \"Hunk1_Inventory\",\n\t\t\"Variants\": [\n\t\t\t{\n\t\t\t\t\"Id\": \"Variant1\",\n\t\t\t\t\"DisplayName\": \"Variant1 Display Name\",\n\t\t\t\t\"Description\": \"Variant1 Description\",\n\t\t\t\t\"Disabled\": \"false\",\n\t\t\t\t\"Tags\": [{\"Name\": \"tag1\"}],\n\t\t\t\t\"Breadth\": \"10m\",\n\t\t\t\t\"Length\": \"100m\",\n\t\t\t\t\"InventoryDetail\": {\n\t\t\t\t\t\"Quantity\": 150,\n\t\t\t\t\t\"InvoiceUnitPrice\": 200.50,\n\t\t\t\t\t\"InvoiceUnitPriceCurrency\": \"USD\"\n\t\t\t\t}\n\t\t\t}\n\t\t]\n\t}\n}"
 						},
 						"url": {
 							"raw": "{{ServiceHost}}/{{ShopsApi}}/ImportEntity()",

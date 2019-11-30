@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Plugin.Hunk.Catalog.Pipelines.Blocks
 {
-    [PipelineDisplayName(Constants.PrepImportEntityBlock)]
-    public class PrepImportEntityBlock : PipelineBlock<ImportEntityArgument, ImportEntityArgument, CommercePipelineExecutionContext>
+    [PipelineDisplayName(Constants.GetCatalogImportPolicyBlock)]
+    public class GetCatalogImportPolicyBlock : PipelineBlock<ImportEntityArgument, ImportEntityArgument, CommercePipelineExecutionContext>
     {
         public override async Task<ImportEntityArgument> Run(ImportEntityArgument arg, CommercePipelineExecutionContext context)
         {

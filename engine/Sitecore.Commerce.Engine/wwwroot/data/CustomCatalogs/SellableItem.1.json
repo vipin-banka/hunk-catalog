@@ -1,0 +1,293 @@
+[
+	{
+		"Id": "Sellable Item 101",
+		"Name": "Sellable Item 101",
+		"DisplayName": "Sellable Item 101 Display Name",
+		"Description": "Sellable Item 101 Description",
+		"Brand": "sample brand",
+		"Manufacturer": "sample manufacturer",
+		"TypeOfGood": "sample type of good",
+		"Tags":[{"Name":"tag101"}],
+		"Parents": ["Hunk1_Catalog/Hunk1_Category Name"],
+		"Accessories": "Accessories value",
+		"Dimensions": "Dimensions value",
+		"InventorySetName": "Hunk1_Inventory",
+		"Variants": [
+			{
+				"Id": "Variant1",
+				"Name": "Variant1 Name",
+				"DisplayName": "Variant1 Display Name",
+				"Description": "Variant1 Description",
+				"Disabled": "true",
+				"Tags": [{"Name": "stainless"}, {"Name": "v1", "Excluded": true}],
+				"Breadth": "10m",
+				"Length": "100m",
+				"InventoryDetail": {
+					"Quantity": 1001,
+					"InvoiceUnitPrice": 12.54,
+					"InvoiceUnitPriceCurrency": "USD"
+				}
+			},
+			{
+				"Id": "Variant2",
+				"Name": "Variant2 Name",
+				"DisplayName": "Variant2 Display Name",
+				"Description": "Variant2 Description",
+				"Disabled": "false",
+				"Tags": [{"Name":"22cuft"}, {"Name":"v2", "Excluded": true}],
+				"Breadth": "20m",
+				"Length": "200m"
+			}
+		],
+		"Languages":[
+			{
+				"Language":"fr-FR",
+				"Entity":{
+					"DisplayName": "fr-FR Sellable Item 101 Display Name",
+					"Description": "fr-FR Sellable Item 101 Description",
+					"Accessories": "fr-FR Accessories value",
+					"Dimensions": "fr-FR Dimensions value",
+					"Variants": [
+						{
+							"Id": "Variant1",
+							"Name": "fr-FR Variant1 Name",
+							"DisplayName": "fr-FR Variant1 Display Name",
+							"Description": "fr-FR Variant1 Description",
+							"Breadth": "fr-FR 10m",
+							"Length": "fr-FR 100m"
+						},
+						{
+							"Id": "Variant2",
+							"Name": "fr-FR Variant2 Name",
+							"DisplayName": "fr-FR Variant2 Display Name",
+							"Description": "fr-FR Variant2 Description",
+							"Breadth": "fr-FR 20m",
+							"Length": "fr-FR 200m"
+						}
+					]
+				}
+			},
+			{
+				"Language":"de-DE",
+				"Entity":{
+					"DisplayName": "de-DE Sellable Item 101 Display Name",
+					"Description": "de-DE Sellable Item 101 Description",
+					"Accessories": "de-DE Accessories value",
+					"Dimensions": "de-DE Dimensions value",
+					"Variants": [
+						{
+							"Id": "Variant1",
+							"Name": "de-DE Variant1 Name",
+							"DisplayName": "de-DE Variant1 Display Name",
+							"Description": "de-DE Variant1 Description",
+							"Breadth": "de-DE 10m",
+							"Length": "de-DE 100m"
+						},
+						{
+							"Id": "Variant2",							
+							"Name": "de-DE Variant2 Name",
+							"DisplayName": "de-DE Variant2 Display Name",
+							"Description": "de-DE Variant2 Description",
+							"Breadth": "de-DE 20m",
+							"Length": "de-DE 200m"
+						}
+					]
+				}
+			}
+		]
+	},
+	{
+		"Id": "Sellable Item 102",
+		"Name": "Sellable Item 102",
+		"DisplayName": "Sellable Item 102 Display Name",
+		"Description": "Sellable Item 102 Description",
+		"Brand": "sample brand",
+		"Manufacturer": "sample manufacturer",
+		"TypeOfGood": "sample type of good",
+		"Tags":[{"Name":"tag102"}],
+		"Parents": ["Hunk1_Catalog/Hunk1_Category Name"],
+		"Accessories": "Accessories value",
+		"Dimensions": "Dimensions value",
+		"InventorySetName": "Hunk1_Inventory",
+		"Variants": [
+			{
+				"Id": "Variant1",
+				"Name": "Variant1 Name",
+				"DisplayName": "Variant1 Display Name",
+				"Description": "Variant1 Description",
+				"Disabled": "true",
+				"Tags": [{"Name": "stainless"}, {"Name": "v1", "Excluded": true}],
+				"Breadth": "10m",
+				"Length": "100m",
+				"InventoryDetail": {
+					"Quantity": 1002,
+					"InvoiceUnitPrice": 12.54,
+					"InvoiceUnitPriceCurrency": "USD"
+				}
+			},
+			{
+				"Id": "Variant2",
+				"Name": "Variant2 Name",
+				"DisplayName": "Variant2 Display Name",
+				"Description": "Variant2 Description",
+				"Disabled": "false",
+				"Tags": [{"Name":"22cuft"}, {"Name":"v2", "Excluded": true}],
+				"Breadth": "20m",
+				"Length": "200m"
+			}
+		],
+		"Languages":[
+			{
+				"Language":"fr-FR",
+				"Entity":{
+					"DisplayName": "fr-FR Sellable Item 102 Display Name",
+					"Description": "fr-FR Sellable Item 102 Description",
+					"Accessories": "fr-FR Accessories value",
+					"Dimensions": "fr-FR Dimensions value",
+					"Variants": [
+						{
+							"Id": "Variant1",
+							"Name": "fr-FR Variant1 Name",
+							"DisplayName": "fr-FR Variant1 Display Name",
+							"Description": "fr-FR Variant1 Description",
+							"Breadth": "fr-FR 10m",
+							"Length": "fr-FR 100m"
+						},
+						{
+							"Id": "Variant2",
+							"Name": "fr-FR Variant2 Name",
+							"DisplayName": "fr-FR Variant2 Display Name",
+							"Description": "fr-FR Variant2 Description",
+							"Breadth": "fr-FR 20m",
+							"Length": "fr-FR 200m"
+						}
+					]
+				}
+			},
+			{
+				"Language":"de-DE",
+				"Entity":{
+					"DisplayName": "de-DE Sellable Item 102 Display Name",
+					"Description": "de-DE Sellable Item 102 Description",
+					"Accessories": "de-DE Accessories value",
+					"Dimensions": "de-DE Dimensions value",
+					"Variants": [
+						{
+							"Id": "Variant1",
+							"Name": "de-DE Variant1 Name",
+							"DisplayName": "de-DE Variant1 Display Name",
+							"Description": "de-DE Variant1 Description",
+							"Breadth": "de-DE 10m",
+							"Length": "de-DE 100m"
+						},
+						{
+							"Id": "Variant2",							
+							"Name": "de-DE Variant2 Name",
+							"DisplayName": "de-DE Variant2 Display Name",
+							"Description": "de-DE Variant2 Description",
+							"Breadth": "de-DE 20m",
+							"Length": "de-DE 200m"
+						}
+					]
+				}
+			}
+		]
+	},
+	{
+		"Id": "Sellable Item 103",
+		"Name": "Sellable Item 103",
+		"DisplayName": "Sellable Item 103 Display Name",
+		"Description": "Sellable Item 103 Description",
+		"Brand": "sample brand",
+		"Manufacturer": "sample manufacturer",
+		"TypeOfGood": "sample type of good",
+		"Tags":[{"Name":"tag103"}],
+		"Parents": ["Hunk1_Catalog/Hunk1_Category Name"],
+		"Accessories": "Accessories value",
+		"Dimensions": "Dimensions value",
+		"InventorySetName": "Hunk1_Inventory",
+		"Variants": [
+			{
+				"Id": "Variant1",
+				"Name": "Variant1 Name",
+				"DisplayName": "Variant1 Display Name",
+				"Description": "Variant1 Description",
+				"Disabled": "true",
+				"Tags": [{"Name": "stainless"}, {"Name": "v1", "Excluded": true}],
+				"Breadth": "10m",
+				"Length": "100m",
+				"InventoryDetail": {
+					"Quantity": 1003,
+					"InvoiceUnitPrice": 12.54,
+					"InvoiceUnitPriceCurrency": "USD"
+				}
+			},
+			{
+				"Id": "Variant2",
+				"Name": "Variant2 Name",
+				"DisplayName": "Variant2 Display Name",
+				"Description": "Variant2 Description",
+				"Disabled": "false",
+				"Tags": [{"Name":"22cuft"}, {"Name":"v2", "Excluded": true}],
+				"Breadth": "20m",
+				"Length": "200m"
+			}
+		],
+		"Languages":[
+			{
+				"Language":"fr-FR",
+				"Entity":{
+					"DisplayName": "fr-FR Sellable Item 103 Display Name",
+					"Description": "fr-FR Sellable Item 103 Description",
+					"Accessories": "fr-FR Accessories value",
+					"Dimensions": "fr-FR Dimensions value",
+					"Variants": [
+						{
+							"Id": "Variant1",
+							"Name": "fr-FR Variant1 Name",
+							"DisplayName": "fr-FR Variant1 Display Name",
+							"Description": "fr-FR Variant1 Description",
+							"Breadth": "fr-FR 10m",
+							"Length": "fr-FR 100m"
+						},
+						{
+							"Id": "Variant2",
+							"Name": "fr-FR Variant2 Name",
+							"DisplayName": "fr-FR Variant2 Display Name",
+							"Description": "fr-FR Variant2 Description",
+							"Breadth": "fr-FR 20m",
+							"Length": "fr-FR 200m"
+						}
+					]
+				}
+			},
+			{
+				"Language":"de-DE",
+				"Entity":{
+					"DisplayName": "de-DE Sellable Item 103 Display Name",
+					"Description": "de-DE Sellable Item 103 Description",
+					"Accessories": "de-DE Accessories value",
+					"Dimensions": "de-DE Dimensions value",
+					"Variants": [
+						{
+							"Id": "Variant1",
+							"Name": "de-DE Variant1 Name",
+							"DisplayName": "de-DE Variant1 Display Name",
+							"Description": "de-DE Variant1 Description",
+							"Breadth": "de-DE 10m",
+							"Length": "de-DE 100m"
+						},
+						{
+							"Id": "Variant2",							
+							"Name": "de-DE Variant2 Name",
+							"DisplayName": "de-DE Variant2 Display Name",
+							"Description": "de-DE Variant2 Description",
+							"Breadth": "de-DE 20m",
+							"Length": "de-DE 200m"
+						}
+					]
+				}
+			}
+		]
+	}
+]

@@ -56,6 +56,9 @@ This plugin covers lot of things so let's see following samples:
 5. [Import Catalog Item](#5-import-catalog-item)
 6. [Import Category Item](#6-import-category-item)
 7. [Import content in custom commerce entity](#7-import-content-in-custom-commerce-entity)
+8. [Import entity relationships](#7-import-entity-relationships)
+9. [Import inventory detail](#7-import-inventory-detail)
+10. [Bulk Import](#7-bulk-import)
 
 ### 1. Import sellable item
 Let's assume you want to import a sellable item. Your sellable item has few custom fields i.e. "Accessories" and "Dimensions" and you need to add a custom commerce component for that.
@@ -695,25 +698,18 @@ namespace Plugin.Hunk.Catalog.Test.CustomEntityImport
 {
     public class SourceCustomEntityImportHandler : BaseEntityImportHandler<SourceCustomEntity, CustomCommerceItem>
     {
-        public SourceCustomEntityImportHandler(string sourceProduct, 
-	  CommerceCommander commerceCommander, 
-	  CommercePipelineExecutionContext context)
-            : base(sourceProduct, commerceCommander, context)
+        public SourceCustomEntityImportHandler(string customEntity, 
+		CommerceCommander commerceCommander, 
+		CommercePipelineExecutionContext context)
+            : base(customEntity, commerceCommander, context)
         {
         }
 
-        public override async Task<CommerceEntity> Create()
+        protected override void Initialize()
         {
-            var commerceEntity = new CustomCommerceItem();
-            commerceEntity.Id = IdWithPrefix();
-            commerceEntity.Name = SourceEntity.Name;
-            commerceEntity.DisplayName = SourceEntity.DisplayName;
-            commerceEntity.Description = SourceEntity.Description;
-
-            await CommerceCommander.Pipeline<IPersistEntityPipeline>()
-                .Run(new PersistEntityArgument(commerceEntity), Context).ConfigureAwait(false);
-
-            return commerceEntity;
+            CommerceEntity.Name = SourceEntity.Name;
+            CommerceEntity.DisplayName = SourceEntity.DisplayName;
+            CommerceEntity.Description = SourceEntity.Description;
         }
 
         public override void Map()
@@ -746,6 +742,63 @@ See sample configuration [here](#catalog-import-policy).
 * Go to **Catalog Import** collection and open **Import Custom Entity** request.
 ![import-custom-entity](https://github.com/vipin-banka/hunk-catalog/blob/master/images/import-custom-item.png)
 * Provide source content in the request body. See API details [here](#api-endpoint).
+* Execute the request.
+* You can check entity in commerce database.
+
+### 8. Import entity relationships
+It is also possible to import entity relationships separately.
+	
+Follow below steps:
+
+#### 8.1 How to test?
+* Build and deploy commerce solution.
+* Bootstrap commerce engine using postman.
+* Import [Sample Postman Collection](https://github.com/vipin-banka/hunk-catalog/blob/master/postman/import/Catalog%20Import.postman_collection.json) in postman.
+* Execute GetToken API from your commerce Authentication collection.
+* Go to **Catalog Import** collection and open **Import Entity Relationships** request.
+![import-custom-entity](https://github.com/vipin-banka/hunk-catalog/blob/master/images/import-custom-item.png)
+* Provide source content in the request body. See API details [here](#api-endpoint).
+* Execute the request.
+* Open Business tools and verify relevant item.
+
+### 9. Import inventory details
+There are two ways to import inventory details.
+You can import it with sellable item variant or you can import it separately.
+	
+Follow below steps:
+
+#### 9.1 How to test?
+* Build and deploy commerce solution.
+* Bootstrap commerce engine using postman.
+* Import [Sample Postman Collection](https://github.com/vipin-banka/hunk-catalog/blob/master/postman/import/Catalog%20Import.postman_collection.json) in postman.
+* Execute GetToken API from your commerce Authentication collection.
+* Go to **Catalog Import** collection and open **Import Entity Relationships** request.
+![import-custom-entity](https://github.com/vipin-banka/hunk-catalog/blob/master/images/import-custom-item.png)
+* Provide source content in the request body. See API details [here](#api-endpoint).
+* Execute the request.
+* Open Business tools and verify relevant item.
+
+### 10. Bulk Import
+It is also possible to import multiple entities in a background process.
+	
+Follow below steps:
+
+#### 10.1 Create Bulk Import for each entity
+
+#### 10.2 Configure Bulk Import class
+
+#### 10.3 Configure Minion
+
+#### 10.4 How to test?
+* Build and deploy commerce solution.
+* Bootstrap commerce engine using postman.
+* Import [Sample Postman Collection](https://github.com/vipin-banka/hunk-catalog/blob/master/postman/import/Catalog%20Import.postman_collection.json) in postman.
+* Execute GetToken API from your commerce Authentication collection.
+* Go to **Catalog Import** collection and open **Import Entity Relationships** request.
+![import-custom-entity](https://github.com/vipin-banka/hunk-catalog/blob/master/images/import-custom-item.png)
+* Provide source content in the request body. See API details [here](#api-endpoint).
+* Execute the request.
+* Open Business tools and verify relevant item.
 * Execute the request.
 * You can check entity in commerce database.
 

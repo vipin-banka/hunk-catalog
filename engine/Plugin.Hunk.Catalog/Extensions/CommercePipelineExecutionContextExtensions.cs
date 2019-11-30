@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Plugin.Hunk.Catalog.Model;
 using Sitecore.Commerce.Core;
 
@@ -56,6 +57,22 @@ namespace Plugin.Hunk.Catalog.Extensions
             }
 
             return result;
+        }
+
+        public static async Task<string> ValidateEntityId(this CommercePipelineExecutionContext context, IDoesEntityExistPipeline doesEntityExistPipeline, Type entityType, string entityId)
+        {
+            var result = string.Empty;
+            var entityExists = await doesEntityExistPipeline.Run(new FindEntityArgument(entityType,
+                    entityId,
+                    null), context)
+                .ConfigureAwait(false);
+
+            if (entityExists)
+            {
+                result = entityId;
+            }
+
+            return await Task.FromResult(result);
         }
     }
 }

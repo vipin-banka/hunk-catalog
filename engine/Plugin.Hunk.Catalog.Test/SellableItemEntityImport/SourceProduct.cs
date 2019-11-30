@@ -49,5 +49,8 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
         public string Accessories { get; set; }
 
         public string Dimensions { get; set; }
+
+        [InventorySetName]
+        public string InventorySetName { get; set; }
     }
 }

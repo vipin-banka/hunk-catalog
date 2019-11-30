@@ -31,17 +31,13 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
 
             foreach (var catalog in arg.ImportHandler.ParentEntityIds)
             {
-                if (catalog.Value == null || !catalog.Value.Any())
-                {
-                    await _associateSellableItemToParent
-                    .Process(context.CommerceContext, catalog.Key, catalog.Key, entityId).ConfigureAwait(false);
-                }
-                else
+                if (catalog.Value != null && catalog.Value.Any())
                 {
                     foreach (var parentId in catalog.Value)
                     {
                         await _associateSellableItemToParent
-                        .Process(context.CommerceContext, catalog.Key, parentId, entityId).ConfigureAwait(false);
+                            .Process(context.CommerceContext, catalog.Key, parentId, entityId)
+                            .ConfigureAwait(false);
                     }
                 }
             }

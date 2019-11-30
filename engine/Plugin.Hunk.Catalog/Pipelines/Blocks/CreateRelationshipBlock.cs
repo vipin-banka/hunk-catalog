@@ -1,9 +1,10 @@
-﻿using Plugin.Hunk.Catalog.Pipelines.Arguments;
+﻿using Plugin.Hunk.Catalog.Extensions;
+using Plugin.Hunk.Catalog.Pipelines.Arguments;
 using Sitecore.Commerce.Core;
 using Sitecore.Commerce.Plugin.Catalog;
 using Sitecore.Framework.Pipelines;
+using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Plugin.Hunk.Catalog.Pipelines.Blocks
@@ -24,27 +25,73 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
             {
                 var relationships = arg.ImportHandler.GetRelationships();
 
+                var commerceEntity = arg.ImportHandler.GetCommerceEntity();
+
                 foreach (var relationshipDetail in relationships)
                 {
-                    if (!string.IsNullOrEmpty(relationshipDetail.Name) && relationshipDetail.Ids != null &&
-                        relationshipDetail.Ids.Any())
+                    if (!string.IsNullOrEmpty(relationshipDetail.Name))
                     {
                         var relationShipMapper = await _commerceCommander.Pipeline<IResolveRelationshipMapperPipeline>()
                             .Run(new ResolveRelationshipMapperArgument(arg, relationshipDetail.Name), context).ConfigureAwait(false);
 
                         if (relationShipMapper == null)
                             continue;
-                        
+
                         if (!string.IsNullOrEmpty(relationShipMapper.Name))
                         {
-                            var targetIds = await relationShipMapper.GetEntityIds(relationshipDetail.Ids).ConfigureAwait(false);
-                            if (targetIds.Any())
+                            IList<string> targetIds = new List<string>();
+                            if (relationshipDetail.Ids != null && relationshipDetail.Ids.Any())
                             {
-                                var targetName = targetIds.Aggregate(new StringBuilder(),
-                                    (sb, id) => sb.Append(id).Append("|"), sb => sb.ToString().Trim('|'));
+                                targetIds = await relationShipMapper.GetEntityIds(relationshipDetail.Ids)
+                                    .ConfigureAwait(false);
+                            }
 
-                                await _commerceCommander.Command<CreateRelationshipCommand>().Process(context.CommerceContext,
-                                    arg.ImportHandler.GetCommerceEntity().Id,
+                            var listName = $"{relationShipMapper.Name}-{commerceEntity.FriendlyId}";
+
+                            if (commerceEntity.EntityVersion > 1)
+                            {
+                                listName = $"{listName}-{commerceEntity.EntityVersion}";
+                            }
+
+                            IDictionary<string, IList<string>> dictionary = await _commerceCommander.Pipeline<IGetListsEntityIdsPipeline>().Run(new GetListsEntityIdsArgument(listName), context).ConfigureAwait(false);
+
+                            var deleteIdsFromList = new List<string>();
+
+                            if (dictionary != null && dictionary.Values.Any())
+                            {
+                                var firstList = dictionary.ElementAt(0);
+                                foreach (var entityId in firstList.Value)
+                                {
+                                    if (targetIds != null
+                                        && targetIds.Contains(entityId))
+                                    {
+                                        targetIds.Remove(entityId);
+                                    }
+                                    else
+                                    {
+                                        deleteIdsFromList.Add(entityId);
+                                    }
+                                }
+                            }
+
+                            if (targetIds != null
+                                && targetIds.Any())
+                            {
+                                var targetName = targetIds.JoinIds();
+
+                                await _commerceCommander.Command<CreateRelationshipCommand>().Process(
+                                    context.CommerceContext,
+                                    commerceEntity.Id,
+                                    targetName, relationShipMapper.Name);
+                            }
+
+                            if (deleteIdsFromList.Any())
+                            {
+                                var targetName = deleteIdsFromList.JoinIds();
+
+                                await _commerceCommander.Command<DeleteRelationshipCommand>().Process(
+                                    context.CommerceContext,
+                                    commerceEntity.Id,
                                     targetName, relationShipMapper.Name);
                             }
                         }
