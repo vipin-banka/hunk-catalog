@@ -12,7 +12,7 @@
     <projectUrl>https://github.com/vipin-banka/hunk-catalog</projectUrl>
     <iconUrl>https://github.com/vipin-banka/hunk-catalog/blob/master/docs/hunk.ico</iconUrl>
     <description>Sitecore Commerce Catalog Import Plugin that makes writing custom catalog import implementation very simple, mantainable and saves time.</description>
-    <tags>Sitecore-Commerce Catalog-Import Hunk-Catalog Hunk</tags>
+    <tags>Sitecore-Commerce Catalog-Import Bulk-Import Hunk-Catalog Hunk</tags>
     <repository type="Git" url="https://github.com/vipin-banka/hunk-catalog" />
     <summary>Sitecore Commerce Catalog Import Plugin that makes writing custom catalog import implementation very simple, mantainable and saves time.</summary>
     <language>English</language>
