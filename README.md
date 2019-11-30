@@ -799,7 +799,8 @@ Follow below steps:
 * Provide source content in the request body. See API details [here](#api-endpoint).
 * Execute the request.
 * Open Business tools and verify relevant item.
-
+* Execute the request.
+* You can check entity in commerce database.
 
 ## Documentation
 Below is some more inforamtion for this plugin:
