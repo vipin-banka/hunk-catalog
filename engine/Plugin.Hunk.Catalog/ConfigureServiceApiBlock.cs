@@ -3,7 +3,6 @@ using Sitecore.Commerce.Core;
 using Sitecore.Commerce.Core.Commands;
 using Sitecore.Framework.Pipelines;
 using System.Threading.Tasks;
-using Plugin.Hunk.Catalog.Model;
 
 namespace Plugin.Hunk.Catalog
 {
@@ -16,7 +15,8 @@ namespace Plugin.Hunk.Catalog
             string entitySetName = "Commands";
 
             ActionConfiguration actionConfiguration = modelBuilder.Action("ImportEntity");
-            actionConfiguration.Parameter<SourceEntityDetail>("sourceEntity");
+            actionConfiguration.Parameter<string>("metadata");
+            actionConfiguration.Parameter<string>("entity");
             actionConfiguration.ReturnsFromEntitySet<CommerceCommand>(entitySetName);
 
             return Task.FromResult(modelBuilder);

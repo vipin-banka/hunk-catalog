@@ -35,6 +35,8 @@ namespace Plugin.Hunk.Catalog.ImportHandlers
 
         public string EntityId => IdWithPrefix();
 
+        public virtual bool IsEntityImport => true;
+
         public IEntity GetSourceEntity()
         {
             return SourceEntity;
@@ -57,7 +59,7 @@ namespace Plugin.Hunk.Catalog.ImportHandlers
 
         protected virtual string Id => SourceEntity.Id;
 
-        protected string IdWithPrefix()
+        protected virtual string IdWithPrefix()
         {
             var prefix = Sitecore.Commerce.Core.CommerceEntity.IdPrefix<TCommerceEntity>();
             var id = Id;
@@ -73,7 +75,10 @@ namespace Plugin.Hunk.Catalog.ImportHandlers
         {
         }
 
-        public abstract Task<CommerceEntity> Create();
+        public virtual Task<CommerceEntity> Create()
+        {
+            return Task.FromResult<CommerceEntity>(null);
+        }
 
         public virtual IList<string> GetParentList()
         {
@@ -100,6 +105,12 @@ namespace Plugin.Hunk.Catalog.ImportHandlers
         public virtual bool HasVariants()
         {
             return false;
+        }
+
+        protected bool HasVariants(object instance)
+        {
+            var variants = typeof(TSourceEntity).GetPropertyValueWithAttribute<VariantsAttribute, IEnumerable>(instance);
+            return variants != null && variants.GetEnumerator().MoveNext();
         }
 
         public virtual IList<IEntity> GetVariants()
@@ -207,5 +218,16 @@ namespace Plugin.Hunk.Catalog.ImportHandlers
         protected virtual void MapLocalizeValues(TSourceEntity localizedSourceEntity, TCommerceEntity localizedTargetEntity)
         {
         }
+
+        public TOutput GetPropertyValueFromSource<TMetadata, TOutput>() 
+            where TMetadata : Attribute
+            where TOutput : class
+        {
+            return typeof(TSourceEntity).GetPropertyValueWithAttribute<TMetadata, TOutput>(SourceEntity);
+        }
+
+        public virtual void BeforePersistEntity() { }
+
+        public virtual void AfterPersistEntity() { }
     }
 }

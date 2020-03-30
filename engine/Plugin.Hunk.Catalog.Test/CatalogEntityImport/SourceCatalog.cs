@@ -18,6 +18,15 @@ namespace Plugin.Hunk.Catalog.Test.CatalogEntityImport
 
         public string DisplayName { get; set; }
 
+        [PriceBookName]
+        public string PriceBookName { get; set; }
+
+        [PromotionBookName]
+        public string PromotionBookName { get; set; }
+
+        [InventorySetName]
+        public string InventorySetName { get; set; }
+
         [Languages()]
         public IList<LanguageEntity<SourceCatalog>> Languages { get; set; }
     }

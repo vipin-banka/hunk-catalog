@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Plugin.Hunk.Catalog.Abstractions;
 using Plugin.Hunk.Catalog.Metadata;
+using Plugin.Hunk.Catalog.Model;
 using Sitecore.Commerce.Core;
 
 namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
@@ -14,6 +15,8 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
 
         public string Id { get; set; }
 
+        public string Name { get; set; }
+
         public string DisplayName { get; set; }
 
         public string Description { get; set; }
@@ -25,5 +28,8 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
         public string Breadth { get; set; }
 
         public string Length { get; set; }
+
+        [InventoryDetail]
+        public InventoryDetail InventoryDetail { get; set; }
     }
 }

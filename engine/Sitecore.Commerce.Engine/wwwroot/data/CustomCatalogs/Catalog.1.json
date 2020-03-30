@@ -1,0 +1,10 @@
+[
+	{
+		"Id": "Hunk1_Catalog",
+		"Name": "Hunk1_Catalog",
+		"DisplayName": "Hunk1 Catalog Display Name",
+		"PriceBookName": "Hunk1_PriceBook",
+		"PromotionBookName": "Hunk1_PromotionBookName",
+		"InventorySetName": "Hunk1_InventorySetName"
+	}
+]

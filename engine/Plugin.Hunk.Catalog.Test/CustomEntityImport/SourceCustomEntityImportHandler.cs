@@ -4,25 +4,20 @@ using System.Threading.Tasks;
 
 namespace Plugin.Hunk.Catalog.Test.CustomEntityImport
 {
-    public class SourceCustomEntityImportHandler : BaseEntityImportHandler<SourceCustomEntity, CustomCommerceItem>
+    /// <inheritdoc />
+    public class SourceCustomEntityImportHandler : CustomEntityImportHandler<SourceCustomEntity, CustomCommerceItem>
     {
-        public SourceCustomEntityImportHandler(string sourceProduct, CommerceCommander commerceCommander, CommercePipelineExecutionContext context)
-            : base(sourceProduct, commerceCommander, context)
+        /// <inheritdoc />
+        public SourceCustomEntityImportHandler(string customEntity, CommerceCommander commerceCommander, CommercePipelineExecutionContext context)
+            : base(customEntity, commerceCommander, context)
         {
         }
 
-        public override async Task<CommerceEntity> Create()
+        protected override void Initialize()
         {
-            var commerceEntity = new CustomCommerceItem();
-            commerceEntity.Id = IdWithPrefix();
-            commerceEntity.Name = SourceEntity.Name;
-            commerceEntity.DisplayName = SourceEntity.DisplayName;
-            commerceEntity.Description = SourceEntity.Description;
-
-            await CommerceCommander.Pipeline<IPersistEntityPipeline>()
-                .Run(new PersistEntityArgument(commerceEntity), Context).ConfigureAwait(false);
-
-            return commerceEntity;
+            CommerceEntity.Name = SourceEntity.Name;
+            CommerceEntity.DisplayName = SourceEntity.DisplayName;
+            CommerceEntity.Description = SourceEntity.Description;
         }
 
         public override void Map()

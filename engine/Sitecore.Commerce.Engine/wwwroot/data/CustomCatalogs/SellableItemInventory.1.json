@@ -1,0 +1,35 @@
+[
+	{
+		"Id": "Sellable Item 101",
+		"VariantId": "Variant1",		
+		"InventorySetName": "Hunk1_InventorySetName",
+		"InventoryDetail": 
+		{
+			"Quantity": 10011,
+			"InvoiceUnitPrice": 1.54,
+			"InvoiceUnitPriceCurrency": "USD"
+		}
+	},
+	{
+		"Id": "Sellable Item 102",
+		"VariantId": "Variant1",	
+		"InventorySetName": "Hunk1_InventorySetName",
+		"InventoryDetail": 
+		{
+			"Quantity": 10021,
+			"InvoiceUnitPrice": 2.54,
+			"InvoiceUnitPriceCurrency": "USD"
+		}
+	},
+	{
+		"Id": "Sellable Item 103",
+		"VariantId": "Variant1",	
+		"InventorySetName": "Hunk1_InventorySetName",
+		"InventoryDetail": 
+		{
+			"Quantity": 10031,
+			"InvoiceUnitPrice": 3.54,
+			"InvoiceUnitPriceCurrency": "USD"
+		}
+	}
+]

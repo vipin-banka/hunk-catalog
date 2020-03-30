@@ -30,8 +30,9 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
         {
             string entityId = arg.ImportHandler.EntityId;
 
-            var entityToUpdate = await _findEntityCommand.Process(context.CommerceContext, typeof(CommerceEntity), entityId)
-                .ConfigureAwait(false);
+            var entityToUpdate = arg.ImportHandler.GetCommerceEntity() ?? await _findEntityCommand
+                                     .Process(context.CommerceContext, typeof(CommerceEntity), entityId)
+                                     .ConfigureAwait(false);
 
             bool createNewVersion = entityToUpdate != null
                                     && arg.CatalogImportPolicy.EntityVersioningScheme == EntityVersioningScheme.CreateNewVersion;
@@ -61,6 +62,7 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
 
             if (entityToUpdate != null)
             {
+                arg.IsNew = false;
                 arg.ImportHandler.SetCommerceEntity(entityToUpdate);
             }
 

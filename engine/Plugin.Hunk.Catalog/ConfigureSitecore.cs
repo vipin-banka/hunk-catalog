@@ -26,27 +26,44 @@ namespace Plugin.Hunk.Catalog
                 {
                     configure.Add<ConfigureServiceApiBlock>();
                 })
-                .AddPipeline<IImportEntityPipeline, ImportEntityPipeline>(configure =>
+                .AddPipeline<IPrepareImportEntityPipeline, PrepareImportEntityPipeline>(configure =>
                 {
                     configure
-                        .Add<PrepImportEntityBlock>()
+                        .Add<GetCatalogImportPolicyBlock>()
                         .Add<ResolveImportHandlerInstanceBlock>()
                         .Add<GetSourceEntityBlock>()
                         .Add<ValidateSourceEntityBlock>()
+                        .Add<GetEntityBlock>();
+                })
+                .AddPipeline<IImportEntityPipeline, ImportEntityPipeline>(configure =>
+                {
+                    configure
                         .Add<ResolveVersionedEntityBlock>()
-                        .Add<ImportEntityBlock>();
+                        .Add<CreateEntityBlock>()
+                        .Add<UpdateEntityBlock>()
+                        .Add<SetEntityComponentsBlock>()
+                        .Add<ImportEntityVariantsBlock>()
+                        .Add<PersistEntityBlock>();
+                })
+                .AddPipeline<IAssociatePriceBookPipeline, AssociatePriceBookPipeline>(configure =>
+                {
+                    configure
+                        .Add<Pipelines.Blocks.AssociateCatalogToPriceBookBlock>();
+                })
+                .AddPipeline<IAssociatePromotionBookPipeline, AssociatePromotionBookPipeline>(configure =>
+                {
+                    configure
+                        .Add<Pipelines.Blocks.AssociateCatalogToPromotionBookBlock>();
+                })
+                .AddPipeline<IAssociateInventorySetPipeline, AssociateInventorySetPipeline>(configure =>
+                {
+                    configure
+                        .Add<AssociateCatalogToInventorySetBlock>();
                 })
                 .AddPipeline<IResolveEntityImportHandlerPipeline, ResolveEntityImportHandlerPipeline>(configure =>
                 {
                     configure
                         .Add<ResolveEntityImportHandlerBlock>();
-                })
-                .AddPipeline<ISetComponentsPipeline, SetComponentsPipeline>(configure =>
-                {
-                    configure
-                        .Add<UpdateEntityBlock>()
-                        .Add<SetEntityComponentsBlock>()
-                        .Add<ImportEntityVariantsBlock>();
                 })
                 .AddPipeline<IResolveEntityMapperPipeline, ResolveEntityMapperPipeline>(configure =>
                 {
@@ -73,30 +90,19 @@ namespace Plugin.Hunk.Catalog
                     configure
                         .Add<ResolveComponentLocalizationMapperBlock>();
                 })
-                .ConfigurePipeline<ICreateCatalogPipeline>(configure =>
-                {
-                    configure
-                        .Add<SetComponentsOnCatalogEntityBlock>()
-                        .After<CreateCatalogBlock>();
-                })
-                .ConfigurePipeline<ICreateCategoryPipeline>(configure =>
-                {
-                    configure
-                        .Add<SetComponentsOnCatalogEntityBlock>()
-                        .After<CreateCategoryBlock>();
-                })
-                .ConfigurePipeline<ICreateSellableItemPipeline>(configure =>
-                {
-                    configure
-                        .Add<SetComponentsOnCatalogEntityBlock>()
-                        .After<CreateSellableItemBlock>();
-                })
                 .AddPipeline<IAssociateParentsPipeline, AssociateParentsPipeline>(configure =>
                 {
                     configure
                         .Add<Pipelines.Blocks.AssociateCategoryToParentBlock>()
                         .Add<AssociateSellableItemToParentBlock>()
+                        .Add<DisassociateFromNotLinkedParentBlock>()
                         .Add<Pipelines.Blocks.CreateRelationshipBlock>();
+                })
+                .AddPipeline<ICreateRelationshipPipeline, CreateRelationshipPipeline>(configure =>
+                {
+                    configure
+                        .Add<Pipelines.Blocks.UpdateCatalogHierarchyBlock>()
+                        .After<Sitecore.Commerce.Plugin.Catalog.UpdateCatalogHierarchyBlock>();
                 })
                 .AddPipeline<IImportLocalizeContentPipeline, ImportLocalizeContentPipeline>(configure =>
                 {
@@ -104,6 +110,17 @@ namespace Plugin.Hunk.Catalog
                         .Add<GetLocalizePropertiesBlock>()
                         .Add<GetLocalizationEntityBlock>()
                         .Add<SetLocalizePropertiesBlock>();
+                })
+                .AddPipeline<IAssociateInventoryInformationPipeline, AssociateInventoryInformationPipeline>(configure =>
+                {
+                    configure
+                        .Add<AssociateInventoryInformationBlock>()
+                        .Add<ImportInventoryInformationBlock>();
+                })
+                .AddPipeline<ILogEntityImportResultPipeline, LogEntityImportResultPipeline>(configure =>
+                {
+                    configure
+                        .Add<LogEntityImportResultBlock>();
                 })
             );
 
