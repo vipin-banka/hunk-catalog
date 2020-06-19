@@ -1,10 +1,6 @@
-﻿using Plugin.Hunk.Catalog.Extensions;
-using Plugin.Hunk.Catalog.Model;
-using Plugin.Hunk.Catalog.Pipelines.Arguments;
-using Serilog;
+﻿using Plugin.Hunk.Catalog.Pipelines.Arguments;
 using Sitecore.Commerce.Core;
 using Sitecore.Commerce.Plugin.Catalog;
-using Sitecore.Commerce.Plugin.SQL;
 using Sitecore.Framework.Pipelines;
 using System;
 using System.Collections.Generic;
@@ -40,24 +36,11 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
             {
                 var bundleComponent = commerceEntity.GetComponent<BundleComponent>();
 
-                //get existing relationship data from IGetListsEntityIdsPipeline (super intuitive name)
-                var relationshipListNames = new[] {
-                    CatalogConstants.BundleToSellableItem,
-                    CatalogConstants.BundleToSellableItemVariant,
-                    CatalogConstants.SellableItemToBundle //TOOD - this is broken
-                };
+                //get existing relationship data from IFindEntityListReferencesPipeline
+                var findEntityListReferencesArg = new FindEntityListReferencesArgument(commerceEntity);
+                findEntityListReferencesArg = await _commerceCommander.Pipeline<IFindEntityListReferencesPipeline>().Run(findEntityListReferencesArg, context).ConfigureAwait(false);
 
-                relationshipListNames = relationshipListNames.Select(x =>
-                {
-                    x = $"{x}-{commerceEntity.FriendlyId}";
-                    if (commerceEntity.EntityVersion > 1)
-                    {
-                        x = $"{x}-{commerceEntity.EntityVersion}";
-                    }
-                    return x;
-                }).ToArray();
-
-                var existingRelationshipDictionary = await _commerceCommander.Pipeline<IGetListsEntityIdsPipeline>().Run(new GetListsEntityIdsArgument(relationshipListNames), context).ConfigureAwait(false);
+                var existingRelationshipDictionary = findEntityListReferencesArg.ListReferences;
 
                 //define a separate dictionary to store the "valid" relationships (this is used to remove orphaned relations later)
                 var newRelationshipDictionary = new Dictionary<string, List<string>>()
@@ -66,7 +49,7 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
                     { CatalogConstants.BundleToSellableItemVariant, new List<string>() }
                 };
 
-                //add new relationships
+                //impot relationships
                 foreach (var bundleItem in bundleComponent.BundleItems)
                 {
                     var isVariantRelationship = false;
@@ -86,6 +69,7 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
                         newRelationshipDictionary[CatalogConstants.BundleToSellableItemVariant].Add(sellableItemId);
                     }
 
+                    //create BundleToSellableItem/BundleToSellableItemVariant relationships (if not already present)
                     if (!isVariantRelationship && !HasRelationship(sellableItemId, CatalogConstants.BundleToSellableItem, existingRelationshipDictionary))
                     {
                         await CreateRelationship(commerceEntity.Id, sellableItemId, CatalogConstants.BundleToSellableItem, context);
@@ -95,12 +79,8 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
                         await CreateRelationship(commerceEntity.Id, sellableItemId, CatalogConstants.BundleToSellableItemVariant, context);
                     }
 
-                    //TOOD - this is broken -- the SellableItemToBundle link does not come back on the query above
-                    //if (!HasRelationship(sellableItemId, CatalogConstants.SellableItemToBundle, relationshipDictionary))
-                    //{
-                    //    //create new sellable item to bundle relation
-                    //    await CreateRelationship(sellableItemId, commerceEntity.Id, CatalogConstants.SellableItemToBundle, context);
-                    //}
+                    //create SellableItemToBundle relationships (we should first check if this exists before creating it, but the ICreateRelationshipPipeline seems to prevent duplicates already...)
+                    await CreateRelationship(sellableItemId, commerceEntity.Id, CatalogConstants.SellableItemToBundle, context);
                 }
 
                 //remove orphaned relationships
@@ -108,12 +88,14 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
                 foreach (var sellableItemId in orphanedSellableItemIds)
                 {
                     await DeleteRelationship(commerceEntity.Id, sellableItemId, CatalogConstants.BundleToSellableItem, context);
+                    await DeleteRelationship(sellableItemId, commerceEntity.Id, CatalogConstants.SellableItemToBundle, context);
                 }
 
                 var orphanedSellableItemVariantIds = existingRelationshipDictionary.Single(dict => ParseRelationshipTypeFromKey(dict.Key) == CatalogConstants.BundleToSellableItemVariant).Value.Where(x => !newRelationshipDictionary[CatalogConstants.BundleToSellableItemVariant].Contains(x));
                 foreach (var sellableItemId in orphanedSellableItemVariantIds)
                 {
                     await DeleteRelationship(commerceEntity.Id, sellableItemId, CatalogConstants.BundleToSellableItemVariant, context);
+                    await DeleteRelationship(sellableItemId, commerceEntity.Id, CatalogConstants.SellableItemToBundle, context);
                 }
             }
         }
@@ -137,11 +119,11 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
 
         private string ParseRelationshipTypeFromKey(string key)
         {
-            //the key that comes back from IGetListsEntityIdsPipeline is formatted as follows: "List-BUNDLETOSELLABLEITEM-TESTBUNDLE01-ByDate"
-            //however, based on CreateBundleRelationshipsBlock, we need to use the values from CatalogConstants
+            //the key that comes back from IFindEntityListReferencesPipeline is formatted as follows: "BundleToSellableItem-TestBundle01"
+            //we want the values from CatalogConstants
 
             var parts = key.Split('-');
-            var relationshipType = parts[1];
+            var relationshipType = parts[0];
 
             if (string.Equals(relationshipType, CatalogConstants.BundleToSellableItem, StringComparison.InvariantCultureIgnoreCase))
             {
