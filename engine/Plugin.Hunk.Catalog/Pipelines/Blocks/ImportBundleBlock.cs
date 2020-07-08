@@ -40,7 +40,7 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
                 var findEntityListReferencesArg = new FindEntityListReferencesArgument(commerceEntity);
                 findEntityListReferencesArg = await _commerceCommander.Pipeline<IFindEntityListReferencesPipeline>().Run(findEntityListReferencesArg, context).ConfigureAwait(false);
 
-                var existingRelationshipDictionary = findEntityListReferencesArg.ListReferences;
+                var existingRelationshipDictionary = findEntityListReferencesArg.ListReferences.ToDictionary(x => ParseRelationshipTypeFromKey(x.Key), x => x.Value);
 
                 //define a separate dictionary to store the "valid" relationships (this is used to remove orphaned relations later)
                 var newRelationshipDictionary = new Dictionary<string, List<string>>()
@@ -84,18 +84,24 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
                 }
 
                 //remove orphaned relationships
-                var orphanedSellableItemIds = existingRelationshipDictionary.Single(dict => ParseRelationshipTypeFromKey(dict.Key) == CatalogConstants.BundleToSellableItem).Value.Where(x => !newRelationshipDictionary[CatalogConstants.BundleToSellableItem].Contains(x));
-                foreach (var sellableItemId in orphanedSellableItemIds)
+                if (existingRelationshipDictionary.ContainsKey(CatalogConstants.BundleToSellableItem))
                 {
-                    await DeleteRelationship(commerceEntity.Id, sellableItemId, CatalogConstants.BundleToSellableItem, context);
-                    await DeleteRelationship(sellableItemId, commerceEntity.Id, CatalogConstants.SellableItemToBundle, context);
+                    var orphanedSellableItemIds = existingRelationshipDictionary[CatalogConstants.BundleToSellableItem].Where(x => !newRelationshipDictionary[CatalogConstants.BundleToSellableItem].Contains(x));
+                    foreach (var sellableItemId in orphanedSellableItemIds)
+                    {
+                        await DeleteRelationship(commerceEntity.Id, sellableItemId, CatalogConstants.BundleToSellableItem, context);
+                        await DeleteRelationship(sellableItemId, commerceEntity.Id, CatalogConstants.SellableItemToBundle, context);
+                    }
                 }
 
-                var orphanedSellableItemVariantIds = existingRelationshipDictionary.Single(dict => ParseRelationshipTypeFromKey(dict.Key) == CatalogConstants.BundleToSellableItemVariant).Value.Where(x => !newRelationshipDictionary[CatalogConstants.BundleToSellableItemVariant].Contains(x));
-                foreach (var sellableItemId in orphanedSellableItemVariantIds)
+                if (existingRelationshipDictionary.ContainsKey(CatalogConstants.BundleToSellableItemVariant))
                 {
-                    await DeleteRelationship(commerceEntity.Id, sellableItemId, CatalogConstants.BundleToSellableItemVariant, context);
-                    await DeleteRelationship(sellableItemId, commerceEntity.Id, CatalogConstants.SellableItemToBundle, context);
+                    var orphanedSellableItemVariantIds = existingRelationshipDictionary[CatalogConstants.BundleToSellableItemVariant].Where(x => !newRelationshipDictionary[CatalogConstants.BundleToSellableItemVariant].Contains(x));
+                    foreach (var sellableItemId in orphanedSellableItemVariantIds)
+                    {
+                        await DeleteRelationship(commerceEntity.Id, sellableItemId, CatalogConstants.BundleToSellableItemVariant, context);
+                        await DeleteRelationship(sellableItemId, commerceEntity.Id, CatalogConstants.SellableItemToBundle, context);
+                    }
                 }
             }
         }
@@ -114,7 +120,7 @@ namespace Plugin.Hunk.Catalog.Pipelines.Blocks
 
         private bool HasRelationship(string target, string relationshipType, IDictionary<string, IList<string>> relationshipDictionary)
         {
-            return relationshipDictionary.Any(dict => ParseRelationshipTypeFromKey(dict.Key) == relationshipType && dict.Value.Any(x => string.Equals(x, target, StringComparison.InvariantCultureIgnoreCase)));
+            return relationshipDictionary.ContainsKey(relationshipType) && relationshipDictionary[relationshipType].Any(x => string.Equals(x, target, StringComparison.InvariantCultureIgnoreCase));
         }
 
         private string ParseRelationshipTypeFromKey(string key)
