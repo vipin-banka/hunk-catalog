@@ -10,6 +10,7 @@ namespace Plugin.Hunk.Catalog.Test.SellableItemEntityImport
         public SourceBundle()
         {
             Tags = new List<Tag>();
+            Parents = new List<string>();
             BundleItems = new List<SourceBundleItem>();
         }
 
