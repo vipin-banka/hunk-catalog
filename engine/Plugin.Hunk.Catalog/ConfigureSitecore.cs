@@ -43,6 +43,7 @@ namespace Plugin.Hunk.Catalog
                         .Add<UpdateEntityBlock>()
                         .Add<SetEntityComponentsBlock>()
                         .Add<ImportEntityVariantsBlock>()
+                        .Add<ImportBundleBlock>()
                         .Add<PersistEntityBlock>();
                 })
                 .AddPipeline<IAssociatePriceBookPipeline, AssociatePriceBookPipeline>(configure =>

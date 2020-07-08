@@ -78,7 +78,9 @@
 
         public const string SetEntityComponentsBlock = "CatalogImport.Framework.block.SetEntityComponents";
 
-        public const string ResolveComponentMapperBlock = "CatalogImport.Framework.block.ResolveComponentMapper"; 
+        public const string ResolveComponentMapperBlock = "CatalogImport.Framework.block.ResolveComponentMapper";
+
+        public const string ImportBundleBlock = "CatalogImport.Framework.block.ImportBundle";
 
         public const string ImportEntityVariantsBlock = "CatalogImport.Framework.block.ImportEntityVariants";
 

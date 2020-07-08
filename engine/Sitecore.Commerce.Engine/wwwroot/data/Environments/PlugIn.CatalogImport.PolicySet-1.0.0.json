@@ -89,9 +89,25 @@
               "Key": "SellableItemInventory",
               "ImportHandlerTypeName": "Plugin.Hunk.Catalog.ImportHandlers.SellableItemInventoryImportHandler, Plugin.Hunk.Catalog",
               "BulkImporterTypeName": "Plugin.Hunk.Catalog.BulkImport.SellableItemInventoryImport, Plugin.Hunk.Catalog"
+            },
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.EntityMapperType, Plugin.Hunk.Catalog",
+              "Key": "Bundle",
+              "ImportHandlerTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.SourceBundleImportHandler, Plugin.Hunk.Catalog.Test",
+              "Components": {
+                "$type": "System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib",
+                "$values": [
+                  "BundleComponent"
+                ]
+              }
             }
           ],
           "EntityComponentMappings": [
+            {
+              "$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
+              "Key": "BundleComponent",
+              "FullTypeName": "Plugin.Hunk.Catalog.Test.SellableItemEntityImport.BundleComponentMapper, Plugin.Hunk.Catalog.Test"
+            },
             {
               "$type": "Plugin.Hunk.Catalog.Policy.MapperType, Plugin.Hunk.Catalog",
               "Key": "SellableItemComponent",
